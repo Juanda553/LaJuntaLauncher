@@ -65,3 +65,5 @@ ehthumbs.db
 
 # Environment file
 .env
+
+.pipe
