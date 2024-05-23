@@ -16,6 +16,12 @@ public class LauncherJunta {
         this.fontColor1 = fontColor1;
         this.fontColor2 = fontColor2;
     }
+    
+    
+    
+    
+    
+    
 
     public String getVersion() {
         return version;

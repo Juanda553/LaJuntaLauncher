@@ -15,35 +15,43 @@ import objects.LauncherJunta;
 import objects.NewsSection;
 import objects.EventsSection;
 
+import gui.LauncherWindow;
+
 public class LoadingWindow extends javax.swing.JFrame {
+    private LauncherWindow LAUNCHER_WINDOW;
+    
     public LoadingWindow() {
         initComponents();
+        
+        this.LAUNCHER_WINDOW = new LauncherWindow();
     }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        datosDeCarga = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        datosDeCarga.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(jLabel1)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addGap(104, 104, 104)
+                .addComponent(datosDeCarga)
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jLabel1)
-                .addContainerGap(174, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(190, Short.MAX_VALUE)
+                .addComponent(datosDeCarga)
+                .addGap(44, 44, 44))
         );
 
         pack();
@@ -56,6 +64,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         ldngWin.setLocationRelativeTo(null);
         
         // chupar la api
+        ldngWin.datosDeCarga.setText("Obteniendo datos de la nube");
         URL url = new URL("https://pastebin.com/raw/nj6RWKmF");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -73,12 +82,18 @@ public class LoadingWindow extends javax.swing.JFrame {
         // poner la api como0 json
         JSONObject api = new JSONObject(informationString.toString());
         System.out.println(api);
+        
+        JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
+        JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
+        
+        //JSONObject apiNews = (JSONObject) apiLauncherProperties.get("news");
+        //JSONObject apiEvents = (JSONObject) apiLauncherProperties.get("events");
 
         System.out.println("Mathias te amo");
         
         JuntaApi JUNTA_API = new JuntaApi(
                 api.getString("juntaName"),
-                api.getString("serverIcon"),
+                api.getString("juntaVersion"),
                 api.getString("forgeVersion"),
                 api.getString("icon"),
                 api.getString("modpackFirstInstall"),
@@ -86,36 +101,19 @@ public class LoadingWindow extends javax.swing.JFrame {
             );
         
         LauncherJunta LAUNCHER_JUNTA = new LauncherJunta(
-               api.getString("launcherVersion"),
-               api.getString("titleImage"),
-               api.getString("background1"),
-               api.getString("background2"),
-               api.getString("button1"),
-               api.getString("button2"),
-               api.getString("buttonPlay"),
-               api.getString("font1"),
-               api.getString("font2")
-            );
-        
-        NewsSection NEWS_SECTION = new NewsSection(
-                api.getString("title"),
-                api.getString("img"),
-                api.getString("desc"),
-                api.getString("date")
-            );
-        
-        EventsSection EVENTS_SECTION = new EventsSection(
-                api.getString("title"),
-                api.getString("img"),
-                api.getString("desc"),
-                api.getString("startDate"),
-                api.getString("endDate")
-            );
-        
-        
+               apiLauncherProperties.getString("launcherVersion"),
+               apiLauncherProperties.getString("titleImage"),
+               apiLauncherColors.getString("background1"),
+               apiLauncherColors.getString("background2"),
+               apiLauncherColors.getString("button1"),
+               apiLauncherColors.getString("button2"),
+               apiLauncherColors.getString("buttonPlay"),
+               apiLauncherColors.getString("font1"),
+               apiLauncherColors.getString("font2")
+            ); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel datosDeCarga;
     // End of variables declaration//GEN-END:variables
 }
