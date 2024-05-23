@@ -60,5 +60,4 @@ public class JuntaApi {
         this.modpackUpdate = modpackUpdate;
     }
     
-    
 }

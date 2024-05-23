@@ -1,16 +1,18 @@
 package objects;
 
-public class Launcher {
+public class LauncherJunta {
     private String version, titleImg;
     //colores
-    private String bgColor1, gbColor2, buttonColor1, buttonColor2, fontColor1, fontColor2;
+    private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontColor1, fontColor2;
 
-    public Launcher(String version, String titleImg, String bgColor1, String gbColor2, String buttonColor2, String fontColor1, String fontColor2) {
+    public LauncherJunta(String version, String titleImg, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontColor1, String fontColor2) {
         this.version = version;
         this.titleImg = titleImg;
         this.bgColor1 = bgColor1;
         this.gbColor2 = gbColor2;
+        this.buttonColor1 = buttonColor1;
         this.buttonColor2 = buttonColor2;
+        this.buttonPlay = buttonPlay;
         this.fontColor1 = fontColor1;
         this.fontColor2 = fontColor2;
     }
@@ -63,6 +65,14 @@ public class Launcher {
         this.buttonColor2 = buttonColor2;
     }
 
+    public String getButtonPlay() {
+        return buttonPlay;
+    }
+
+    public void setButtonPlay(String buttonPlay) {
+        this.buttonPlay = buttonPlay;
+    }
+
     public String getFontColor1() {
         return fontColor1;
     }
@@ -78,6 +88,5 @@ public class Launcher {
     public void setFontColor2(String fontColor2) {
         this.fontColor2 = fontColor2;
     }
-    
-    
+
 }

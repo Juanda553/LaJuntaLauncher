@@ -1,14 +1,13 @@
 package objects;
 
 public class NewsSection {
-    private String title, img, desc, startDate, endDate;
+    private String title, img, desc, date;
 
-    public NewsSection(String title, String img, String desc, String startDate, String endDate) {
+    public NewsSection(String title, String img, String desc, String date) {
         this.title = title;
         this.img = img;
         this.desc = desc;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.date = date;
     }
 
     public String getTitle() {
@@ -35,21 +34,14 @@ public class NewsSection {
         this.desc = desc;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setDate(String date) {
+        this.date = date;
     }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
+    
     
     
 }
