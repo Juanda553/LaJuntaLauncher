@@ -17,12 +17,19 @@ import objects.NewsSection;
 import objects.EventsSection;
 
 import gui.LauncherWindow;
-
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 
 public class LoadingWindow extends javax.swing.JFrame {
+    private String mineDir, diomedesDir, juntaLauncherDir;
+    
     public LoadingWindow() {
         initComponents();
+        
+        this.mineDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
+        this.juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
+        this.diomedesDir = juntaLauncherDir + "/.diomedes";
     }
     
     @SuppressWarnings("unchecked")
@@ -114,9 +121,9 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
         JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
-        
+        JSONObject apiEvents = (JSONObject) apiLauncherProperties.get("event");
         JSONArray apiNews = (JSONArray) apiLauncherProperties.get("news");
-        JSONArray apiEvents = (JSONArray) apiLauncherProperties.get("events");
+        
 
         System.out.println("Mathias te amo");
         
@@ -127,8 +134,53 @@ public class LoadingWindow extends javax.swing.JFrame {
                 api.getString("forgeVersion"),
                 api.getString("icon"),
                 api.getString("modpackFirstInstall"),
-                api.getString("modPackUpdate")
+                api.getString("modPackUpdate"),
+
+                apiLauncherProperties.getString("launcherVersion"),
+                apiLauncherProperties.getString("titleImage"),
+                apiLauncherColors.getString("background1"),
+                apiLauncherColors.getString("background2"),
+                apiLauncherColors.getString("button1"),
+                apiLauncherColors.getString("button2"),
+                apiLauncherColors.getString("buttonPlay"),
+                apiLauncherColors.getString("font1"),
+                apiLauncherColors.getString("font2"),
+                apiLauncherProperties.getJSONObject("event"),
+                apiLauncherProperties.getJSONArray("news")
             );
+        
+        try {
+            FileInputStream archivoEntrada = new FileInputStream(thisWindow.juntaLauncherDir+"/junta_data.json");
+            InputStreamReader lector = new InputStreamReader(archivoEntrada, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(lector);
+            String linea;
+            while ((linea = bufferedReader.readLine()) != null) {
+                System.out.println(linea);
+            }
+            bufferedReader.close();
+        } catch (Exception e) {
+            File carpeta = new File(thisWindow.diomedesDir);
+            carpeta.mkdirs();
+            
+            JSONObject localSettings = new JSONObject();
+            localSettings.put("localVersion", JUNTA_API.getServerVersion());
+            
+            String jsonParla = localSettings.toString(4);
+            
+            try (FileWriter file = new FileWriter(thisWindow.juntaLauncherDir + "/settings.json")) {
+                file.write(jsonParla);
+                file.flush();
+            } catch (Exception ex) {
+                System.out.println("no " + ex);
+            }
+        }
+            
+        
+        
+        
+        
+        
+        
         
         thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
         LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
@@ -145,10 +197,10 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         thisWindow.datosDeCarga.setText("Terminado :)");
         
+        
         LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
         LAUNCHER_WINDOW.setLocationRelativeTo(null);
         LAUNCHER_WINDOW.setVisible(true);
-        
         thisWindow.setVisible(false);
     }
 
