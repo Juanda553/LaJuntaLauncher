@@ -92,7 +92,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public static void main(String args[]) throws MalformedURLException, ProtocolException, IOException {
+    public static void main(String args[]) throws MalformedURLException, ProtocolException, IOException, InterruptedException {
         // Poniendo pantalla de carga
         LoadingWindow thisWindow = new LoadingWindow();
         thisWindow.setVisible(true);
@@ -117,15 +117,15 @@ public class LoadingWindow extends javax.swing.JFrame {
         // poner la api como0 json
         thisWindow.datosDeCarga.setText("Parseando datos a Json");
         JSONObject api = new JSONObject(informationString.toString());
-        System.out.println(api);
+        //System.out.println(api);
         
+        // haciendo variables del json
         JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
         JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
-        JSONObject apiEvents = (JSONObject) apiLauncherProperties.get("event");
-        JSONArray apiNews = (JSONArray) apiLauncherProperties.get("news");
         
-
-        System.out.println("Mathias te amo");
+        // Mathias te amo
+        thisWindow.datosDeCarga.setText("Mathias te amo");
+        Thread.sleep(1000);
         
         thisWindow.datosDeCarga.setText("Instanciando datos del servidor");
         JuntaApi JUNTA_API = new JuntaApi(
@@ -143,14 +143,20 @@ public class LoadingWindow extends javax.swing.JFrame {
                 apiLauncherColors.getString("button1"),
                 apiLauncherColors.getString("button2"),
                 apiLauncherColors.getString("buttonPlay"),
+                apiLauncherColors.getString("fontPlay"),
                 apiLauncherColors.getString("font1"),
                 apiLauncherColors.getString("font2"),
                 apiLauncherProperties.getJSONObject("event"),
-                apiLauncherProperties.getJSONArray("news")
+                apiLauncherProperties.getJSONArray("news"),
+                apiLauncherProperties.getJSONArray("partners"),
+                apiLauncherProperties.getJSONArray("splashes")
             );
         
+        System.out.println(JUNTA_API.getDetails());
+        
+        thisWindow.datosDeCarga.setText("Abriendo settings.json");
         try {
-            FileInputStream archivoEntrada = new FileInputStream(thisWindow.juntaLauncherDir+"/junta_data.json");
+            FileInputStream archivoEntrada = new FileInputStream(thisWindow.juntaLauncherDir+"/settings.json");
             InputStreamReader lector = new InputStreamReader(archivoEntrada, "UTF-8");
             BufferedReader bufferedReader = new BufferedReader(lector);
             String linea;
@@ -158,7 +164,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 System.out.println(linea);
             }
             bufferedReader.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             File carpeta = new File(thisWindow.diomedesDir);
             carpeta.mkdirs();
             
@@ -184,16 +190,11 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
         LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
-               apiLauncherProperties.getString("launcherVersion"),
-               apiLauncherProperties.getString("titleImage"),
-               apiLauncherColors.getString("background1"),
-               apiLauncherColors.getString("background2"),
-               apiLauncherColors.getString("button1"),
-               apiLauncherColors.getString("button2"),
-               apiLauncherColors.getString("buttonPlay"),
-               apiLauncherColors.getString("font1"),
-               apiLauncherColors.getString("font2")
-            ); 
+                JUNTA_API.getLauncherVersion(),
+                JUNTA_API.getForgeVersion(),
+                "diomedes",
+                "12"
+        );
         
         thisWindow.datosDeCarga.setText("Terminado :)");
         

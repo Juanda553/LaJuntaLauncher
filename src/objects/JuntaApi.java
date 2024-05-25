@@ -8,12 +8,12 @@ public class JuntaApi {
     private String name, serverVersion, forgeVersion, serverIcon, modpackInitial, modpackUpdate;
     
     private String launcherVersion, titleImg;
-    private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontColor1, fontColor2;
+    private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontPlay, fontColor1, fontColor2;
     
     private JSONObject event;
-    private JSONArray news;
+    private JSONArray news, partners, splashes;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
@@ -27,31 +27,37 @@ public class JuntaApi {
         this.buttonColor1 = buttonColor1;
         this.buttonColor2 = buttonColor2;
         this.buttonPlay = buttonPlay;
+        this.fontPlay = fontPlay;
         this.fontColor1 = fontColor1;
         this.fontColor2 = fontColor2;
         this.event = event;
         this.news = news;
+        this.partners = partners;
+        this.splashes = splashes;
     }
     
-    public void createJson(String juntaLauncherDir){
-        String apiBase = "";
+    public String getDetails() {
+        StringBuilder result = new StringBuilder();
+        result.append("name: ").append(this.name).append("\n");
+        result.append("serverVersion: ").append(this.serverVersion).append("\n");
+        result.append("forgeVersion: ").append(this.forgeVersion).append("\n");
+        result.append("serverIcon: ").append(this.serverIcon).append("\n");
+        result.append("modpackInitial: ").append(this.modpackInitial).append("\n");
+        result.append("modpackUpdate: ").append(this.modpackUpdate).append("\n");
+        result.append("launcherVersion: ").append(this.launcherVersion).append("\n");
+        result.append("titleImg: ").append(this.titleImg).append("\n");
+        result.append("bgColor1: ").append(this.bgColor1).append("\n");
+        result.append("gbColor2: ").append(this.gbColor2).append("\n");
+        result.append("buttonColor1: ").append(this.buttonColor1).append("\n");
+        result.append("buttonColor2: ").append(this.buttonColor2).append("\n");
+        result.append("buttonPlay: ").append(this.buttonPlay).append("\n");
+        result.append("fontPlay: ").append(this.fontPlay).append("\n");
+        result.append("fontColor1: ").append(this.fontColor1).append("\n");
+        result.append("fontColor2: ").append(this.fontColor2).append("\n");
         
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("localVersion", serverVersion);
-        try (FileWriter fileWriter = new FileWriter(juntaLauncherDir+"/junta_data.json")) {
-            String jsonString = jsonObject.toString();
-
-            fileWriter.write(jsonString);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        return result.toString();
     }
-    
-    
-    
-    
-    
-    
+
 
     public String getName() {
         return name;
@@ -157,6 +163,14 @@ public class JuntaApi {
         this.buttonPlay = buttonPlay;
     }
 
+    public String getFontPlay() {
+        return fontPlay;
+    }
+
+    public void setFontPlay(String fontPlay) {
+        this.fontPlay = fontPlay;
+    }
+
     public String getFontColor1() {
         return fontColor1;
     }
@@ -188,8 +202,22 @@ public class JuntaApi {
     public void setNews(JSONArray news) {
         this.news = news;
     }
-    
-    
-    
+
+    public JSONArray getPartners() {
+        return partners;
+    }
+
+    public void setPartners(JSONArray partners) {
+        this.partners = partners;
+    }
+
+    public JSONArray getSplashes() {
+        return splashes;
+    }
+
+    public void setSplashes(JSONArray splashes) {
+        this.splashes = splashes;
+    }
+
     
 }
