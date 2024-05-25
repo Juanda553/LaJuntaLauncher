@@ -174,7 +174,8 @@ public class LoadingWindow extends javax.swing.JFrame {
             carpeta.mkdirs();
             
             JSONObject localSettings = new JSONObject();
-            localSettings.put("localVersion", JUNTA_API.getServerVersion());
+            localSettings.put("juntaServerVersion", JUNTA_API.getServerVersion());
+            localSettings.put("launcherVersion", JUNTA_API.getLauncherVersion());
             
             String jsonParla = localSettings.toString(4);
             
