@@ -8,12 +8,13 @@ public class JuntaApi {
     private String name, serverVersion, forgeVersion, serverIcon, modpackInitial, modpackUpdate;
     
     private String launcherVersion, titleImg;
+    private int serverPrice, MoneyCollected;
     private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontPlay, fontColor1, fontColor2;
     
     private JSONObject event;
     private JSONArray news, partners, splashes;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
@@ -22,6 +23,8 @@ public class JuntaApi {
         this.modpackUpdate = modpackUpdate;
         this.launcherVersion = launcherVersion;
         this.titleImg = titleImg;
+        this.serverPrice = serverPrice;
+        this.MoneyCollected = MoneyCollected;
         this.bgColor1 = bgColor1;
         this.gbColor2 = gbColor2;
         this.buttonColor1 = buttonColor1;
@@ -45,6 +48,8 @@ public class JuntaApi {
         result.append("modpackInitial: ").append(this.modpackInitial).append("\n");
         result.append("modpackUpdate: ").append(this.modpackUpdate).append("\n");
         result.append("launcherVersion: ").append(this.launcherVersion).append("\n");
+        result.append("serverPrice: ").append(this.serverPrice).append("\n");
+        result.append("moneyCollected: ").append(this.MoneyCollected).append("\n");
         result.append("titleImg: ").append(this.titleImg).append("\n");
         result.append("bgColor1: ").append(this.bgColor1).append("\n");
         result.append("gbColor2: ").append(this.gbColor2).append("\n");
@@ -57,7 +62,6 @@ public class JuntaApi {
         
         return result.toString();
     }
-
 
     public String getName() {
         return name;
@@ -121,6 +125,22 @@ public class JuntaApi {
 
     public void setTitleImg(String titleImg) {
         this.titleImg = titleImg;
+    }
+
+    public int getServerPrice() {
+        return serverPrice;
+    }
+
+    public void setServerPrice(int serverPrice) {
+        this.serverPrice = serverPrice;
+    }
+
+    public int getMoneyCollected() {
+        return MoneyCollected;
+    }
+
+    public void setMoneyCollected(int MoneyCollected) {
+        this.MoneyCollected = MoneyCollected;
     }
 
     public String getBgColor1() {
@@ -219,5 +239,6 @@ public class JuntaApi {
         this.splashes = splashes;
     }
 
+    
     
 }

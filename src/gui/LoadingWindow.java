@@ -138,6 +138,9 @@ public class LoadingWindow extends javax.swing.JFrame {
 
                 apiLauncherProperties.getString("launcherVersion"),
                 apiLauncherProperties.getString("titleImage"),
+                apiLauncherProperties.getInt("serverPrice"),
+                apiLauncherProperties.getInt("moneyCollected"),
+                
                 apiLauncherColors.getString("background1"),
                 apiLauncherColors.getString("background2"),
                 apiLauncherColors.getString("button1"),
@@ -165,7 +168,8 @@ public class LoadingWindow extends javax.swing.JFrame {
             }
             bufferedReader.close();
         } catch (IOException e) {
-            thisWindow.datosDeCarga.setText("Instalando requerimientos");
+            thisWindow.datosDeCarga.setText("No se encontró el directorio");
+            thisWindow.datosDeCarga.setText("");
             File carpeta = new File(thisWindow.diomedesDir);
             carpeta.mkdirs();
             
