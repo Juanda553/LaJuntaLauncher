@@ -23,8 +23,9 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.fontColor1 = JUNTA_API.getFontColor1();
         this.fontColor2 = JUNTA_API.getFontColor2();
         
+        this.showUserName.setText(LAUNCHER_CLASS.getUsername());
         
-        this.panelRoot.setBackground(Color.decode(bgColor1));
+        this.panelRoot.setBackground(Color.decode(bgColor1));      
         this.panelMain.setBackground(Color.decode(bgColor2));
         
         this.playButton.setBackground(Color.decode(btnPlayColor));
@@ -62,6 +63,8 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_WhatsappChannel = new javax.swing.JButton();
         btn_openOldServers = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        showUserName1 = new javax.swing.JLabel();
+        showUserName = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -77,7 +80,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         panelMain.setBackground(new java.awt.Color(54, 67, 53));
         panelMain.setLayout(null);
 
-        playButton.setBackground(new java.awt.Color(168, 229, 127));
+        playButton.setBackground(new java.awt.Color(202, 200, 111));
         playButton.setFont(new java.awt.Font("Minecraft Evenings", 0, 36)); // NOI18N
         playButton.setForeground(new java.awt.Color(255, 255, 255));
         playButton.setText("Jugar");
@@ -135,8 +138,8 @@ public class LauncherWindow extends javax.swing.JFrame {
         jLabel1.setBounds(15, 10, 820, 245);
 
         btn_checkUpdate.setBackground(new java.awt.Color(85, 105, 84));
-        btn_checkUpdate.setFont(new java.awt.Font("Minecraft", 0, 18)); // NOI18N
-        btn_checkUpdate.setText("Actualizar");
+        btn_checkUpdate.setFont(new java.awt.Font("Minecraft", 0, 14)); // NOI18N
+        btn_checkUpdate.setText("Actualizar modpack");
         btn_checkUpdate.setBorder(null);
 
         btn_launcherSettings.setBackground(new java.awt.Color(85, 105, 84));
@@ -168,6 +171,15 @@ public class LauncherWindow extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
+        showUserName1.setFont(new java.awt.Font("Minecraft", 0, 12)); // NOI18N
+        showUserName1.setForeground(new java.awt.Color(255, 255, 255));
+        showUserName1.setText("Sesion iniciada como:");
+        showUserName1.setToolTipText("");
+
+        showUserName.setFont(new java.awt.Font("Minecraft", 0, 12)); // NOI18N
+        showUserName.setForeground(new java.awt.Color(255, 255, 255));
+        showUserName.setText("name");
+
         javax.swing.GroupLayout panelRootLayout = new javax.swing.GroupLayout(panelRoot);
         panelRoot.setLayout(panelRootLayout);
         panelRootLayout.setHorizontalGroup(
@@ -181,7 +193,11 @@ public class LauncherWindow extends javax.swing.JFrame {
                     .addComponent(btn_openCredits, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(btn_WhatsappChannel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(btn_openOldServers, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
+                    .addComponent(jSeparator1)
+                    .addComponent(showUserName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRootLayout.createSequentialGroup()
+                        .addComponent(showUserName1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -189,9 +205,14 @@ public class LauncherWindow extends javax.swing.JFrame {
         panelRootLayout.setVerticalGroup(
             panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRootLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelRootLayout.createSequentialGroup()
-                        .addGap(69, 69, 69)
+                        .addGap(6, 6, 6)
+                        .addComponent(showUserName1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_checkUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,15 +220,13 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(btn_launcherSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_minecraftSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
                         .addComponent(btn_openOldServers, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_WhatsappChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_openCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRootLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)))
+                    .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -247,5 +266,7 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JPanel panelMain;
     private javax.swing.JPanel panelRoot;
     private javax.swing.JButton playButton;
+    private javax.swing.JLabel showUserName;
+    private javax.swing.JLabel showUserName1;
     // End of variables declaration//GEN-END:variables
 }

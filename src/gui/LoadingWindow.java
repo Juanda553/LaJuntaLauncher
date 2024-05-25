@@ -100,7 +100,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         // chupar la api
         thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");
-        URL url = new URL("https://pastebin.com/raw/nj6RWKmF");
+        URL url = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.connect();
@@ -165,6 +165,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             }
             bufferedReader.close();
         } catch (IOException e) {
+            thisWindow.datosDeCarga.setText("Instalando requerimientos");
             File carpeta = new File(thisWindow.diomedesDir);
             carpeta.mkdirs();
             
@@ -192,7 +193,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
                 JUNTA_API.getLauncherVersion(),
                 JUNTA_API.getForgeVersion(),
-                "diomedes",
+                "Diomedes",
                 "12"
         );
         
