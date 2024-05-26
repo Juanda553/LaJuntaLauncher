@@ -27,6 +27,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.fontColor2 = JUNTA_API.getFontColor2();
         
         this.showUserName.setText(LAUNCHER_CLASS.getUsername());
+        this.usingRam.setText("Usando " + LAUNCHER_CLASS.getRam() + "GB de RAM");
         this.btn_partners.setText("$" + (JUNTA_API.getServerPrice() - JUNTA_API.getMoneyCollected()) + " restantes");
         
         this.panelRoot.setBackground(Color.decode(bgColor1));      
@@ -71,6 +72,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         showUserName = new javax.swing.JLabel();
         btn_partners = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
+        usingRam = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -149,24 +151,44 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_checkUpdate.setText("Actualizar modpack");
         btn_checkUpdate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_checkUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_checkUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_checkUpdateActionPerformed(evt);
+            }
+        });
 
         btn_launcherSettings.setBackground(new java.awt.Color(85, 105, 84));
         btn_launcherSettings.setFont(new java.awt.Font("Minecraft", 0, 14)); // NOI18N
         btn_launcherSettings.setText("Ajustes Launcher");
         btn_launcherSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_launcherSettings.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_launcherSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_launcherSettingsActionPerformed(evt);
+            }
+        });
 
         btn_minecraftSettings.setBackground(new java.awt.Color(85, 105, 84));
         btn_minecraftSettings.setFont(new java.awt.Font("Minecraft", 0, 14)); // NOI18N
         btn_minecraftSettings.setText("Ajustes Minecraft");
         btn_minecraftSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_minecraftSettings.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_minecraftSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_minecraftSettingsActionPerformed(evt);
+            }
+        });
 
         btn_openCredits.setBackground(new java.awt.Color(85, 105, 84));
         btn_openCredits.setFont(new java.awt.Font("Minecraft", 0, 14)); // NOI18N
         btn_openCredits.setText("Creditos");
         btn_openCredits.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_openCredits.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_openCredits.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_openCreditsActionPerformed(evt);
+            }
+        });
 
         btn_WhatsappChannel.setBackground(new java.awt.Color(85, 105, 84));
         btn_WhatsappChannel.setFont(new java.awt.Font("Minecraft", 0, 14)); // NOI18N
@@ -203,9 +225,18 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_partners.setToolTipText("");
         btn_partners.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_partners.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_partners.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_partnersActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
+
+        usingRam.setFont(new java.awt.Font("Minecraft", 0, 12)); // NOI18N
+        usingRam.setForeground(new java.awt.Color(255, 255, 255));
+        usingRam.setText("ram: ramGB");
 
         javax.swing.GroupLayout panelRootLayout = new javax.swing.GroupLayout(panelRoot);
         panelRoot.setLayout(panelRootLayout);
@@ -226,7 +257,8 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(showUserName1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btn_partners, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jSeparator2))
+                    .addComponent(jSeparator2)
+                    .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -242,6 +274,8 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_checkUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,7 +287,7 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_partners, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
                         .addComponent(btn_openOldServers, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_WhatsappChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,10 +312,11 @@ public class LauncherWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        // TODO add your handling code here:
+        System.out.println("Jugar");
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void btn_WhatsappChannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_WhatsappChannelActionPerformed
+        System.out.println("Whatsapp");
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI("https://whatsapp.com/channel/0029VaJc8jB9RZAfFWN7840n"));
@@ -292,6 +327,26 @@ public class LauncherWindow extends javax.swing.JFrame {
             System.out.println(e.toString());
         }
     }//GEN-LAST:event_btn_WhatsappChannelActionPerformed
+
+    private void btn_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkUpdateActionPerformed
+        System.out.println("Actualizar modpack");
+    }//GEN-LAST:event_btn_checkUpdateActionPerformed
+
+    private void btn_launcherSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_launcherSettingsActionPerformed
+        System.out.println("Ajustes del launcherm");
+    }//GEN-LAST:event_btn_launcherSettingsActionPerformed
+
+    private void btn_minecraftSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_minecraftSettingsActionPerformed
+        System.out.println("Ajustes del juegom");
+    }//GEN-LAST:event_btn_minecraftSettingsActionPerformed
+
+    private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed
+        System.out.println("Ver partners");
+    }//GEN-LAST:event_btn_partnersActionPerformed
+
+    private void btn_openCreditsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openCreditsActionPerformed
+        System.out.println("Creditos");
+    }//GEN-LAST:event_btn_openCreditsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_WhatsappChannel;
@@ -315,5 +370,6 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JButton playButton;
     private javax.swing.JLabel showUserName;
     private javax.swing.JLabel showUserName1;
+    private javax.swing.JLabel usingRam;
     // End of variables declaration//GEN-END:variables
 }

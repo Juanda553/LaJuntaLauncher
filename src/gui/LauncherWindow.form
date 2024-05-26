@@ -81,6 +81,7 @@
                       </Group>
                       <Component id="btn_partners" alignment="1" pref="172" max="32767" attributes="0"/>
                       <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="usingRam" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="panelMain" min="-2" pref="850" max="-2" attributes="0"/>
@@ -99,6 +100,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="showUserName" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="usingRam" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_checkUpdate" min="-2" pref="56" max="-2" attributes="0"/>
@@ -110,7 +113,7 @@
                           <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_partners" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace pref="202" max="32767" attributes="0"/>
+                          <EmptySpace pref="182" max="32767" attributes="0"/>
                           <Component id="btn_openOldServers" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_WhatsappChannel" min="-2" pref="40" max="-2" attributes="0"/>
@@ -266,6 +269,9 @@
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_checkUpdateActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_launcherSettings">
           <Properties>
@@ -285,6 +291,9 @@
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_launcherSettingsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_minecraftSettings">
           <Properties>
@@ -304,6 +313,9 @@
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_minecraftSettingsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_openCredits">
           <Properties>
@@ -323,6 +335,9 @@
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_openCreditsActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_WhatsappChannel">
           <Properties>
@@ -415,6 +430,9 @@
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_partnersActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator2">
           <Properties>
@@ -424,6 +442,17 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="usingRam">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Minecraft" size="12" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="ram: ramGB"/>
           </Properties>
         </Component>
       </SubComponents>

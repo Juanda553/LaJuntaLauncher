@@ -1,9 +1,10 @@
 package objects;
 
 public class LauncherJunta {
-    private String launcherVersion, minecraftVersion, username, ram;
+    private String launcherVersion, minecraftVersion, username;
+    int ram;
 
-    public LauncherJunta(String launcherVersion, String minecraftVersion, String username, String ram) {
+    public LauncherJunta(String launcherVersion, String minecraftVersion, String username, int ram) {
         this.launcherVersion = launcherVersion;
         this.minecraftVersion = minecraftVersion;
         this.username = username;
@@ -34,11 +35,11 @@ public class LauncherJunta {
         this.username = username;
     }
 
-    public String getRam() {
+    public int getRam() {
         return ram;
     }
 
-    public void setRam(String ram) {
+    public void setRam(int ram) {
         this.ram = ram;
     }
 

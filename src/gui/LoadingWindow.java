@@ -20,6 +20,10 @@ import gui.LauncherWindow;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import javax.swing.JOptionPane;
 
 public class LoadingWindow extends javax.swing.JFrame {
     private String mineDir, diomedesDir, juntaLauncherDir;
@@ -98,16 +102,17 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
+        URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
+        
         // chupar la api
         thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");
-        URL url = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) API_URL.openConnection();
         connection.setRequestMethod("GET");
         connection.connect();
         
         thisWindow.datosDeCarga.setText("Guardando datos");
         StringBuilder informationString = new StringBuilder();
-            Scanner scanner = new Scanner(url.openStream());
+            Scanner scanner = new Scanner(API_URL.openStream());
                 
             while(scanner.hasNext()){
                 informationString.append(scanner.nextLine());
@@ -159,23 +164,35 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         thisWindow.datosDeCarga.setText("Abriendo settings.json");
         try {
-            FileInputStream archivoEntrada = new FileInputStream(thisWindow.juntaLauncherDir+"/settings.json");
-            InputStreamReader lector = new InputStreamReader(archivoEntrada, "UTF-8");
-            BufferedReader bufferedReader = new BufferedReader(lector);
-            String linea;
-            while ((linea = bufferedReader.readLine()) != null) {
-                System.out.println(linea);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
+            //FileInputStream archivoEntrada = new FileInputStream(thisWindow.juntaLauncherDir+"/settings.json");
+            //InputStreamReader lector = new InputStreamReader(archivoEntrada, "UTF-8");
+            //BufferedReader bufferedReader = new BufferedReader(lector);
+            //String linea;
+            //while ((linea = bufferedReader.readLine()) != null) {
+            //    System.out.println(linea);
+            //}
+            //bufferedReader.close();
+            
+            String path = thisWindow.juntaLauncherDir+"/settings.json";
+            String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+            JSONObject settingsJson = new JSONObject(settingsContent);
+            
+            System.out.println(settingsJson.getString("juntaServerVersion"));
+            System.out.println(settingsJson.getString("launcherVersion"));
+            System.out.println(settingsJson.getString("username"));
+            System.out.println(settingsJson.getInt("minecraftRam"));
+            
+        } catch (Exception e) {
             thisWindow.datosDeCarga.setText("No se encontró el directorio");
-            thisWindow.datosDeCarga.setText("");
+            thisWindow.datosDeCarga.setText("Creando nuevo directorio jeje");
             File carpeta = new File(thisWindow.diomedesDir);
             carpeta.mkdirs();
             
             JSONObject localSettings = new JSONObject();
             localSettings.put("juntaServerVersion", JUNTA_API.getServerVersion());
             localSettings.put("launcherVersion", JUNTA_API.getLauncherVersion());
+            localSettings.put("username", "");
+            localSettings.put("minecraftRam", 0);
             
             String jsonParla = localSettings.toString(4);
             
@@ -186,20 +203,32 @@ public class LoadingWindow extends javax.swing.JFrame {
                 System.out.println("no " + ex);
             }
         }
+        
+        String path = thisWindow.juntaLauncherDir+"/settings.json";
+        String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+        JSONObject settingsJson = new JSONObject(settingsContent);
+        
+        if(settingsJson.getString("username").equals("")){
+            System.out.println("no tiene user");
+            String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario:", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
             
+            settingsJson.put("username", username);
+            
+        } if (settingsJson.getInt("minecraftRam") <= 0) {
+            String ramString = JOptionPane.showInputDialog(null, "Ingresa la cantidad de ram que quieres asignar al juego \n(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
+            int ram = Integer.parseInt(ramString);
+            
+            settingsJson.put("minecraftRam", ram);
+        }
         
-        
-        
-        
-        
-        
+        Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
         
         thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
         LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
                 JUNTA_API.getLauncherVersion(),
                 JUNTA_API.getForgeVersion(),
-                "Diomedes",
-                "12"
+                settingsJson.getString("username"),
+                settingsJson.getInt("minecraftRam")
         );
         
         thisWindow.datosDeCarga.setText("Terminado :)");
