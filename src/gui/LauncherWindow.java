@@ -172,6 +172,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         header.setBounds(15, 10, 820, 245);
 
         btn_checkUpdate.setBackground(Color.decode(btnColor1));
+        btn_checkUpdate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_checkUpdate.setForeground(Color.decode(fontColor2));
         btn_checkUpdate.setText("Actualizar modpack");
         btn_checkUpdate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -184,6 +185,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         });
 
         btn_launcherSettings.setBackground(Color.decode(btnColor1));
+        btn_launcherSettings.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_launcherSettings.setForeground(Color.decode(fontColor2));
         btn_launcherSettings.setText("Ajustes Launcher");
         btn_launcherSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -196,6 +198,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         });
 
         btn_minecraftSettings.setBackground(Color.decode(btnColor1));
+        btn_minecraftSettings.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_minecraftSettings.setForeground(Color.decode(fontColor2));
         btn_minecraftSettings.setText("Ajustes Minecraft");
         btn_minecraftSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -254,6 +257,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         showUserName.setText(LAUNCHER_CLASS.getUsername());
 
         btn_partners.setBackground(Color.decode(btnColor1));
+        btn_partners.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_partners.setForeground(Color.decode(fontColor2));
         btn_partners.setText("$" + (JUNTA_API.getServerPrice() - JUNTA_API.getMoneyCollected()) + " restantes");
         btn_partners.setToolTipText("");
