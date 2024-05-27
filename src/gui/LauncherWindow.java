@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.Icon;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 public class LauncherWindow extends javax.swing.JFrame {
     private JuntaApi JUNTA_API;
     private LauncherJunta LAUNCHER_CLASS;
-    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFont, fontColor1, fontColor2, eventTitle;
+    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle;
     
     private Partners partnersWindow;
     private MinecraftSettings mcSettingsWindow;
@@ -29,27 +30,20 @@ public class LauncherWindow extends javax.swing.JFrame {
     private JSONObject currentEvent;
     
     private Font mcFont, mcTitleFont;
-    private ImageIcon headerIcon, userHeadIcon, eventIcon;
+    private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon;
 
     public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS) throws MalformedURLException {
         
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
         this.partnersWindow = new Partners(JUNTA_API.getPartners());
-        
-        try {
-            this.mcFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/font/Minecraft.ttf"));
-            this.mcTitleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/font/MinecraftEvenings.ttf"));
-        } catch (FontFormatException | IOException e) {
-            System.out.println(e);
-        }
 
         this.bgColor1 = JUNTA_API.getBgColor1();
         this.bgColor2 = JUNTA_API.getGbColor2();
         this.btnColor1 = JUNTA_API.getButtonColor1();
         this.btnColor2 = JUNTA_API.getButtonColor2();
         this.btnPlayColor = JUNTA_API.getButtonPlay();
-        this.btnPlayFont = JUNTA_API.getFontPlay();
+        this.btnPlayFontString = JUNTA_API.getFontPlay();
         this.fontColor1 = JUNTA_API.getFontColor1();
         this.fontColor2 = JUNTA_API.getFontColor2();
         this.currentEvent = JUNTA_API.getEvent();
@@ -62,6 +56,9 @@ public class LauncherWindow extends javax.swing.JFrame {
         
         URL eventImgUrl = new URL(currentEvent.getString("img"));
         this.eventIcon = new ImageIcon(eventImgUrl);
+        
+        URL btnPlayFontUrl = new URL(btnPlayFontString);
+        this.btnPlayFontIcon = new ImageIcon(btnPlayFontUrl);
         
         initComponents();
         
@@ -117,9 +114,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         panelMain.setLayout(null);
 
         playButton.setBackground(Color.decode(btnPlayColor));
-        playButton.setFont(mcTitleFont.deriveFont(36f));
-        playButton.setForeground(Color.decode(btnPlayFont));
-        playButton.setText("Jugar");
+        playButton.setIcon(btnPlayFontIcon);
         playButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         playButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         playButton.setFocusPainted(false);
@@ -156,7 +151,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         eventPanel.add(eventImg);
         eventImg.setBounds(5, 105, 368, 165);
 
-        EventTitle.setFont(mcTitleFont.deriveFont(24f));
         EventTitle.setForeground(Color.decode(fontColor1));
         EventTitle.setText(currentEvent.getString("title"));
         eventPanel.add(EventTitle);
@@ -178,7 +172,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         header.setBounds(15, 10, 820, 245);
 
         btn_checkUpdate.setBackground(Color.decode(btnColor1));
-        btn_checkUpdate.setFont(mcFont.deriveFont(14f));
         btn_checkUpdate.setForeground(Color.decode(fontColor2));
         btn_checkUpdate.setText("Actualizar modpack");
         btn_checkUpdate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -191,7 +184,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         });
 
         btn_launcherSettings.setBackground(Color.decode(btnColor1));
-        btn_launcherSettings.setFont(mcFont.deriveFont(14f));
         btn_launcherSettings.setForeground(Color.decode(fontColor2));
         btn_launcherSettings.setText("Ajustes Launcher");
         btn_launcherSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -204,7 +196,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         });
 
         btn_minecraftSettings.setBackground(Color.decode(btnColor1));
-        btn_minecraftSettings.setFont(mcFont.deriveFont(14f));
         btn_minecraftSettings.setForeground(Color.decode(fontColor2));
         btn_minecraftSettings.setText("Ajustes Minecraft");
         btn_minecraftSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -217,7 +208,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         });
 
         btn_openCredits.setBackground(Color.decode(btnColor1));
-        btn_openCredits.setFont(mcFont.deriveFont(14f));
         btn_openCredits.setForeground(Color.decode(fontColor2));
         btn_openCredits.setText("Creditos");
         btn_openCredits.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -230,7 +220,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         });
 
         btn_WhatsappChannel.setBackground(Color.decode(btnColor1));
-        btn_WhatsappChannel.setFont(mcFont.deriveFont(14f));
         btn_WhatsappChannel.setForeground(Color.decode(fontColor2));
         btn_WhatsappChannel.setText("Canal de Whatsapp");
         btn_WhatsappChannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -243,7 +232,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         });
 
         btn_openOldServers.setBackground(Color.decode(btnColor1));
-        btn_openOldServers.setFont(mcFont.deriveFont(14f));
         btn_openOldServers.setForeground(Color.decode(fontColor2));
         btn_openOldServers.setText("Servidores Antiguos");
         btn_openOldServers.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -258,17 +246,14 @@ public class LauncherWindow extends javax.swing.JFrame {
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
-        showUserName1.setFont(new java.awt.Font("Minecraft", 0, 12)); // NOI18N
         showUserName1.setForeground(Color.decode(fontColor1));
         showUserName1.setText("Sesion iniciada como:");
         showUserName1.setToolTipText("");
 
-        showUserName.setFont(new java.awt.Font("Minecraft", 0, 12)); // NOI18N
         showUserName.setForeground(Color.decode(fontColor1));
         showUserName.setText(LAUNCHER_CLASS.getUsername());
 
         btn_partners.setBackground(Color.decode(btnColor1));
-        btn_partners.setFont(mcFont.deriveFont(14f));
         btn_partners.setForeground(Color.decode(fontColor2));
         btn_partners.setText("$" + (JUNTA_API.getServerPrice() - JUNTA_API.getMoneyCollected()) + " restantes");
         btn_partners.setToolTipText("");
@@ -284,7 +269,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
 
-        usingRam.setFont(new java.awt.Font("Minecraft", 0, 12)); // NOI18N
         usingRam.setForeground(Color.decode(fontColor1));
         usingRam.setText("Usando " + LAUNCHER_CLASS.getRam() + "GB de RAM");
 
@@ -343,7 +327,7 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_partners, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                         .addComponent(btn_openOldServers, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_WhatsappChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)

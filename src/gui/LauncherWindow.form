@@ -121,7 +121,7 @@
                           <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_partners" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace pref="190" max="32767" attributes="0"/>
+                          <EmptySpace pref="184" max="32767" attributes="0"/>
                           <Component id="btn_openOldServers" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_WhatsappChannel" min="-2" pref="40" max="-2" attributes="0"/>
@@ -152,13 +152,9 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="Color.decode(btnPlayColor)" type="code"/>
                 </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="mcTitleFont.deriveFont(36f)" type="code"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="btnPlayFontIcon" type="code"/>
                 </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="Color.decode(btnPlayFont)" type="code"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Jugar"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                     <BevelBorder/>
@@ -239,9 +235,6 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="EventTitle">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="mcTitleFont.deriveFont(24f)" type="code"/>
-                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="Color.decode(fontColor1)" type="code"/>
                     </Property>
@@ -298,9 +291,6 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(btnColor1)" type="code"/>
             </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="mcFont.deriveFont(14f)" type="code"/>
-            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor2)" type="code"/>
             </Property>
@@ -323,9 +313,6 @@
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(btnColor1)" type="code"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="mcFont.deriveFont(14f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor2)" type="code"/>
@@ -350,9 +337,6 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(btnColor1)" type="code"/>
             </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="mcFont.deriveFont(14f)" type="code"/>
-            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor2)" type="code"/>
             </Property>
@@ -375,9 +359,6 @@
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(btnColor1)" type="code"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="mcFont.deriveFont(14f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor2)" type="code"/>
@@ -402,9 +383,6 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(btnColor1)" type="code"/>
             </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="mcFont.deriveFont(14f)" type="code"/>
-            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor2)" type="code"/>
             </Property>
@@ -427,9 +405,6 @@
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(btnColor1)" type="code"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="mcFont.deriveFont(14f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor2)" type="code"/>
@@ -461,9 +436,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="showUserName1">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Minecraft" size="12" style="0"/>
-            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor1)" type="code"/>
             </Property>
@@ -473,9 +445,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="showUserName">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Minecraft" size="12" style="0"/>
-            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor1)" type="code"/>
             </Property>
@@ -488,9 +457,6 @@
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(btnColor1)" type="code"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="mcFont.deriveFont(14f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor2)" type="code"/>
@@ -525,9 +491,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="usingRam">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Minecraft" size="12" style="0"/>
-            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Color.decode(fontColor1)" type="code"/>
             </Property>
