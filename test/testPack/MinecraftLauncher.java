@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LaunchGame {
+public class MinecraftLauncher {
     public static void main(String[] args) {
         String dotDiomedes = "C:/Users/juanz/AppData/Roaming/.jnt-copia";
         String mcVersion = "1.18.2";

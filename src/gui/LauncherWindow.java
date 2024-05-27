@@ -38,8 +38,8 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.partnersWindow = new Partners(JUNTA_API.getPartners());
         
         try {
-            this.mcFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/font/Minecraft.ttf"));
-            this.mcTitleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/font/MinecraftEvenings.ttf"));
+            this.mcFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/font/Minecraft.ttf"));
+            this.mcTitleFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/resources/font/MinecraftEvenings.ttf"));
         } catch (FontFormatException | IOException e) {
             System.out.println(e);
         }
@@ -172,7 +172,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         eventPanel.setBounds(10, 345, 380, 280);
 
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        header.setIcon(headerIcon);
+        header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/junta_launcher_header.jpg"))); // NOI18N
         header.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         panelMain.add(header);
         header.setBounds(15, 10, 820, 245);
