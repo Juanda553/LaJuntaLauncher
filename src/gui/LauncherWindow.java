@@ -151,7 +151,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         eventPanel.add(eventImg);
         eventImg.setBounds(5, 105, 368, 165);
 
-        EventTitle.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        EventTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         EventTitle.setForeground(Color.decode(fontColor1));
         EventTitle.setText(currentEvent.getString("title"));
         eventPanel.add(EventTitle);
