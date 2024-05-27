@@ -34,6 +34,8 @@ public class LauncherWindow extends javax.swing.JFrame {
     private Partners partnersWindow;
     private MinecraftSettings mcSettingsWindow;
     private LauncherSettings launcherSettingsWindow;
+    private Credits creditsWindow;
+    
     private JSONObject currentEvent;
     
     private Font mcFont, mcTitleFont;
@@ -43,7 +45,11 @@ public class LauncherWindow extends javax.swing.JFrame {
         
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
+        
         this.partnersWindow = new Partners(JUNTA_API.getPartners());
+        this.mcSettingsWindow = new MinecraftSettings();
+        this.launcherSettingsWindow = new LauncherSettings();
+        this.creditsWindow = new Credits();
 
         this.bgColor1 = JUNTA_API.getBgColor1();
         this.bgColor2 = JUNTA_API.getGbColor2();
@@ -96,8 +102,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_launcherSettings = new javax.swing.JButton();
         btn_minecraftSettings = new javax.swing.JButton();
         btn_openCredits = new javax.swing.JButton();
-        btn_WhatsappChannel = new javax.swing.JButton();
-        btn_openOldServers = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         showUserName1 = new javax.swing.JLabel();
         showUserName = new javax.swing.JLabel();
@@ -132,7 +136,7 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
         panelMain.add(playButton);
-        playButton.setBounds(140, 265, 180, 65);
+        playButton.setBounds(140, 220, 180, 65);
 
         newsPanel.setBackground(new java.awt.Color(51, 51, 51));
         newsPanel.setLayout(null);
@@ -173,7 +177,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         eventPanel.setBackground(new java.awt.Color(51, 51, 51));
         eventPanel.setLayout(null);
         panelMain.add(eventPanel);
-        eventPanel.setBounds(15, 345, 430, 280);
+        eventPanel.setBounds(15, 295, 430, 330);
 
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header.setIcon(headerIcon);
@@ -232,30 +236,6 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
-        btn_WhatsappChannel.setBackground(Color.decode(btnColor1));
-        btn_WhatsappChannel.setForeground(Color.decode(fontColor2));
-        btn_WhatsappChannel.setText("Canal de Whatsapp");
-        btn_WhatsappChannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_WhatsappChannel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_WhatsappChannel.setFocusPainted(false);
-        btn_WhatsappChannel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_WhatsappChannelActionPerformed(evt);
-            }
-        });
-
-        btn_openOldServers.setBackground(Color.decode(btnColor1));
-        btn_openOldServers.setForeground(Color.decode(fontColor2));
-        btn_openOldServers.setText("Servidores Antiguos");
-        btn_openOldServers.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_openOldServers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_openOldServers.setFocusPainted(false);
-        btn_openOldServers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_openOldServersActionPerformed(evt);
-            }
-        });
-
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
@@ -299,8 +279,6 @@ public class LauncherWindow extends javax.swing.JFrame {
                     .addComponent(btn_launcherSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(btn_minecraftSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(btn_openCredits, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(btn_WhatsappChannel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(btn_openOldServers, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addComponent(btn_partners, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
@@ -339,12 +317,8 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(btn_minecraftSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
                         .addComponent(btn_partners, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
-                        .addComponent(btn_openOldServers, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_WhatsappChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_openCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -367,6 +341,13 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         System.out.println("Jugar");
+        if (LAUNCHER_CLASS.getServerVersion().equals(JUNTA_API.getServerVersion())) {
+            JOptionPane.showMessageDialog(null, "Good", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Tienes una version antigua", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(LAUNCHER_CLASS.getServerVersion());
+            System.out.println(JUNTA_API.getServerVersion());
+        }
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
@@ -379,19 +360,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_playButtonActionPerformed
 
-    private void btn_WhatsappChannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_WhatsappChannelActionPerformed
-        System.out.println("Whatsapp");
-        try {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI("https://whatsapp.com/channel/0029VaJc8jB9RZAfFWN7840n"));
-            } else {
-                System.out.println("no sirve");
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-    }//GEN-LAST:event_btn_WhatsappChannelActionPerformed
-
     private void btn_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkUpdateActionPerformed
         System.out.println("Actualizar modpack");
         JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
@@ -400,15 +368,20 @@ public class LauncherWindow extends javax.swing.JFrame {
     private void btn_launcherSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_launcherSettingsActionPerformed
         System.out.println("Ajustes del launcherm");
         JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
+        launcherSettingsWindow.setLocationRelativeTo(null);
+        launcherSettingsWindow.setVisible(true);
     }//GEN-LAST:event_btn_launcherSettingsActionPerformed
 
     private void btn_minecraftSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_minecraftSettingsActionPerformed
         System.out.println("Ajustes del juegom");
         JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
+        mcSettingsWindow.setLocationRelativeTo(null);
+        mcSettingsWindow.setVisible(true);
     }//GEN-LAST:event_btn_minecraftSettingsActionPerformed
 
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed
         System.out.println("Ver partners");
+        JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
         partnersWindow.setLocationRelativeTo(null);
         partnersWindow.setVisible(true);
     }//GEN-LAST:event_btn_partnersActionPerformed
@@ -416,21 +389,16 @@ public class LauncherWindow extends javax.swing.JFrame {
     private void btn_openCreditsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openCreditsActionPerformed
         System.out.println("Creditos");
         JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
+        creditsWindow.setLocationRelativeTo(null);
+        creditsWindow.setVisible(true);
     }//GEN-LAST:event_btn_openCreditsActionPerformed
-
-    private void btn_openOldServersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openOldServersActionPerformed
-        System.out.println("Servidores viejos");
-        JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btn_openOldServersActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel EventTitle;
-    private javax.swing.JButton btn_WhatsappChannel;
     private javax.swing.JButton btn_checkUpdate;
     private javax.swing.JButton btn_launcherSettings;
     private javax.swing.JButton btn_minecraftSettings;
     private javax.swing.JButton btn_openCredits;
-    private javax.swing.JButton btn_openOldServers;
     private javax.swing.JButton btn_partners;
     private javax.swing.JScrollPane eventDesc;
     private javax.swing.JLabel eventImg;

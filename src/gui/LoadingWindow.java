@@ -126,10 +126,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         // objetos padre del Json
         JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
         JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
-        
-        // Mathias te amo
-        thisWindow.datosDeCarga.setText("Mathias te amo");
-        Thread.sleep(1000); // 1 segundo de delay pq si xdd
+
         
         // Literalmente lo que dice abajo es lo que hace esto xd | VVVV
         thisWindow.datosDeCarga.setText("Instanciando datos de la API");
@@ -231,7 +228,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                 JUNTA_API.getLauncherVersion(),
                 JUNTA_API.getForgeVersion(),
                 settingsJson.getString("username"),
-                settingsJson.getInt("minecraftRam")
+                settingsJson.getInt("minecraftRam"),
+                settingsJson.getString("juntaServerVersion")
         );
         
         // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
@@ -259,7 +257,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         
         // Abrir ya la ventana del launcher
-        thisWindow.datosDeCarga.setText("Terminado :)");
+        thisWindow.datosDeCarga.setText("Abriendo...");
         LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
         LAUNCHER_WINDOW.setLocationRelativeTo(null);
         LAUNCHER_WINDOW.setVisible(true);

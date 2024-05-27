@@ -1,14 +1,15 @@
 package objects;
 
 public class LauncherJunta {
-    private String launcherVersion, minecraftVersion, username;
+    private String launcherVersion, minecraftVersion, username, serverVersion;
     int ram;
 
-    public LauncherJunta(String launcherVersion, String minecraftVersion, String username, int ram) {
+    public LauncherJunta(String launcherVersion, String minecraftVersion, String username, int ram, String serverVersion) {
         this.launcherVersion = launcherVersion;
         this.minecraftVersion = minecraftVersion;
         this.username = username;
         this.ram = ram;
+        this.serverVersion = serverVersion;
     }
 
     public String getLauncherVersion() {
@@ -41,6 +42,14 @@ public class LauncherJunta {
 
     public void setRam(int ram) {
         this.ram = ram;
+    }
+
+    public String getServerVersion() {
+        return serverVersion;
+    }
+
+    public void setServerVersion(String serverVersion) {
+        this.serverVersion = serverVersion;
     }
 
     
