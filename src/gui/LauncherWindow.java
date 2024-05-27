@@ -151,22 +151,23 @@ public class LauncherWindow extends javax.swing.JFrame {
         eventPanel.add(eventImg);
         eventImg.setBounds(5, 105, 368, 165);
 
+        EventTitle.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         EventTitle.setForeground(Color.decode(fontColor1));
         EventTitle.setText(currentEvent.getString("title"));
         eventPanel.add(EventTitle);
-        EventTitle.setBounds(10, 10, 360, 16);
+        EventTitle.setBounds(10, 10, 360, 25);
 
         eventDesc.setForeground(Color.decode(fontColor1));
         eventDesc.setText(currentEvent.getString("desc"));
         eventDesc.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         eventPanel.add(eventDesc);
-        eventDesc.setBounds(9, 33, 360, 65);
+        eventDesc.setBounds(10, 40, 360, 50);
 
         panelMain.add(eventPanel);
         eventPanel.setBounds(10, 345, 380, 280);
 
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/junta_launcher_header.jpg"))); // NOI18N
+        header.setIcon(headerIcon);
         header.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         panelMain.add(header);
         header.setBounds(15, 10, 820, 245);
