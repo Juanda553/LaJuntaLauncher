@@ -7,15 +7,22 @@ import javax.swing.JOptionPane;
 import objects.JuntaApi;
 import objects.LauncherJunta;
 
+import gui.*;
+
 public class LauncherWindow extends javax.swing.JFrame {
     private JuntaApi JUNTA_API;
     private LauncherJunta LAUNCHER_CLASS;
     private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnFontColor, fontColor1, fontColor2;
+    
+    private Partners partnersWindow;
+    private MinecraftSettings mcSettingsWindow;
+    private LauncherSettings launcherSettingsWindow;
 
     public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS) {
         initComponents();
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = this.LAUNCHER_CLASS;
+        this.partnersWindow = new Partners(JUNTA_API.getPartners());
         
         this.bgColor1 = JUNTA_API.getBgColor1();
         this.bgColor2 = JUNTA_API.getGbColor2();
@@ -73,6 +80,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_partners = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         usingRam = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -238,6 +246,8 @@ public class LauncherWindow extends javax.swing.JFrame {
         usingRam.setForeground(new java.awt.Color(255, 255, 255));
         usingRam.setText("ram: ramGB");
 
+        jProgressBar1.setValue(50);
+
         javax.swing.GroupLayout panelRootLayout = new javax.swing.GroupLayout(panelRoot);
         panelRoot.setLayout(panelRootLayout);
         panelRootLayout.setHorizontalGroup(
@@ -253,12 +263,13 @@ public class LauncherWindow extends javax.swing.JFrame {
                     .addComponent(btn_openOldServers, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addComponent(showUserName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_partners, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                    .addComponent(jSeparator2)
+                    .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addComponent(showUserName1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btn_partners, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jSeparator2)
-                    .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -287,7 +298,9 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_partners, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
                         .addComponent(btn_openOldServers, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_WhatsappChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,6 +355,8 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed
         System.out.println("Ver partners");
+        partnersWindow.setLocationRelativeTo(null);
+        partnersWindow.setVisible(true);
     }//GEN-LAST:event_btn_partnersActionPerformed
 
     private void btn_openCreditsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openCreditsActionPerformed
@@ -362,6 +377,7 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel newsPanel;

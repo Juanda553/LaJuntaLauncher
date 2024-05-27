@@ -110,7 +110,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         connection.setRequestMethod("GET");
         connection.connect();
         
-        thisWindow.datosDeCarga.setText("Guardando datos");
+        thisWindow.datosDeCarga.setText("Guardando datos de la nube");
         StringBuilder informationString = new StringBuilder();
             Scanner scanner = new Scanner(API_URL.openStream());
                 
@@ -122,17 +122,17 @@ public class LoadingWindow extends javax.swing.JFrame {
         // poner la api como0 json
         thisWindow.datosDeCarga.setText("Parseando datos a Json");
         JSONObject api = new JSONObject(informationString.toString());
-        //System.out.println(api);
         
-        // haciendo variables del json
+        // objetos padre del Json
         JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
         JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
         
         // Mathias te amo
         thisWindow.datosDeCarga.setText("Mathias te amo");
-        Thread.sleep(1000);
+        Thread.sleep(1000); // 1 segundo de delay pq si xdd
         
-        thisWindow.datosDeCarga.setText("Instanciando datos del servidor");
+        // Literalmente lo que dice abajo es lo que hace esto xd | VVVV
+        thisWindow.datosDeCarga.setText("Instanciando datos de la API");
         JuntaApi JUNTA_API = new JuntaApi(
                 api.getString("juntaName"),
                 api.getString("juntaVersion"),
@@ -160,42 +160,39 @@ public class LoadingWindow extends javax.swing.JFrame {
                 apiLauncherProperties.getJSONArray("splashes")
             );
         
+        // Imprime en consola toda desa vaina
         System.out.println(JUNTA_API.getDetails());
         
         thisWindow.datosDeCarga.setText("Abriendo settings.json");
+        // Intentar leer los datos del settings json, en caso de existir los imprime, pero si no pues tira error y crea desde cero esa carpeta junto al settings.json
         try {
-            //FileInputStream archivoEntrada = new FileInputStream(thisWindow.juntaLauncherDir+"/settings.json");
-            //InputStreamReader lector = new InputStreamReader(archivoEntrada, "UTF-8");
-            //BufferedReader bufferedReader = new BufferedReader(lector);
-            //String linea;
-            //while ((linea = bufferedReader.readLine()) != null) {
-            //    System.out.println(linea);
-            //}
-            //bufferedReader.close();
-            
+            //abrir archivo
             String path = thisWindow.juntaLauncherDir+"/settings.json";
             String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
             JSONObject settingsJson = new JSONObject(settingsContent);
             
+            //imprimir
             System.out.println(settingsJson.getString("juntaServerVersion"));
             System.out.println(settingsJson.getString("launcherVersion"));
             System.out.println(settingsJson.getString("username"));
-            System.out.println(settingsJson.getInt("minecraftRam"));
+            System.out.println(settingsJson.getInt("minecraftRam") + "GB");
             
         } catch (Exception e) {
             thisWindow.datosDeCarga.setText("No se encontró el directorio");
             thisWindow.datosDeCarga.setText("Creando nuevo directorio jeje");
+            // crear el directorio diomedes
             File carpeta = new File(thisWindow.diomedesDir);
             carpeta.mkdirs();
             
+            // Agregando los datos necesarios actuales para el launcher de forma local
             JSONObject localSettings = new JSONObject();
             localSettings.put("juntaServerVersion", JUNTA_API.getServerVersion());
             localSettings.put("launcherVersion", JUNTA_API.getLauncherVersion());
             localSettings.put("username", "");
             localSettings.put("minecraftRam", 0);
             
+            // pasandoe ese objeto a un archivo settings.json y guardando
             String jsonParla = localSettings.toString(4);
-            
             try (FileWriter file = new FileWriter(thisWindow.juntaLauncherDir + "/settings.json")) {
                 file.write(jsonParla);
                 file.flush();
@@ -204,10 +201,14 @@ public class LoadingWindow extends javax.swing.JFrame {
             }
         }
         
+        // ahora si abriendo esos datos para utilizar
         String path = thisWindow.juntaLauncherDir+"/settings.json";
         String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
         JSONObject settingsJson = new JSONObject(settingsContent);
         
+        // comprobar si es primera vez que abre el launcher, lo hace de forma que si username es vacio pida el username, y si ram es 0 que pida la ram pal juego
+        // Por ahora se hará con joptionpane XD
+        // de paso los guarda en el objeto json
         if(settingsJson.getString("username").equals("")){
             System.out.println("no tiene user");
             String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario:", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
@@ -221,8 +222,10 @@ public class LoadingWindow extends javax.swing.JFrame {
             settingsJson.put("minecraftRam", ram);
         }
         
+        // guarda el archivo settings.json para que no se pierda esos datos
         Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
         
+        //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
         thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
         LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
                 JUNTA_API.getLauncherVersion(),
@@ -231,9 +234,32 @@ public class LoadingWindow extends javax.swing.JFrame {
                 settingsJson.getInt("minecraftRam")
         );
         
+        // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Abrir ya la ventana del launcher
         thisWindow.datosDeCarga.setText("Terminado :)");
-        
-        
         LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
         LAUNCHER_WINDOW.setLocationRelativeTo(null);
         LAUNCHER_WINDOW.setVisible(true);
