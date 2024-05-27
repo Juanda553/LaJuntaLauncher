@@ -40,7 +40,13 @@ public class Partners extends javax.swing.JFrame {
         partnersList = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Partners");
+        setBackground(new java.awt.Color(0, 0, 0));
 
+        jScrollPane1.setBackground(new java.awt.Color(51, 51, 51));
+
+        partnersList.setBackground(new java.awt.Color(102, 102, 102));
+        partnersList.setForeground(new java.awt.Color(255, 255, 255));
         partnersList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -49,23 +55,18 @@ public class Partners extends javax.swing.JFrame {
 
             }
         ));
+        partnersList.setGridColor(new java.awt.Color(51, 51, 51));
         jScrollPane1.setViewportView(partnersList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

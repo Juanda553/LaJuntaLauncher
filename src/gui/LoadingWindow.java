@@ -102,7 +102,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
+        URL API_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
         
         // chupar la api
         thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");

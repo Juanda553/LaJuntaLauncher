@@ -7,7 +7,7 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="LaJuntaLauncher" default="default" basedir=".">
+<project name="LaJuntaLauncher" default="dist" basedir=".">
     <description>Builds, tests, and runs the project LaJuntaLauncher.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
@@ -70,4 +70,55 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <!-- Set global properties for this build -->
+    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+    <property name="dist.dir" location="dist"/>
+    <property name="lib.dir" location="lib"/>
+
+    <!-- Init target -->
+    <target name="init">
+        <!-- Create build and dist directories if they don't exist -->
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compile target -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Create JAR target -->
+    <target name="dist" depends="compile">
+        <mkdir dir="${build.dir}/lib"/>
+
+        <!-- Copy dependencies -->
+        <copy todir="${build.dir}/lib">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </copy>
+
+        <!-- Create the final JAR -->
+        <jar destfile="${dist.dir}/LaJuntaLauncherAlpha.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="gui.LoadingWindow"/>
+            </manifest>
+            <zipfileset dir="${build.dir}/lib" includes="**/*.jar" prefix="lib/"/>
+        </jar>
+    </target>
+
+    <!-- Clean target -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+    
 </project>
