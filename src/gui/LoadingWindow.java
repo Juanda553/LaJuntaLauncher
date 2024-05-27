@@ -216,7 +216,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             settingsJson.put("username", username);
             
         } if (settingsJson.getInt("minecraftRam") <= 0) {
-            String ramString = JOptionPane.showInputDialog(null, "Ingresa la cantidad de ram que quieres asignar al juego \n(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
+            String ramString = JOptionPane.showInputDialog(null, "Ingresa la cantidad de ram que quieres asignar al juego \n(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)\n(Recuerda que esta es la ram que usarás en el juego, no pongas la ram de tu pc XD)", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
             int ram = Integer.parseInt(ramString);
             
             settingsJson.put("minecraftRam", ram);

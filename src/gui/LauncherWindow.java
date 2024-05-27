@@ -15,8 +15,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ScrollBarUI;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.json.JSONObject;
 
 public class LauncherWindow extends javax.swing.JFrame {
@@ -56,7 +63,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         
         URL eventImgUrl = new URL(currentEvent.getString("img"));
         this.eventIcon = new ImageIcon(eventImgUrl);
-        
+         
         URL btnPlayFontUrl = new URL(btnPlayFontString);
         this.btnPlayFontIcon = new ImageIcon(btnPlayFontUrl);
         
@@ -79,10 +86,11 @@ public class LauncherWindow extends javax.swing.JFrame {
         panelMain = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
         newsPanel = new javax.swing.JPanel();
-        eventPanel = new javax.swing.JPanel();
-        eventImg = new javax.swing.JLabel();
         EventTitle = new javax.swing.JLabel();
-        eventDesc = new javax.swing.JLabel();
+        eventDesc = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        eventImg = new javax.swing.JLabel();
+        eventPanel = new javax.swing.JPanel();
         header = new javax.swing.JLabel();
         btn_checkUpdate = new javax.swing.JButton();
         btn_launcherSettings = new javax.swing.JButton();
@@ -124,47 +132,48 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
         panelMain.add(playButton);
-        playButton.setBounds(110, 265, 180, 65);
+        playButton.setBounds(140, 265, 180, 65);
 
         newsPanel.setBackground(new java.awt.Color(51, 51, 51));
-
-        javax.swing.GroupLayout newsPanelLayout = new javax.swing.GroupLayout(newsPanel);
-        newsPanel.setLayout(newsPanelLayout);
-        newsPanelLayout.setHorizontalGroup(
-            newsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
-        );
-        newsPanelLayout.setVerticalGroup(
-            newsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 355, Short.MAX_VALUE)
-        );
-
-        panelMain.add(newsPanel);
-        newsPanel.setBounds(405, 270, 435, 355);
-
-        eventPanel.setBackground(new java.awt.Color(51, 51, 51));
-        eventPanel.setLayout(null);
-
-        eventImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        eventImg.setIcon(eventIcon);
-        eventImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        eventPanel.add(eventImg);
-        eventImg.setBounds(5, 105, 368, 165);
+        newsPanel.setLayout(null);
 
         EventTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         EventTitle.setForeground(Color.decode(fontColor1));
         EventTitle.setText(currentEvent.getString("title"));
-        eventPanel.add(EventTitle);
+        newsPanel.add(EventTitle);
         EventTitle.setBounds(10, 10, 360, 25);
 
-        eventDesc.setForeground(Color.decode(fontColor1));
-        eventDesc.setText(currentEvent.getString("desc"));
-        eventDesc.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        eventPanel.add(eventDesc);
-        eventDesc.setBounds(10, 40, 360, 50);
+        eventDesc.setBackground(Color.decode(bgColor1));
+        eventDesc.setBorder(null);
+        eventDesc.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setBackground(Color.decode(bgColor1));
+        jTextArea1.setColumns(20);
+        jTextArea1.setForeground(Color.decode(fontColor1));
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText(currentEvent.getString("desc") + "\n\n" + currentEvent.getString("date"));
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setDisabledTextColor(Color.decode(fontColor1));
+        eventDesc.setViewportView(jTextArea1);
+
+        newsPanel.add(eventDesc);
+        eventDesc.setBounds(10, 45, 360, 135);
+
+        eventImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        eventImg.setIcon(eventIcon);
+        eventImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        newsPanel.add(eventImg);
+        eventImg.setBounds(5, 185, 368, 165);
+
+        panelMain.add(newsPanel);
+        newsPanel.setBounds(455, 270, 380, 355);
+
+        eventPanel.setBackground(new java.awt.Color(51, 51, 51));
+        eventPanel.setLayout(null);
         panelMain.add(eventPanel);
-        eventPanel.setBounds(10, 345, 380, 280);
+        eventPanel.setBounds(15, 345, 430, 280);
 
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header.setIcon(headerIcon);
@@ -423,7 +432,7 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JButton btn_openCredits;
     private javax.swing.JButton btn_openOldServers;
     private javax.swing.JButton btn_partners;
-    private javax.swing.JLabel eventDesc;
+    private javax.swing.JScrollPane eventDesc;
     private javax.swing.JLabel eventImg;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JLabel header;
@@ -432,6 +441,7 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel newsPanel;
     private javax.swing.JPanel panelMain;
     private javax.swing.JPanel panelRoot;
