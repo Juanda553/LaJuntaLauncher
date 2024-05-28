@@ -134,6 +134,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 api.getString("juntaName"),
                 api.getString("juntaVersion"),
                 api.getString("forgeVersion"),
+                api.getString("indexVersion"),
                 api.getString("icon"),
                 api.getString("modpackFirstInstall"),
                 api.getString("modPackUpdate"),
@@ -229,10 +230,11 @@ public class LoadingWindow extends javax.swing.JFrame {
         LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
                 JUNTA_API.getLauncherVersion(),
                 JUNTA_API.getForgeVersion(),
+                JUNTA_API.getIndexVersion(),
                 settingsJson.getString("username"),
                 settingsJson.getInt("minecraftRam"),
                 settingsJson.getString("juntaServerVersion"),
-                thisWindow.diomedesDir
+                settingsJson.getString("diomedesDir")
         );
         
         // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva

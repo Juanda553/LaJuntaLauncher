@@ -1,16 +1,25 @@
 package objects;
 
 public class LauncherJunta {
-    private String launcherVersion, minecraftVersion, username, serverVersion, diomedesDir;
+    private String launcherVersion, minecraftVersion, indexVersion, username, serverVersion, diomedesDir;
     int ram;
 
-    public LauncherJunta(String launcherVersion, String minecraftVersion, String username, int ram, String serverVersion, String diomedesDir) {
+    public LauncherJunta(String launcherVersion, String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String diomedesDir) {
         this.launcherVersion = launcherVersion;
         this.minecraftVersion = minecraftVersion;
+        this.indexVersion = indexVersion;
         this.username = username;
         this.ram = ram;
         this.serverVersion = serverVersion;
         this.diomedesDir = diomedesDir;
+    }
+
+    public String getIndexVersion() {
+        return indexVersion;
+    }
+
+    public void setIndexVersion(String indexVersion) {
+        this.indexVersion = indexVersion;
     }
 
     public String getDiomedesDir() {

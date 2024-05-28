@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JuntaApi {
-    private String name, serverVersion, forgeVersion, serverIcon, modpackInitial, modpackUpdate;
+    private String name, serverVersion, forgeVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -14,10 +14,11 @@ public class JuntaApi {
     private JSONObject event;
     private JSONArray news, partners, splashes;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
+        this.indexVersion = indexVersion;
         this.serverIcon = serverIcon;
         this.modpackInitial = modpackInitial;
         this.modpackUpdate = modpackUpdate;
@@ -63,6 +64,14 @@ public class JuntaApi {
         return result.toString();
     }
 
+    public String getIndexVersion() {
+        return indexVersion;
+    }
+
+    public void setIndexVersion(String indexVersion) {
+        this.indexVersion = indexVersion;
+    }
+    
     public String getName() {
         return name;
     }
