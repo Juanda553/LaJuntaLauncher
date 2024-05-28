@@ -173,6 +173,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             System.out.println(settingsJson.getString("launcherVersion"));
             System.out.println(settingsJson.getString("username"));
             System.out.println(settingsJson.getInt("minecraftRam") + "GB");
+            System.out.println(settingsJson.getString("diomedesDir"));
             
         } catch (Exception e) {
             thisWindow.datosDeCarga.setText("No se encontró el directorio");
@@ -187,6 +188,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             localSettings.put("launcherVersion", JUNTA_API.getLauncherVersion());
             localSettings.put("username", "");
             localSettings.put("minecraftRam", 0);
+            localSettings.put("diomedesDir", thisWindow.diomedesDir);
             
             // pasandoe ese objeto a un archivo settings.json y guardando
             String jsonParla = localSettings.toString(4);
@@ -229,7 +231,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                 JUNTA_API.getForgeVersion(),
                 settingsJson.getString("username"),
                 settingsJson.getInt("minecraftRam"),
-                settingsJson.getString("juntaServerVersion")
+                settingsJson.getString("juntaServerVersion"),
+                thisWindow.diomedesDir
         );
         
         // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
