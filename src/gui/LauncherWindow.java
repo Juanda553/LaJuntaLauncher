@@ -405,9 +405,12 @@ public class LauncherWindow extends javax.swing.JFrame {
                 processBuilder.directory(new File(dotDiomedes));
                 processBuilder.inheritIO();
                 Process process = processBuilder.start();
+                Thread.sleep(2500);
+                dispose();
                 
                 process.waitFor();
                 System.out.println("Exitcode: " + process.exitValue());
+                setVisible(true);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
