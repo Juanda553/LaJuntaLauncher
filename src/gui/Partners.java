@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * @author juanz
  */
 public class Partners extends javax.swing.JFrame {
-    public Partners(JSONArray jsonArray) {
+    public Partners(JSONArray jsonArray, int  totalMoney) {
         initComponents();
         
         DefaultTableModel model = new DefaultTableModel();
@@ -30,6 +30,19 @@ public class Partners extends javax.swing.JFrame {
             model.addRow(cachones);
             partnersList.setModel(model);
         }
+        String[] totalPaid = new String[2];
+        
+        totalPaid[0] = "";
+        totalPaid[1] = "";
+            
+        model.addRow(totalPaid);
+        
+        totalPaid[0] = "Total";
+        totalPaid[1] = String.valueOf(totalMoney);
+            
+        model.addRow(totalPaid);
+        partnersList.setModel(model);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -46,6 +59,7 @@ public class Partners extends javax.swing.JFrame {
         jScrollPane1.setBackground(new java.awt.Color(51, 51, 51));
 
         partnersList.setBackground(new java.awt.Color(102, 102, 102));
+        partnersList.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         partnersList.setForeground(new java.awt.Color(255, 255, 255));
         partnersList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -56,17 +70,18 @@ public class Partners extends javax.swing.JFrame {
             }
         ));
         partnersList.setGridColor(new java.awt.Color(51, 51, 51));
+        partnersList.setRowHeight(32);
         jScrollPane1.setViewportView(partnersList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();

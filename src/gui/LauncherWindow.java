@@ -51,7 +51,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
         
-        this.partnersWindow = new Partners(JUNTA_API.getPartners());
+        this.partnersWindow = new Partners(JUNTA_API.getPartners(), this.JUNTA_API.getMoneyCollected());
         this.mcSettingsWindow = new MinecraftSettings();
         this.launcherSettingsWindow = new LauncherSettings();
         this.creditsWindow = new Credits();
