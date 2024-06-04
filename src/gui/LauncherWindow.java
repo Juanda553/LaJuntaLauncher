@@ -90,9 +90,6 @@ public class LauncherWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
         panelRoot = new javax.swing.JPanel();
         panelMain = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
@@ -103,23 +100,13 @@ public class LauncherWindow extends javax.swing.JFrame {
         eventImg = new javax.swing.JLabel();
         eventPanel = new javax.swing.JPanel();
         header = new javax.swing.JLabel();
-        btn_checkUpdate = new javax.swing.JButton();
-        btn_launcherSettings = new javax.swing.JButton();
-        btn_minecraftSettings = new javax.swing.JButton();
-        btn_openCredits = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         showUserName1 = new javax.swing.JLabel();
         showUserName = new javax.swing.JLabel();
         btn_partners = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
         usingRam = new javax.swing.JLabel();
         userHead = new javax.swing.JLabel();
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        LauncherVersionLabelJIJIJIJIJI = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Laucnher");
@@ -190,57 +177,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         panelMain.add(header);
         header.setBounds(15, 10, 820, 245);
 
-        btn_checkUpdate.setBackground(Color.decode(btnColor1));
-        btn_checkUpdate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_checkUpdate.setForeground(Color.decode(fontColor2));
-        btn_checkUpdate.setText("Actualizar modpack");
-        btn_checkUpdate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_checkUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_checkUpdate.setFocusPainted(false);
-        btn_checkUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_checkUpdateActionPerformed(evt);
-            }
-        });
-
-        btn_launcherSettings.setBackground(Color.decode(btnColor1));
-        btn_launcherSettings.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_launcherSettings.setForeground(Color.decode(fontColor2));
-        btn_launcherSettings.setText("Ajustes Launcher");
-        btn_launcherSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_launcherSettings.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_launcherSettings.setFocusPainted(false);
-        btn_launcherSettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_launcherSettingsActionPerformed(evt);
-            }
-        });
-
-        btn_minecraftSettings.setBackground(Color.decode(btnColor1));
-        btn_minecraftSettings.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_minecraftSettings.setForeground(Color.decode(fontColor2));
-        btn_minecraftSettings.setText("Ajustes Minecraft");
-        btn_minecraftSettings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_minecraftSettings.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_minecraftSettings.setFocusPainted(false);
-        btn_minecraftSettings.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_minecraftSettingsActionPerformed(evt);
-            }
-        });
-
-        btn_openCredits.setBackground(Color.decode(btnColor1));
-        btn_openCredits.setForeground(Color.decode(fontColor2));
-        btn_openCredits.setText("Creditos");
-        btn_openCredits.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_openCredits.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_openCredits.setFocusPainted(false);
-        btn_openCredits.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_openCreditsActionPerformed(evt);
-            }
-        });
-
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
 
@@ -265,13 +201,14 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
-        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
-
         usingRam.setForeground(Color.decode(fontColor1));
         usingRam.setText("Usando " + LAUNCHER_CLASS.getRam() + "GB de RAM");
 
         userHead.setIcon(userHeadIcon);
+
+        LauncherVersionLabelJIJIJIJIJI.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        LauncherVersionLabelJIJIJIJIJI.setForeground(Color.decode(fontColor2));
+        LauncherVersionLabelJIJIJIJIJI.setText("Version: " + LAUNCHER_CLASS.getLauncherVersion());
 
         javax.swing.GroupLayout panelRootLayout = new javax.swing.GroupLayout(panelRoot);
         panelRoot.setLayout(panelRootLayout);
@@ -280,20 +217,18 @@ public class LauncherWindow extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRootLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_checkUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_launcherSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(btn_minecraftSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(btn_openCredits, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addComponent(btn_partners, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(jSeparator2)
                     .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(showUserName1)
                             .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRootLayout.createSequentialGroup()
+                        .addComponent(LauncherVersionLabelJIJIJIJIJI)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -302,30 +237,22 @@ public class LauncherWindow extends javax.swing.JFrame {
             panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRootLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelRootLayout.createSequentialGroup()
                                 .addComponent(showUserName1)
                                 .addGap(4, 4, 4)
-                                .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE))
                             .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_checkUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_launcherSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_minecraftSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
                         .addComponent(btn_partners, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_openCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(502, 502, 502)
+                        .addComponent(LauncherVersionLabelJIJIJIJIJI))
                     .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -419,54 +346,21 @@ public class LauncherWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_playButtonActionPerformed
 
-    private void btn_checkUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkUpdateActionPerformed
-        System.out.println("Actualizar modpack");
-        JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btn_checkUpdateActionPerformed
-
-    private void btn_launcherSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_launcherSettingsActionPerformed
-        System.out.println("Ajustes del launcherm");
-        JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
-        launcherSettingsWindow.setLocationRelativeTo(null);
-        launcherSettingsWindow.setVisible(true);
-    }//GEN-LAST:event_btn_launcherSettingsActionPerformed
-
-    private void btn_minecraftSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_minecraftSettingsActionPerformed
-        System.out.println("Ajustes del juegom");
-        JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
-        mcSettingsWindow.setLocationRelativeTo(null);
-        mcSettingsWindow.setVisible(true);
-    }//GEN-LAST:event_btn_minecraftSettingsActionPerformed
-
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed
         System.out.println("Ver partners");
         partnersWindow.setLocationRelativeTo(null);
         partnersWindow.setVisible(true);
     }//GEN-LAST:event_btn_partnersActionPerformed
 
-    private void btn_openCreditsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_openCreditsActionPerformed
-        System.out.println("Creditos");
-        JOptionPane.showMessageDialog(null, "Esta función aún sigue en desarrollo.", "Mensaje de Diomedes", JOptionPane.INFORMATION_MESSAGE);
-        creditsWindow.setLocationRelativeTo(null);
-        creditsWindow.setVisible(true);
-    }//GEN-LAST:event_btn_openCreditsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel EventTitle;
-    private javax.swing.JButton btn_checkUpdate;
-    private javax.swing.JButton btn_launcherSettings;
-    private javax.swing.JButton btn_minecraftSettings;
-    private javax.swing.JButton btn_openCredits;
+    private javax.swing.JLabel LauncherVersionLabelJIJIJIJIJI;
     private javax.swing.JButton btn_partners;
     private javax.swing.JScrollPane eventDesc;
     private javax.swing.JLabel eventImg;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JLabel header;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel newsPanel;
     private javax.swing.JPanel panelMain;

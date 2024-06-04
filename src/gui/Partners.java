@@ -30,18 +30,6 @@ public class Partners extends javax.swing.JFrame {
             model.addRow(cachones);
             partnersList.setModel(model);
         }
-        String[] totalPaid = new String[2];
-        
-        totalPaid[0] = "";
-        totalPaid[1] = "";
-            
-        model.addRow(totalPaid);
-        
-        totalPaid[0] = "Total";
-        totalPaid[1] = String.valueOf(totalMoney);
-            
-        model.addRow(totalPaid);
-        partnersList.setModel(model);
         
     }
 
