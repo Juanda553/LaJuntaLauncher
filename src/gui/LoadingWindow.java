@@ -43,6 +43,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         datosDeCarga = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
@@ -61,15 +62,21 @@ public class LoadingWindow extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/junta_full_logo_resizedlow.png"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
+        jProgressBar1.setBackground(new java.awt.Color(102, 102, 102));
+        jProgressBar1.setForeground(new java.awt.Color(255, 255, 255));
+        jProgressBar1.setValue(32);
+        jProgressBar1.setBorder(null);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-                    .addComponent(datosDeCarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                    .addComponent(datosDeCarga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -79,7 +86,9 @@ public class LoadingWindow extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(datosDeCarga)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -103,12 +112,14 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setLocationRelativeTo(null);
         
         URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
+        thisWindow.jProgressBar1.setValue(1);
         
         // chupar la api
         thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");
         HttpURLConnection connection = (HttpURLConnection) API_URL.openConnection();
         connection.setRequestMethod("GET");
         connection.connect();
+        thisWindow.jProgressBar1.setValue(10);
         
         thisWindow.datosDeCarga.setText("Guardando datos de la nube");
         StringBuilder informationString = new StringBuilder();
@@ -118,6 +129,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 informationString.append(scanner.nextLine());
         }
         scanner.close();
+        thisWindow.jProgressBar1.setValue(20);
         
         // poner la api como0 json
         thisWindow.datosDeCarga.setText("Parseando datos a Json");
@@ -126,6 +138,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         // objetos padre del Json
         JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
         JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
+        thisWindow.jProgressBar1.setValue(25);
 
         
         // Literalmente lo que dice abajo es lo que hace esto xd | VVVV
@@ -160,6 +173,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         // Imprime en consola toda desa vaina
         System.out.println(JUNTA_API.getDetails());
+        thisWindow.jProgressBar1.setValue(30);
         
         thisWindow.datosDeCarga.setText("Abriendo settings.json");
         // Intentar leer los datos del settings json, en caso de existir los imprime, pero si no pues tira error y crea desde cero esa carpeta junto al settings.json
@@ -175,6 +189,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             System.out.println(settingsJson.getString("username"));
             System.out.println(settingsJson.getInt("minecraftRam") + "GB");
             System.out.println(settingsJson.getString("diomedesDir"));
+            thisWindow.jProgressBar1.setValue(32);
             
         } catch (Exception e) {
             thisWindow.datosDeCarga.setText("No se encontró el directorio");
@@ -200,11 +215,13 @@ public class LoadingWindow extends javax.swing.JFrame {
                 System.out.println("no " + ex);
             }
         }
+        thisWindow.jProgressBar1.setValue(40);
         
         // ahora si abriendo esos datos para utilizar
         String path = thisWindow.juntaLauncherDir+"/settings.json";
         String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
         JSONObject settingsJson = new JSONObject(settingsContent);
+        thisWindow.jProgressBar1.setValue(50);
         
         // comprobar si es primera vez que abre el launcher, lo hace de forma que si username es vacio pida el username, y si ram es 0 que pida la ram pal juego
         // Por ahora se hará con joptionpane XD
@@ -221,6 +238,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             
             settingsJson.put("minecraftRam", ram);
         }
+        thisWindow.jProgressBar1.setValue(55);
         
         // guarda el archivo settings.json para que no se pierda esos datos
         Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
@@ -236,6 +254,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 settingsJson.getString("juntaServerVersion"),
                 settingsJson.getString("diomedesDir")
         );
+        thisWindow.jProgressBar1.setValue(64);
         
         // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
         
@@ -263,6 +282,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         // Abrir ya la ventana del launcher
         thisWindow.datosDeCarga.setText("Abriendo...");
+        thisWindow.jProgressBar1.setValue(100);
         LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
         LAUNCHER_WINDOW.setLocationRelativeTo(null);
         LAUNCHER_WINDOW.setVisible(true);
@@ -273,5 +293,6 @@ public class LoadingWindow extends javax.swing.JFrame {
     private javax.swing.JLabel datosDeCarga;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
     // End of variables declaration//GEN-END:variables
 }
