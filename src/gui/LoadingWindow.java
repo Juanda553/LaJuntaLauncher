@@ -111,7 +111,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
+        URL API_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
         thisWindow.jProgressBar1.setValue(1);
         
         // chupar la api
@@ -228,12 +228,12 @@ public class LoadingWindow extends javax.swing.JFrame {
         // de paso los guarda en el objeto json
         if(settingsJson.getString("username").equals("")){
             System.out.println("no tiene user");
-            String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario:", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
+            String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
             
             settingsJson.put("username", username);
             
         } if (settingsJson.getInt("minecraftRam") <= 0) {
-            String ramString = JOptionPane.showInputDialog(null, "Ingresa la cantidad de ram que quieres asignar al juego \n(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)\n(Recuerda que esta es la ram que usarás en el juego, no pongas la ram de tu pc XD)", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
+            String ramString = JOptionPane.showInputDialog(null, "<html><center>Ingresa la cantidad de ram que quieres asignar al juego.<br>(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)<br>(Recuerda que esta es la ram que usarás en el juego, no pongas la ram de tu pc XD)</center></html>", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
             int ram = Integer.parseInt(ramString);
             
             settingsJson.put("minecraftRam", ram);
@@ -246,7 +246,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
         thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
         LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
-                JUNTA_API.getLauncherVersion(),
+                settingsJson.getString("launcherVersion"),
                 JUNTA_API.getForgeVersion(),
                 JUNTA_API.getIndexVersion(),
                 settingsJson.getString("username"),
@@ -280,13 +280,19 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         
         
-        // Abrir ya la ventana del launcher
-        thisWindow.datosDeCarga.setText("Abriendo...");
-        thisWindow.jProgressBar1.setValue(100);
-        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
-        LAUNCHER_WINDOW.setLocationRelativeTo(null);
-        LAUNCHER_WINDOW.setVisible(true);
-        thisWindow.setVisible(false);
+        if (LAUNCHER_CLASS.getLauncherVersion().equals(JUNTA_API.getLauncherVersion())) {
+            // Abrir ya la ventana del launcher
+            thisWindow.datosDeCarga.setText("Abriendo...");
+            thisWindow.jProgressBar1.setValue(100);
+            LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
+            LAUNCHER_WINDOW.setLocationRelativeTo(null);
+            LAUNCHER_WINDOW.setVisible(true);
+            thisWindow.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor revisa el Canal de Discord para descargar la ultima versión. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
+            thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
+            thisWindow.jProgressBar1.setValue(0);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
