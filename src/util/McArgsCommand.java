@@ -48,7 +48,7 @@ public class McArgsCommand {
             String pipi;
             
             try {
-                if (yeisonVanilla.getJSONArray("libraries").getJSONObject(i).getJSONArray("rules").length() == 1) {
+                if (yeisonVanilla.getJSONArray("libraries").getJSONObject(i).getJSONArray("rules").length() == 2) {
                     System.out.println("Saltau");
                     continue;
             }

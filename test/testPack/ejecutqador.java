@@ -5,7 +5,7 @@ import testPack.*;
 
 public class ejecutqador {
     public static void main(String[] args) throws IOException {
-        McArgsCommand mcArgsCommand = new McArgsCommand("C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.jnt-copia");
+        McArgsCommand mcArgsCommand = new McArgsCommand("C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.jnt-copia", "", "");
         System.out.println(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
         
         //System.out.println(ola.getMainClassMC());

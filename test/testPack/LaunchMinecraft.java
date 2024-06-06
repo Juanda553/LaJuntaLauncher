@@ -19,7 +19,7 @@ public class LaunchMinecraft {
         String ram = "16";
         String ramFinal = "-Xmx" + ram + "G";
         
-        McArgsCommand mcArgsCommand = new McArgsCommand("C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.jnt-copia");
+        McArgsCommand mcArgsCommand = new McArgsCommand("C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.jnt-copia", "", "");
         replacePalceholder pene = new replacePalceholder(dotDiomedes, mcVersion);
 
         List<String> command = new ArrayList<>();
