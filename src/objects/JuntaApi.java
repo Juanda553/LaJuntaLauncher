@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JuntaApi {
-    private String name, serverVersion, forgeVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate;
+    private String name, serverVersion, forgeVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -14,10 +14,11 @@ public class JuntaApi {
     private JSONObject event;
     private JSONArray news, partners, splashes;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
+        this.vanillaVersion = vanillaVersion;
         this.indexVersion = indexVersion;
         this.serverIcon = serverIcon;
         this.modpackInitial = modpackInitial;
@@ -39,7 +40,15 @@ public class JuntaApi {
         this.partners = partners;
         this.splashes = splashes;
     }
-    
+
+    public String getVanillaVersion() {
+        return vanillaVersion;
+    }
+
+    public void setVanillaVersion(String vanillaVersion) {
+        this.vanillaVersion = vanillaVersion;
+    }
+
     public String getDetails() {
         StringBuilder result = new StringBuilder();
         result.append("name: ").append(this.name).append("\n");

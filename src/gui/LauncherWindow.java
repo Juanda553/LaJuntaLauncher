@@ -282,7 +282,7 @@ public class LauncherWindow extends javax.swing.JFrame {
             String ram = String.valueOf(LAUNCHER_CLASS.getRam());
             String ramFinal = "-Xmx" + ram + "G";
             
-            McArgsCommand mcArgsCommand = new McArgsCommand(dotDiomedes);
+            McArgsCommand mcArgsCommand = new McArgsCommand(dotDiomedes, JUNTA_API.getVanillaVersion(), JUNTA_API.getForgeVersion());
             replacePalceholder pene = new replacePalceholder(dotDiomedes, mcVersion);
             
             List<String> command = new ArrayList<>();
@@ -293,6 +293,7 @@ public class LauncherWindow extends javax.swing.JFrame {
             command.add("-Djava.library.path=" + dotDiomedes + "/versions/" + mcVersion + "/natives");
             command.add("-cp");
             command.add(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
+            //System.out.println(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
             
             command.addAll(pene.getPlacedHoldediiiii(mcArgsCommand.getJvmArgs()));
             
@@ -342,6 +343,7 @@ public class LauncherWindow extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         } catch (Exception ex) {
+            System.out.println("error ejecutar");
             System.out.println(ex);
         }
     }//GEN-LAST:event_playButtonActionPerformed

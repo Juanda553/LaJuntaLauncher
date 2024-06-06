@@ -1,4 +1,4 @@
-package util;
+package testPack;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,6 +6,8 @@ import java.util.List;
 import org.json.JSONArray;
 
 import util.*;
+import util.McArgsCommand;
+import util.replacePalceholder;
 
 public class LaunchMinecraft {
     public static void main(String[] args) throws IOException {

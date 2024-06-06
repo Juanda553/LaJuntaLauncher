@@ -147,6 +147,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 api.getString("juntaName"),
                 api.getString("juntaVersion"),
                 api.getString("forgeVersion"),
+                api.getString("vanillaVersion"),
                 api.getString("indexVersion"),
                 api.getString("icon"),
                 api.getString("modpackFirstInstall"),

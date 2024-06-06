@@ -9,17 +9,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class McArgsCommand {
-    String mineDir, miyeisonString, yeisonFile, miyeisonStringVanilla, yeisonFileVanilla;
+    String mineDir, miyeisonString, yeisonFile, miyeisonStringVanilla, yeisonFileVanilla, versionForge, mcVersion;
     JSONObject yeison, argsssss, yeisonVanilla;
 
-    public McArgsCommand(String mineDir) throws IOException {
+    public McArgsCommand(String mineDir, String mcVersion, String versionForge) throws IOException {
         this.mineDir = mineDir;
+        this.mcVersion = mcVersion;
+        this.versionForge = versionForge;
         
-        miyeisonString = mineDir + "/versions/1.18.2-forge-40.2.21/1.18.2-forge-40.2.21.json";
+        miyeisonString = mineDir + "/versions/"+ versionForge +"/"+versionForge+".json";
         yeisonFile = new String(Files.readAllBytes(Paths.get(miyeisonString)));
         this.yeison = new JSONObject(yeisonFile);
         
-        miyeisonStringVanilla = mineDir + "/versions/1.18.2/1.18.2.json";
+        miyeisonStringVanilla = mineDir + "/versions/"+ mcVersion +"/"+ mcVersion +".json";
         yeisonFileVanilla = new String(Files.readAllBytes(Paths.get(miyeisonStringVanilla)));
         this.yeisonVanilla = new JSONObject(yeisonFileVanilla);
         
@@ -47,17 +49,18 @@ public class McArgsCommand {
             
             try {
                 if (yeisonVanilla.getJSONArray("libraries").getJSONObject(i).getJSONArray("rules").length() == 1) {
-                continue;
+                    System.out.println("Saltau");
+                    continue;
             }
             } catch (Exception e) {
             }
             
             try {
                 libsJAJA = yeisonVanilla.getJSONArray("libraries").getJSONObject(i).getJSONObject("downloads").getJSONObject("classifiers").getJSONObject("natives-windows").getString("path");
-                System.out.println("pene");
+                System.out.println("A | " + libsJAJA);
             } catch (Exception e) {
                 libsJAJA = yeisonVanilla.getJSONArray("libraries").getJSONObject(i).getJSONObject("downloads").getJSONObject("artifact").getString("path");
-                System.out.println("vagina");
+                System.out.println("B | " + libsJAJA);
             }
             
             clp.add(mineDir + "/libraries/" +libsJAJA);
