@@ -72,7 +72,6 @@ public class LaunchMinecraft {
                 processBuilder.directory(new File(dotDiomedes));
                 processBuilder.inheritIO();
                 Process process = processBuilder.start();
-                Thread.sleep(2500);
                 ventana.dispose();
                 
                 process.waitFor();
