@@ -298,17 +298,22 @@ public class Credits extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String adminPassword = JOptionPane.showInputDialog(null);
         dispose();
-        if (adminPassword.equals("D10m3d35M1P4tr0n!...")){
-            String pene = JOptionPane.showInputDialog(null);
-            if (pene.equals("juan")){
+        String pipi = LAUNCHER_CLASS.getUsername();
+        
+        switch (pipi) {
+            case "JuanDa553":
                 System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_1"));
-            } else if (pene.equals("angelo")){
+                break;
+            case "Lentinoo":
                 System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_2"));
-            } else if (pene.equals("javi")){
+                break;
+            case "lFaker":
                 System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_3"));
-            }
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Tu no eres admin pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
+                break;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
