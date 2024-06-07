@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class McArgsCommand {
@@ -45,15 +44,13 @@ public class McArgsCommand {
         List<String> clp = new ArrayList<>();
         for (int i = 0; i < yeisonVanilla.getJSONArray("libraries").length(); i++){
             String libsJAJA;
-            String pipi;
             
             try {
                 if (yeisonVanilla.getJSONArray("libraries").getJSONObject(i).getJSONArray("rules").length() == 2) {
                     System.out.println("Saltau");
                     continue;
-            }
-            } catch (Exception e) {
-            }
+                }
+            } catch (Exception e) {}
             
             try {
                 libsJAJA = yeisonVanilla.getJSONArray("libraries").getJSONObject(i).getJSONObject("downloads").getJSONObject("classifiers").getJSONObject("natives-windows").getString("path");

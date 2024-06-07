@@ -1,35 +1,16 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Desktop;
-import java.net.URI;
 import javax.swing.JOptionPane;
 import objects.JuntaApi;
 import objects.LauncherJunta;
 
 import gui.*;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.ScrollBarUI;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import util.McArgsCommand;
-import util.replacePalceholder;
 import util.LaunchMinecraft;
 
 public class LauncherWindow extends javax.swing.JFrame {
@@ -292,11 +273,11 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         System.out.println("Jugar");
-        //dispose();
+        int exitCodeMC = Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this, LAUNCHER_CLASS.getUsername());
         
-        System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this, LAUNCHER_CLASS.getUsername()));
-        
-        //setVisible(true);
+        if (exitCodeMC != 0) {
+            JOptionPane.showMessageDialog(null, "Joa, te crasheó el juego SJAKJSJKAS", "Crash", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed

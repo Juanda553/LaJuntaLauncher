@@ -6,14 +6,12 @@ import java.util.List;
 import javax.swing.JFrame;
 import org.json.JSONArray;
 
-import util.*;
-import util.McArgsCommand;
-import util.replacePalceholder;
+
 import objects.LauncherJunta;
 import objects.JuntaApi;
 
 public class LaunchMinecraft {
-    public String launch(LauncherJunta LAUNCHER_CLASS, JuntaApi JUNTA_API, JFrame ventana, String userName){
+    public int launch(LauncherJunta LAUNCHER_CLASS, JuntaApi JUNTA_API, JFrame ventana, String userName){
         try {                                           
             String dotDiomedes = LAUNCHER_CLASS.getDiomedesDir();
             String mcVersion = LAUNCHER_CLASS.getMinecraftVersion();
@@ -79,16 +77,16 @@ public class LaunchMinecraft {
                 
                 process.waitFor();
                 ventana.setVisible(true);
-                String sxitCodeUwU = "Exitcode: " + process.exitValue();
-                return sxitCodeUwU;
+                System.out.println("Exitcode: " + process.exitValue());
+                return process.exitValue();
             } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         } catch (Exception ex) {
             System.out.println("error ejecutar");
             System.out.println(ex);
         }
-        return "";
+        return 1;
     }
 
 }

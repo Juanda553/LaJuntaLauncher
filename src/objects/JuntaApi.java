@@ -1,6 +1,5 @@
 package objects;
 
-import java.io.FileWriter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

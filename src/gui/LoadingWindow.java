@@ -1,24 +1,16 @@
 package gui;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Scanner;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 import objects.JuntaApi;
 import objects.LauncherJunta;
-import objects.NewsSection;
-import objects.EventsSection;
-
-import gui.LauncherWindow;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
