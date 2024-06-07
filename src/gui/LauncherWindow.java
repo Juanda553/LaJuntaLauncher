@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import util.McArgsCommand;
 import util.replacePalceholder;
+import util.LaunchMinecraft;
 
 public class LauncherWindow extends javax.swing.JFrame {
     private JuntaApi JUNTA_API;
@@ -40,6 +41,8 @@ public class LauncherWindow extends javax.swing.JFrame {
     private MinecraftSettings mcSettingsWindow;
     private LauncherSettings launcherSettingsWindow;
     private Credits creditsWindow;
+    
+    private LaunchMinecraft Launch_Minecraft;
     
     private JSONObject currentEvent;
     
@@ -54,7 +57,8 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.partnersWindow = new Partners(JUNTA_API.getPartners(), this.JUNTA_API.getMoneyCollected());
         this.mcSettingsWindow = new MinecraftSettings();
         this.launcherSettingsWindow = new LauncherSettings();
-        this.creditsWindow = new Credits();
+        this.creditsWindow = new Credits(LAUNCHER_CLASS);
+        this.Launch_Minecraft = new LaunchMinecraft();
 
         this.bgColor1 = JUNTA_API.getBgColor1();
         this.bgColor2 = JUNTA_API.getGbColor2();
@@ -288,79 +292,11 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         System.out.println("Jugar");
-        try {                                           
-            String dotDiomedes = LAUNCHER_CLASS.getDiomedesDir();
-            String mcVersion = LAUNCHER_CLASS.getMinecraftVersion();
-            String verIndex = LAUNCHER_CLASS.getIndexVersion();
-            
-            
-            String ram = String.valueOf(LAUNCHER_CLASS.getRam());
-            String ramFinal = "-Xmx" + ram + "G";
-            
-            McArgsCommand mcArgsCommand = new McArgsCommand(dotDiomedes, JUNTA_API.getVanillaVersion(), JUNTA_API.getForgeVersion());
-            replacePalceholder pene = new replacePalceholder(dotDiomedes, mcVersion);
-            
-            List<String> command = new ArrayList<>();
-            command.add("java");
-            command.add(ramFinal);
-            command.add(ramFinal);
-            command.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
-            command.add("-Djava.library.path=" + dotDiomedes + "/versions/" + mcVersion + "/natives");
-            command.add("-cp");
-            command.add(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
-            //System.out.println(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
-            
-            command.addAll(pene.getPlacedHoldediiiii(mcArgsCommand.getJvmArgs()));
-            
-            command.add(mcArgsCommand.getMainClassMC());
-            
-            command.add("--username");
-            command.add(LAUNCHER_CLASS.getUsername());
-            command.add("--version");
-            command.add(mcVersion);
-            command.add("--gameDir");
-            command.add(dotDiomedes);
-            command.add("--assetsDir");
-            command.add(dotDiomedes + "/assets");
-            command.add("--assetIndex");
-            command.add(verIndex);
-            command.add("--uuid");
-            command.add("");
-            command.add("--accessToken");
-            command.add("");
-            command.add("--clientId");
-            command.add("${clientid}");
-            command.add("--xuid");
-            command.add("${auth_xuid}");
-            command.add("--userType");
-            command.add("msa");
-            command.add("--versionType");
-            command.add("release");
-            command.addAll(mcArgsCommand.getGamerArgs());
-            
-            //System.out.println(command);
-            JSONArray dsfgsdfghsdfh = new JSONArray(command);
-            System.out.println(dsfgsdfghsdfh);
-            
-            try {
-                // penetrar datos al cmd
-                ProcessBuilder processBuilder = new ProcessBuilder(command);
-                processBuilder.directory(new File(dotDiomedes));
-                processBuilder.inheritIO();
-                Process process = processBuilder.start();
-                Thread.sleep(2500);
-                dispose();
-                
-                process.waitFor();
-                System.out.println("Exitcode: " + process.exitValue());
-                setVisible(true);
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        } catch (Exception ex) {
-            System.out.println("error ejecutar");
-            System.out.println(ex);
-        }
+        dispose();
+        
+        System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this));
+        
+        setVisible(true);
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed

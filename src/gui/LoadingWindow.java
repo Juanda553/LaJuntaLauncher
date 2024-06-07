@@ -26,14 +26,16 @@ import java.nio.file.StandardOpenOption;
 import javax.swing.JOptionPane;
 
 public class LoadingWindow extends javax.swing.JFrame {
-    private String mineDir, diomedesDir, juntaLauncherDir;
+    //public String mineDir, diomedesDir, juntaLauncherDir;
+    
+    public String mineDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
+    public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
+    public String diomedesDir = juntaLauncherDir + "/.diomedes";
     
     public LoadingWindow() {
         initComponents();
         
-        this.mineDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
-        this.juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
-        this.diomedesDir = juntaLauncherDir + "/.diomedes";
+        
     }
     
     @SuppressWarnings("unchecked")

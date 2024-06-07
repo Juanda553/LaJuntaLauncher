@@ -1,8 +1,15 @@
 package objects;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import javax.swing.JOptionPane;
+import org.json.JSONObject;
+import gui.LoadingWindow;
+
 public class LauncherJunta {
     private String launcherVersion, minecraftVersion, indexVersion, username, serverVersion, diomedesDir;
     int ram;
+    LoadingWindow asd;
 
     public LauncherJunta(String launcherVersion, String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String diomedesDir) {
         this.launcherVersion = launcherVersion;
@@ -16,9 +23,12 @@ public class LauncherJunta {
     
     public boolean saveData(){
         try {
-            
+            String path = asd.juntaLauncherDir+"/settings.json";
+            String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+            JSONObject settingsJson = new JSONObject(settingsContent);
             return true;
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Ocurrió un pequeno error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -28,6 +38,7 @@ public class LauncherJunta {
             
             return true;
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Ocurrió un pequeno error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
