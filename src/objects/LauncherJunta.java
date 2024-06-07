@@ -13,6 +13,24 @@ public class LauncherJunta {
         this.serverVersion = serverVersion;
         this.diomedesDir = diomedesDir;
     }
+    
+    public boolean saveData(){
+        try {
+            
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public boolean loadData(){
+        try {
+            
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public String getIndexVersion() {
         return indexVersion;

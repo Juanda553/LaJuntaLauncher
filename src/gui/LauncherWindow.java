@@ -107,6 +107,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         usingRam = new javax.swing.JLabel();
         userHead = new javax.swing.JLabel();
         LauncherVersionLabelJIJIJIJIJI = new javax.swing.JLabel();
+        btn_credits = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Laucnher");
@@ -210,6 +211,17 @@ public class LauncherWindow extends javax.swing.JFrame {
         LauncherVersionLabelJIJIJIJIJI.setForeground(Color.decode(fontColor2));
         LauncherVersionLabelJIJIJIJIJI.setText("Version: " + LAUNCHER_CLASS.getLauncherVersion());
 
+        btn_credits.setBackground(Color.decode(btnColor1));
+        btn_credits.setForeground(Color.decode(fontColor2));
+        btn_credits.setText("Creditos");
+        btn_credits.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_credits.setFocusPainted(false);
+        btn_credits.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_creditsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelRootLayout = new javax.swing.GroupLayout(panelRoot);
         panelRoot.setLayout(panelRootLayout);
         panelRootLayout.setHorizontalGroup(
@@ -228,7 +240,8 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addComponent(LauncherVersionLabelJIJIJIJIJI)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btn_credits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -243,16 +256,18 @@ public class LauncherWindow extends javax.swing.JFrame {
                             .addGroup(panelRootLayout.createSequentialGroup()
                                 .addComponent(showUserName1)
                                 .addGap(4, 4, 4)
-                                .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE))
+                                .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE))
                             .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
+                        .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_partners, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(502, 502, 502)
-                        .addComponent(LauncherVersionLabelJIJIJIJIJI))
+                        .addGap(465, 465, 465)
+                        .addComponent(LauncherVersionLabelJIJIJIJIJI)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_credits, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -354,9 +369,15 @@ public class LauncherWindow extends javax.swing.JFrame {
         partnersWindow.setVisible(true);
     }//GEN-LAST:event_btn_partnersActionPerformed
 
+    private void btn_creditsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_creditsActionPerformed
+        creditsWindow.setLocationRelativeTo(null);
+        creditsWindow.setVisible(true);
+    }//GEN-LAST:event_btn_creditsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel EventTitle;
     private javax.swing.JLabel LauncherVersionLabelJIJIJIJIJI;
+    private javax.swing.JButton btn_credits;
     private javax.swing.JButton btn_partners;
     private javax.swing.JScrollPane eventDesc;
     private javax.swing.JLabel eventImg;
