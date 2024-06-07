@@ -95,7 +95,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_credits = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("La Junta Laucnher");
+        setTitle("La Junta Launcher");
         setResizable(false);
 
         panelRoot.setBackground(new java.awt.Color(51, 51, 51));
