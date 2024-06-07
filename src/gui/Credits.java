@@ -4,17 +4,26 @@
  */
 package gui;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import objects.JuntaApi;
 import objects.LauncherJunta;
+import util.LaunchMinecraft;
 /**
  *
  * @author juanz
  */
 public class Credits extends javax.swing.JFrame {
-
+    private LauncherJunta LAUNCHER_CLASS;
+    private JuntaApi JUNTA_API;
+    private LaunchMinecraft Launch_Minecraft;
+    private JFrame diomedesPichaGrande;
     
-    public Credits() {
-        
+    public Credits(LauncherJunta Launcher_Junta, JuntaApi Junta_Api, JFrame diomedesPichaGrande) {
+        this.LAUNCHER_CLASS = Launcher_Junta;
+        this.JUNTA_API = Junta_Api;
+        this.diomedesPichaGrande = diomedesPichaGrande;
+        this.Launch_Minecraft = new LaunchMinecraft();
         
         initComponents();
     }
@@ -290,53 +299,19 @@ public class Credits extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String adminPassword = JOptionPane.showInputDialog(null);
-        
+        dispose();
         if (adminPassword.equals("D10m3d35M1P4tr0n!...")){
             String pene = JOptionPane.showInputDialog(null);
             if (pene.equals("juan")){
-                
+                System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_1"));
             } else if (pene.equals("angelo")){
-                
+                System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_2"));
             } else if (pene.equals("javi")){
-                
+                System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_3"));
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Credits.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Credits.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Credits.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Credits.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Credits().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel credClient;

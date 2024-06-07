@@ -57,7 +57,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.partnersWindow = new Partners(JUNTA_API.getPartners(), this.JUNTA_API.getMoneyCollected());
         this.mcSettingsWindow = new MinecraftSettings();
         this.launcherSettingsWindow = new LauncherSettings();
-        this.creditsWindow = new Credits(LAUNCHER_CLASS);
+        this.creditsWindow = new Credits(LAUNCHER_CLASS, JUNTA_API, this);
         this.Launch_Minecraft = new LaunchMinecraft();
 
         this.bgColor1 = JUNTA_API.getBgColor1();
@@ -292,11 +292,11 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         System.out.println("Jugar");
-        dispose();
+        //dispose();
         
-        System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this));
+        System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this, LAUNCHER_CLASS.getUsername()));
         
-        setVisible(true);
+        //setVisible(true);
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed

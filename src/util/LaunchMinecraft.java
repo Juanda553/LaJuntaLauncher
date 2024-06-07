@@ -13,13 +13,7 @@ import objects.LauncherJunta;
 import objects.JuntaApi;
 
 public class LaunchMinecraft {
-    
-    
-    
-    
-    
-    
-    public String launch(LauncherJunta LAUNCHER_CLASS, JuntaApi JUNTA_API, JFrame ventana){
+    public String launch(LauncherJunta LAUNCHER_CLASS, JuntaApi JUNTA_API, JFrame ventana, String userName){
         try {                                           
             String dotDiomedes = LAUNCHER_CLASS.getDiomedesDir();
             String mcVersion = LAUNCHER_CLASS.getMinecraftVersion();
@@ -47,7 +41,7 @@ public class LaunchMinecraft {
             command.add(mcArgsCommand.getMainClassMC());
             
             command.add("--username");
-            command.add(LAUNCHER_CLASS.getUsername());
+            command.add(userName);
             command.add("--version");
             command.add(mcVersion);
             command.add("--gameDir");
@@ -80,8 +74,11 @@ public class LaunchMinecraft {
                 processBuilder.directory(new File(dotDiomedes));
                 processBuilder.inheritIO();
                 Process process = processBuilder.start();
+                Thread.sleep(2500);
+                ventana.dispose();
                 
                 process.waitFor();
+                ventana.setVisible(true);
                 String sxitCodeUwU = "Exitcode: " + process.exitValue();
                 return sxitCodeUwU;
             } catch (IOException | InterruptedException e) {
