@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 public class LoadingWindow extends javax.swing.JFrame {
     //public String mineDir, diomedesDir, juntaLauncherDir;
     
-    public String mineDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
+    public String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
     public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
     public String diomedesDir = juntaLauncherDir + "/.diomedes";
     
@@ -202,9 +202,9 @@ public class LoadingWindow extends javax.swing.JFrame {
             
             // Agregando los datos necesarios actuales para el launcher de forma local
             JSONObject localSettings = new JSONObject();
-            localSettings.put("juntaServerVersion", JUNTA_API.getServerVersion());
+            localSettings.put("juntaServerVersion", "");
             localSettings.put("launcherVersion", JUNTA_API.getLauncherVersion());
-            localSettings.put("juntaName", JUNTA_API.getName());
+            localSettings.put("juntaName", "");
             localSettings.put("username", "");
             localSettings.put("minecraftRam", 0);
             localSettings.put("diomedesDir", thisWindow.diomedesDir);
@@ -280,6 +280,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                 thisWindow.jProgressBar1.setValue(72);
                 settingsJson.put("juntaName", JUNTA_API.getName());
                 LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
+                settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
+                LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
                 
                 thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
             } catch (IOException e) {
@@ -306,7 +308,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             }
         }
-        
         
             // guarda el archivo settings.json para que no se pierda esos datos
             Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);

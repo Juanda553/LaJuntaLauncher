@@ -16,12 +16,13 @@ public class LaunchMinecraft {
             String dotDiomedes = LAUNCHER_CLASS.getDiomedesDir();
             String mcVersion = LAUNCHER_CLASS.getMinecraftVersion();
             String verIndex = LAUNCHER_CLASS.getIndexVersion();
+            String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
             
             
             String ram = String.valueOf(LAUNCHER_CLASS.getRam());
             String ramFinal = "-Xmx" + ram + "G";
             
-            McArgsCommand mcArgsCommand = new McArgsCommand(dotDiomedes, JUNTA_API.getVanillaVersion(), JUNTA_API.getForgeVersion());
+            McArgsCommand mcArgsCommand = new McArgsCommand(dotMinecraft, JUNTA_API.getVanillaVersion(), JUNTA_API.getForgeVersion());
             replacePalceholder pene = new replacePalceholder(dotDiomedes, mcVersion);
             
             List<String> command = new ArrayList<>();
@@ -29,7 +30,7 @@ public class LaunchMinecraft {
             command.add(ramFinal);
             command.add(ramFinal);
             command.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
-            command.add("-Djava.library.path=" + dotDiomedes + "/versions/" + mcVersion + "/natives");
+            command.add("-Djava.library.path=" + dotMinecraft + "/versions/" + mcVersion + "/natives");
             command.add("-cp");
             command.add(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
             //System.out.println(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
@@ -45,7 +46,7 @@ public class LaunchMinecraft {
             command.add("--gameDir");
             command.add(dotDiomedes);
             command.add("--assetsDir");
-            command.add(dotDiomedes + "/assets");
+            command.add(dotMinecraft + "/assets");
             command.add("--assetIndex");
             command.add(verIndex);
             command.add("--uuid");

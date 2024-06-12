@@ -15,7 +15,7 @@ public class replacePalceholder {
     String dotDiomedes, mcVersion;
 
     public replacePalceholder(String dotDiomedes, String mcVersion) {
-        this.dotDiomedes = dotDiomedes;
+        this.dotDiomedes = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         this.mcVersion = mcVersion;
     }
 

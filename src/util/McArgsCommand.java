@@ -8,13 +8,14 @@ import java.util.List;
 import org.json.JSONObject;
 
 public class McArgsCommand {
-    String mineDir, miyeisonString, yeisonFile, miyeisonStringVanilla, yeisonFileVanilla, versionForge, mcVersion;
+    String mineDir, miyeisonString, yeisonFile, miyeisonStringVanilla, yeisonFileVanilla, versionForge, mcVersion, dotMinecraft;
     JSONObject yeison, argsssss, yeisonVanilla;
 
     public McArgsCommand(String mineDir, String mcVersion, String versionForge) throws IOException {
         this.mineDir = mineDir;
         this.mcVersion = mcVersion;
         this.versionForge = versionForge;
+        this.dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         
         miyeisonString = mineDir + "/versions/"+ versionForge +"/"+versionForge+".json";
         yeisonFile = new String(Files.readAllBytes(Paths.get(miyeisonString)));
@@ -33,7 +34,7 @@ public class McArgsCommand {
         List<String> clp = new ArrayList<>();
         for (int i = 0; i < yeison.getJSONArray("libraries").length(); i++){
             String libsJAJA = yeison.getJSONArray("libraries").getJSONObject(i).getJSONObject("downloads").getJSONObject("artifact").getString("path");
-            clp.add(mineDir + "/libraries/" +libsJAJA);
+            clp.add(dotMinecraft + "/libraries/" +libsJAJA);
         }
         result = String.join(";", clp);
         return result;
@@ -60,7 +61,7 @@ public class McArgsCommand {
                 System.out.println("B | " + libsJAJA);
             }
             
-            clp.add(mineDir + "/libraries/" +libsJAJA);
+            clp.add(dotMinecraft + "/libraries/" +libsJAJA);
         }
         result = String.join(";", clp);
         return result;
