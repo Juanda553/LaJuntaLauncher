@@ -47,6 +47,7 @@ public class LoadingWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(65, 65, 65));
@@ -280,6 +281,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 settingsJson.put("juntaName", JUNTA_API.getName());
                 LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
                 
+                thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             }
@@ -299,12 +301,13 @@ public class LoadingWindow extends javax.swing.JFrame {
                 settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
                 LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
                 
-                
+                thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if (thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"))) {
+        
+        
             // guarda el archivo settings.json para que no se pierda esos datos
             Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
 
@@ -321,7 +324,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                 thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
                 thisWindow.jProgressBar1.setValue(0);
             }
-        }
     }
     
     public boolean descomprimir(FileInputStream xd) {
@@ -330,10 +332,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                 jProgressBar1.setValue(85);
 
                 File comprimidom = new File(juntaLauncherDir + "/current.zip");
-                if (!comprimidom.exists()) {
-                    System.out.println("asdas");
-                return true;
-                }
                 
                 ZipInputStream zipInputStream = new ZipInputStream(xd);
                 ZipEntry entry;
