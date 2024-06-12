@@ -296,7 +296,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 thisWindow.jProgressBar1.setValue(70);
                 thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
                 
-                FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
+                FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
                 
                 thisWindow.datosDeCarga.setText("Actualizacion descargada");
                 thisWindow.jProgressBar1.setValue(72);
