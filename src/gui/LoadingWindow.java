@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -7,14 +8,21 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Scanner;
 import org.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 
 import objects.JuntaApi;
 import objects.LauncherJunta;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 
 public class LoadingWindow extends javax.swing.JFrame {
@@ -26,8 +34,6 @@ public class LoadingWindow extends javax.swing.JFrame {
     
     public LoadingWindow() {
         initComponents();
-        
-        
     }
     
     @SuppressWarnings("unchecked")
@@ -197,6 +203,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             JSONObject localSettings = new JSONObject();
             localSettings.put("juntaServerVersion", JUNTA_API.getServerVersion());
             localSettings.put("launcherVersion", JUNTA_API.getLauncherVersion());
+            localSettings.put("juntaName", JUNTA_API.getName());
             localSettings.put("username", "");
             localSettings.put("minecraftRam", 0);
             localSettings.put("diomedesDir", thisWindow.diomedesDir);
@@ -207,7 +214,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 file.write(jsonParla);
                 file.flush();
             } catch (Exception ex) {
-                System.out.println("no " + ex);
+                JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             }
         }
         thisWindow.jProgressBar1.setValue(40);
@@ -228,6 +235,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             settingsJson.put("username", username);
             
         } if (settingsJson.getInt("minecraftRam") <= 0) {
+           System.out.println("no ram");
             String ramString = JOptionPane.showInputDialog(null, "<html><center>Ingresa la cantidad de ram que quieres asignar al juego.<br>(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)<br>(Recuerda que esta es la ram que usarás en el juego, no pongas la ram de tu pc XD)</center></html>", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
             int ram = Integer.parseInt(ramString);
             
@@ -247,47 +255,115 @@ public class LoadingWindow extends javax.swing.JFrame {
                 settingsJson.getString("username"),
                 settingsJson.getInt("minecraftRam"),
                 settingsJson.getString("juntaServerVersion"),
+                settingsJson.getString("juntaName"),
                 settingsJson.getString("diomedesDir")
         );
         thisWindow.jProgressBar1.setValue(64);
         
         // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
         
+        thisWindow.datosDeCarga.setText("Comprobando temporada...");
+        thisWindow.jProgressBar1.setValue(68);
+        if (!LAUNCHER_CLASS.getJuntaName().equals(JUNTA_API.getName())) {
+            thisWindow.datosDeCarga.setText("Tienes una temporada antigua!");
+            thisWindow.jProgressBar1.setValue(68);
+            
+            try {
+                FileUtils.cleanDirectory(new File(thisWindow.diomedesDir));
+                thisWindow.jProgressBar1.setValue(70);
+                thisWindow.datosDeCarga.setText("Descargando nueva temporada. " + JUNTA_API.getName());
+                
+                FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
+                
+                thisWindow.datosDeCarga.setText("Temporada descargada.");
+                thisWindow.jProgressBar1.setValue(72);
+                settingsJson.put("juntaName", JUNTA_API.getName());
+                LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
+                
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        if (LAUNCHER_CLASS.getLauncherVersion().equals(JUNTA_API.getLauncherVersion())) {
-            // Abrir ya la ventana del launcher
-            thisWindow.datosDeCarga.setText("Abriendo...");
-            thisWindow.jProgressBar1.setValue(100);
-            LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
-            LAUNCHER_WINDOW.setLocationRelativeTo(null);
-            LAUNCHER_WINDOW.setVisible(true);
-            thisWindow.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor revisa el Canal de Discord para descargar la ultima versión. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
-            thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
-            thisWindow.jProgressBar1.setValue(0);
+        } else if (LAUNCHER_CLASS.getJuntaName().equals(JUNTA_API.getName()) && !LAUNCHER_CLASS.getServerVersion().equals(JUNTA_API.getServerVersion())) {
+            thisWindow.datosDeCarga.setText("Hay una nueva version disponible!");
+            thisWindow.jProgressBar1.setValue(68);
+            
+            try {
+                thisWindow.jProgressBar1.setValue(70);
+                thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
+                
+                FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
+                
+                thisWindow.datosDeCarga.setText("Actualizacion descargada");
+                thisWindow.jProgressBar1.setValue(72);
+                settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
+                LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
+                
+                
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            }
         }
+        if (thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"))) {
+            // guarda el archivo settings.json para que no se pierda esos datos
+            Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+
+            if (LAUNCHER_CLASS.getLauncherVersion().equals(JUNTA_API.getLauncherVersion())) {
+                // Abrir ya la ventana del launcher
+                thisWindow.datosDeCarga.setText("Abriendo...");
+                thisWindow.jProgressBar1.setValue(100);
+                LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
+                LAUNCHER_WINDOW.setLocationRelativeTo(null);
+                LAUNCHER_WINDOW.setVisible(true);
+                thisWindow.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor revisa el Canal de Discord para descargar la ultima versión. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
+                thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
+                thisWindow.jProgressBar1.setValue(0);
+            }
+        }
+    }
+    
+    public boolean descomprimir(FileInputStream xd) {
+        try {
+                datosDeCarga.setText("Descomprimiendo modpack...");
+                jProgressBar1.setValue(85);
+
+                File comprimidom = new File(juntaLauncherDir + "/current.zip");
+                if (!comprimidom.exists()) {
+                    System.out.println("asdas");
+                return true;
+                }
+                
+                ZipInputStream zipInputStream = new ZipInputStream(xd);
+                ZipEntry entry;
+                while ((entry = zipInputStream.getNextEntry()) != null) {
+                    String entryName = entry.getName();
+                    if (!entry.isDirectory()) {
+                        File entryFile = new File(diomedesDir, entryName);
+                        entryFile.getParentFile().mkdirs();
+
+                        byte[] buffer = new byte[1024];
+                        FileOutputStream fos = new FileOutputStream(entryFile);
+                        int length;
+                        while ((length = zipInputStream.read(buffer)) > 0) {
+                            fos.write(buffer, 0, length);
+                        }
+                        fos.close();
+                    }
+                    zipInputStream.closeEntry();
+                }
+                zipInputStream.close();
+
+                comprimidom.delete();
+
+                datosDeCarga.setText("Descomprimido con exito!");
+                jProgressBar1.setValue(90);
+                return true;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
