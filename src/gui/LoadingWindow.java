@@ -31,6 +31,7 @@ public class LoadingWindow extends javax.swing.JFrame {
     public String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
     public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
     public String diomedesDir = juntaLauncherDir + "/.diomedes";
+    public String LAUNCHER_VERSION = "2.0.0";
     
     public LoadingWindow() {
         initComponents();
@@ -203,7 +204,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             // Agregando los datos necesarios actuales para el launcher de forma local
             JSONObject localSettings = new JSONObject();
             localSettings.put("juntaServerVersion", "");
-            localSettings.put("launcherVersion", JUNTA_API.getLauncherVersion());
+            localSettings.put("launcherVersion", thisWindow.LAUNCHER_VERSION);
             localSettings.put("juntaName", "");
             localSettings.put("username", "");
             localSettings.put("minecraftRam", 0);
@@ -280,15 +281,14 @@ public class LoadingWindow extends javax.swing.JFrame {
                 thisWindow.jProgressBar1.setValue(72);
                 settingsJson.put("juntaName", JUNTA_API.getName());
                 LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
-                settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
-                LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
                 
                 thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             }
         
-        } else if (LAUNCHER_CLASS.getJuntaName().equals(JUNTA_API.getName()) && !LAUNCHER_CLASS.getServerVersion().equals(JUNTA_API.getServerVersion())) {
+        } 
+        if (!LAUNCHER_CLASS.getServerVersion().equals(JUNTA_API.getServerVersion())) {
             thisWindow.datosDeCarga.setText("Hay una nueva version disponible!");
             thisWindow.jProgressBar1.setValue(68);
             
