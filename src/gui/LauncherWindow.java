@@ -66,7 +66,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         
         initComponents();
         
-        this.panelRoot.setBackground(Color.decode(bgColor1));      
+        this.panelRoot.setBackground(Color.decode(bgColor1));
         this.panelMain.setBackground(Color.decode(bgColor2));
         this.eventPanel.setBackground(Color.decode(bgColor1));
         this.newsPanel.setBackground(Color.decode(bgColor1));
