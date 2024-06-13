@@ -74,27 +74,16 @@ public class LaunchMinecraft {
                 // penetrar datos al cmd
                 ProcessBuilder processBuilder = new ProcessBuilder(command);
                 processBuilder.directory(new File(dotDiomedes));
-                //processBuilder.inheritIO();
-                processBuilder.redirectErrorStream(true);
+                processBuilder.inheritIO();
                 Process process = processBuilder.start();
                 ventana.dispose();
                 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                StringBuilder output = new StringBuilder();
-                String line;
-                int lineCount = 0;
-                while ((line = reader.readLine()) != null && lineCount < 20) {
-                    output.append(line).append("\n");
-                    lineCount++;
-                }
-
                 process.waitFor();
-                ventana.setVisible(true);
-                System.out.println("Exitcode: " + process.exitValue());
-                
-                
-                if (process.exitValue() != 0) {
-                    JOptionPane.showMessageDialog(null, "Joabro, el juego te crasheó JKASJKAJKSJK\n\n" + output.toString() + "\n\nCodigo de Salida: " + process.exitValue(), "Crash xd", JOptionPane.ERROR_MESSAGE);
+                if (process.exitValue() == 0) {
+                    System.exit(0);
+                } else {
+                    ventana.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "Joabro, el juego te crasheó JKASJKAJKSJK" + "\n\nCodigo de Salida: " + process.exitValue(), "Crash xd", JOptionPane.ERROR_MESSAGE);
                 }
                 
                 return process.exitValue();

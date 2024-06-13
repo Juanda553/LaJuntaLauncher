@@ -31,7 +31,7 @@ public class LoadingWindow extends javax.swing.JFrame {
     public String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
     public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
     public String diomedesDir = juntaLauncherDir + "/.diomedes";
-    public String LAUNCHER_VERSION = "2.0.0";
+    public String LAUNCHER_VERSION = "2.0.1";
     
     public LoadingWindow() {
         initComponents();
@@ -172,7 +172,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiLauncherProperties.getJSONObject("event"),
                     apiLauncherProperties.getJSONArray("news"),
                     apiLauncherProperties.getJSONArray("partners"),
-                    apiLauncherProperties.getJSONArray("splashes")
+                    apiLauncherProperties.getJSONArray("deletedMods")
                 );
 
             // Imprime en consola toda desa vaina

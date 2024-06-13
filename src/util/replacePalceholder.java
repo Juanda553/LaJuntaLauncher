@@ -22,7 +22,7 @@ public class replacePalceholder {
 
     public List<String> getPlacedHoldediiiii(List<String> asd) {
         Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("library_directory", dotDiomedes + "/libraries");
+        placeholders.put("library_directory", dotMinecraft + "/libraries");
         placeholders.put("classpath_separator", ";");
         placeholders.put("version_name", mcVersion);
 
