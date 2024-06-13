@@ -31,7 +31,7 @@ public class LoadingWindow extends javax.swing.JFrame {
     public String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
     public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
     public String diomedesDir = juntaLauncherDir + "/.diomedes";
-    public String LAUNCHER_VERSION = "2.0.1";
+    public String LAUNCHER_VERSION = "2.0.0";
     
     public LoadingWindow() {
         initComponents();
@@ -116,215 +116,226 @@ public class LoadingWindow extends javax.swing.JFrame {
         URL API_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
         thisWindow.jProgressBar1.setValue(1);
         
-        // chupar la api
-        thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");
-        HttpURLConnection connection = (HttpURLConnection) API_URL.openConnection();
-        connection.setRequestMethod("GET");
-        connection.connect();
-        thisWindow.jProgressBar1.setValue(10);
-        
-        thisWindow.datosDeCarga.setText("Guardando datos de la nube");
-        StringBuilder informationString = new StringBuilder();
-            Scanner scanner = new Scanner(API_URL.openStream());
-                
-            while(scanner.hasNext()){
-                informationString.append(scanner.nextLine());
-        }
-        scanner.close();
-        thisWindow.jProgressBar1.setValue(20);
-        
-        // poner la api como0 json
-        thisWindow.datosDeCarga.setText("Parseando datos a Json");
-        JSONObject api = new JSONObject(informationString.toString());
-        
-        // objetos padre del Json
-        JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
-        JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
-        thisWindow.jProgressBar1.setValue(25);
-
-        
         // Literalmente lo que dice abajo es lo que hace esto xd | VVVV
-        thisWindow.datosDeCarga.setText("Instanciando datos de la API");
-        JuntaApi JUNTA_API = new JuntaApi(
-                api.getString("juntaName"),
-                api.getString("juntaVersion"),
-                api.getString("forgeVersion"),
-                api.getString("vanillaVersion"),
-                api.getString("indexVersion"),
-                api.getString("icon"),
-                api.getString("modpackFirstInstall"),
-                api.getString("modPackUpdate"),
+        JuntaApi JUNTA_API = null;
+        try {
+            // chupar la api
+            thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");
+            HttpURLConnection connection = (HttpURLConnection) API_URL.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            thisWindow.jProgressBar1.setValue(10);
 
-                apiLauncherProperties.getString("launcherVersion"),
-                apiLauncherProperties.getString("titleImage"),
-                apiLauncherProperties.getInt("serverPrice"),
-                apiLauncherProperties.getInt("moneyCollected"),
-                
-                apiLauncherColors.getString("background1"),
-                apiLauncherColors.getString("background2"),
-                apiLauncherColors.getString("button1"),
-                apiLauncherColors.getString("button2"),
-                apiLauncherColors.getString("buttonPlay"),
-                apiLauncherColors.getString("fontPlay"),
-                apiLauncherColors.getString("font1"),
-                apiLauncherColors.getString("font2"),
-                apiLauncherProperties.getJSONObject("event"),
-                apiLauncherProperties.getJSONArray("news"),
-                apiLauncherProperties.getJSONArray("partners"),
-                apiLauncherProperties.getJSONArray("splashes")
-            );
-        
-        // Imprime en consola toda desa vaina
-        System.out.println(JUNTA_API.getDetails());
-        thisWindow.jProgressBar1.setValue(30);
-        
-        if (thisWindow.LAUNCHER_VERSION.equals(JUNTA_API.getLauncherVersion())) {
-            thisWindow.datosDeCarga.setText("Abriendo settings.json");
-            // Intentar leer los datos del settings json, en caso de existir los imprime, pero si no pues tira error y crea desde cero esa carpeta junto al settings.json
+            thisWindow.datosDeCarga.setText("Guardando datos de la nube");
+            StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(API_URL.openStream());
+
+                while(scanner.hasNext()){
+                    informationString.append(scanner.nextLine());
+            }
+            scanner.close();
+            thisWindow.jProgressBar1.setValue(20);
+
+            // poner la api como0 json
+            thisWindow.datosDeCarga.setText("Parseando datos a Json");
+            JSONObject api = new JSONObject(informationString.toString());
+
+            // objetos padre del Json
+            JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
+            JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
+            thisWindow.jProgressBar1.setValue(25);
+            
+            thisWindow.datosDeCarga.setText("Instanciando datos de la API");
+            JUNTA_API = new JuntaApi(
+                    api.getString("juntaName"),
+                    api.getString("juntaVersion"),
+                    api.getString("forgeVersion"),
+                    api.getString("vanillaVersion"),
+                    api.getString("indexVersion"),
+                    api.getString("icon"),
+                    api.getString("modpackInstall"),
+                    api.getString("modPackUpdate"),
+
+                    apiLauncherProperties.getString("launcherVersion"),
+                    apiLauncherProperties.getString("titleImage"),
+                    apiLauncherProperties.getInt("serverPrice"),
+                    apiLauncherProperties.getInt("moneyCollected"),
+
+                    apiLauncherColors.getString("background1"),
+                    apiLauncherColors.getString("background2"),
+                    apiLauncherColors.getString("button1"),
+                    apiLauncherColors.getString("button2"),
+                    apiLauncherColors.getString("buttonPlay"),
+                    apiLauncherColors.getString("fontPlay"),
+                    apiLauncherColors.getString("font1"),
+                    apiLauncherColors.getString("font2"),
+                    apiLauncherProperties.getJSONObject("event"),
+                    apiLauncherProperties.getJSONArray("news"),
+                    apiLauncherProperties.getJSONArray("partners"),
+                    apiLauncherProperties.getJSONArray("splashes")
+                );
+
+            // Imprime en consola toda desa vaina
+            System.out.println(JUNTA_API.getDetails());
+            thisWindow.jProgressBar1.setValue(30);
+            
             try {
-                //abrir archivo
-                String path = thisWindow.juntaLauncherDir+"/settings.json";
-                String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
-                JSONObject settingsJson = new JSONObject(settingsContent);
+                if (thisWindow.LAUNCHER_VERSION.equals(JUNTA_API.getLauncherVersion())) {
+                    thisWindow.datosDeCarga.setText("Abriendo settings.json");
+                    // Intentar leer los datos del settings json, en caso de existir los imprime, pero si no pues tira error y crea desde cero esa carpeta junto al settings.json
+                    try {
+                        //abrir archivo
+                        String path = thisWindow.juntaLauncherDir+"/settings.json";
+                        String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                        JSONObject settingsJson = new JSONObject(settingsContent);
 
-                //imprimir
-                System.out.println(settingsJson.getString("juntaServerVersion"));
-                System.out.println(settingsJson.getString("launcherVersion"));
-                System.out.println(settingsJson.getString("username"));
-                System.out.println(settingsJson.getInt("minecraftRam") + "GB");
-                System.out.println(settingsJson.getString("diomedesDir"));
-                thisWindow.jProgressBar1.setValue(32);
+                        //imprimir
+                        System.out.println(settingsJson.getString("juntaServerVersion"));
+                        System.out.println(settingsJson.getString("launcherVersion"));
+                        System.out.println(settingsJson.getString("username"));
+                        System.out.println(settingsJson.getInt("minecraftRam") + "GB");
+                        System.out.println(settingsJson.getString("diomedesDir"));
+                        thisWindow.jProgressBar1.setValue(32);
 
+                    } catch (Exception e) {
+                        thisWindow.datosDeCarga.setText("No se encontró el directorio");
+                        thisWindow.datosDeCarga.setText("Creando nuevo directorio jeje");
+                        // crear el directorio diomedes
+                        File carpeta = new File(thisWindow.diomedesDir);
+                        carpeta.mkdirs();
+
+                        // Agregando los datos necesarios actuales para el launcher de forma local
+                        JSONObject localSettings = new JSONObject();
+                        localSettings.put("juntaServerVersion", "");
+                        localSettings.put("launcherVersion", thisWindow.LAUNCHER_VERSION);
+                        localSettings.put("juntaName", "");
+                        localSettings.put("username", "");
+                        localSettings.put("minecraftRam", 0);
+                        localSettings.put("diomedesDir", thisWindow.diomedesDir);
+
+                        // pasandoe ese objeto a un archivo settings.json y guardando
+                        String jsonParla = localSettings.toString(4);
+                        try (FileWriter file = new FileWriter(thisWindow.juntaLauncherDir + "/settings.json")) {
+                            file.write(jsonParla);
+                            file.flush();
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    thisWindow.jProgressBar1.setValue(40);
+
+                    // ahora si abriendo esos datos para utilizar
+                    String path = thisWindow.juntaLauncherDir+"/settings.json";
+                    String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                    JSONObject settingsJson = new JSONObject(settingsContent);
+                    thisWindow.jProgressBar1.setValue(50);
+
+                    // comprobar si es primera vez que abre el launcher, lo hace de forma que si username es vacio pida el username, y si ram es 0 que pida la ram pal juego
+                    // Por ahora se hará con joptionpane XD
+                    // de paso los guarda en el objeto json
+                    if(settingsJson.getString("username").equals("")){
+                        System.out.println("no tiene user");
+                        String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
+
+                        settingsJson.put("username", username);
+
+                    } if (settingsJson.getInt("minecraftRam") <= 0) {
+                       System.out.println("no ram");
+                        String ramString = JOptionPane.showInputDialog(null, "<html><center>Ingresa la cantidad de ram que quieres asignar al juego.<br>(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)<br>(Recuerda que esta es la ram que usarás en el juego, no pongas la ram de tu pc XD)</center></html>", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
+                        int ram = Integer.parseInt(ramString);
+
+                        settingsJson.put("minecraftRam", ram);
+                    }
+                    thisWindow.jProgressBar1.setValue(55);
+
+                    // guarda el archivo settings.json para que no se pierda esos datos
+                    Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+
+                    //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
+                    thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
+                    LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
+                            settingsJson.getString("launcherVersion"),
+                            JUNTA_API.getForgeVersion(),
+                            JUNTA_API.getIndexVersion(),
+                            settingsJson.getString("username"),
+                            settingsJson.getInt("minecraftRam"),
+                            settingsJson.getString("juntaServerVersion"),
+                            settingsJson.getString("juntaName"),
+                            settingsJson.getString("diomedesDir")
+                    );
+                    thisWindow.jProgressBar1.setValue(64);
+
+                    // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
+
+                    thisWindow.datosDeCarga.setText("Comprobando temporada...");
+                    thisWindow.jProgressBar1.setValue(68);
+                    if (!LAUNCHER_CLASS.getJuntaName().equals(JUNTA_API.getName())) {
+                        thisWindow.datosDeCarga.setText("Tienes una temporada antigua!");
+                        thisWindow.jProgressBar1.setValue(68);
+
+                        try {
+                            FileUtils.cleanDirectory(new File(thisWindow.diomedesDir));
+                            thisWindow.jProgressBar1.setValue(70);
+                            thisWindow.datosDeCarga.setText("Descargando nueva temporada. " + JUNTA_API.getName());
+
+                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
+
+                            thisWindow.datosDeCarga.setText("Temporada descargada.");
+                            thisWindow.jProgressBar1.setValue(72);
+                            settingsJson.put("juntaName", JUNTA_API.getName());
+                            LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
+
+                            thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
+                        } catch (IOException e) {
+                            JOptionPane.showMessageDialog(null, "Envia captura de este error: Descargar Primera Vez\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } 
+                    if (!LAUNCHER_CLASS.getServerVersion().equals(JUNTA_API.getServerVersion())) {
+                        thisWindow.datosDeCarga.setText("Hay una nueva version disponible!");
+                        thisWindow.jProgressBar1.setValue(68);
+
+                        try {
+                            thisWindow.jProgressBar1.setValue(70);
+                            thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
+
+                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
+
+                            thisWindow.datosDeCarga.setText("Actualizacion descargada");
+                            thisWindow.jProgressBar1.setValue(72);
+                            settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
+                            LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
+
+                            thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
+                        } catch (IOException e) {
+                            JOptionPane.showMessageDialog(null, "Envia captura de este error: Actualizar\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
+                        // guarda el archivo settings.json para que no se pierda esos datos
+                        Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+
+                        // Abrir ya la ventana del launcher
+                        thisWindow.datosDeCarga.setText("Abriendo...");
+                        thisWindow.jProgressBar1.setValue(100);
+                        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
+                        LAUNCHER_WINDOW.setLocationRelativeTo(null);
+                        LAUNCHER_WINDOW.setVisible(true);
+                        thisWindow.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor revisa el Canal de Discord para descargar la ultima versión. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
+                        thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
+                        thisWindow.jProgressBar1.setValue(0);
+                }
             } catch (Exception e) {
-                thisWindow.datosDeCarga.setText("No se encontró el directorio");
-                thisWindow.datosDeCarga.setText("Creando nuevo directorio jeje");
-                // crear el directorio diomedes
-                File carpeta = new File(thisWindow.diomedesDir);
-                carpeta.mkdirs();
-
-                // Agregando los datos necesarios actuales para el launcher de forma local
-                JSONObject localSettings = new JSONObject();
-                localSettings.put("juntaServerVersion", "");
-                localSettings.put("launcherVersion", thisWindow.LAUNCHER_VERSION);
-                localSettings.put("juntaName", "");
-                localSettings.put("username", "");
-                localSettings.put("minecraftRam", 0);
-                localSettings.put("diomedesDir", thisWindow.diomedesDir);
-
-                // pasandoe ese objeto a un archivo settings.json y guardando
-                String jsonParla = localSettings.toString(4);
-                try (FileWriter file = new FileWriter(thisWindow.juntaLauncherDir + "/settings.json")) {
-                    file.write(jsonParla);
-                    file.flush();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(null, "Envia captura de este error:\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             }
-            thisWindow.jProgressBar1.setValue(40);
-
-            // ahora si abriendo esos datos para utilizar
-            String path = thisWindow.juntaLauncherDir+"/settings.json";
-            String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
-            JSONObject settingsJson = new JSONObject(settingsContent);
-            thisWindow.jProgressBar1.setValue(50);
-
-            // comprobar si es primera vez que abre el launcher, lo hace de forma que si username es vacio pida el username, y si ram es 0 que pida la ram pal juego
-            // Por ahora se hará con joptionpane XD
-            // de paso los guarda en el objeto json
-            if(settingsJson.getString("username").equals("")){
-                System.out.println("no tiene user");
-                String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
-
-                settingsJson.put("username", username);
-
-            } if (settingsJson.getInt("minecraftRam") <= 0) {
-               System.out.println("no ram");
-                String ramString = JOptionPane.showInputDialog(null, "<html><center>Ingresa la cantidad de ram que quieres asignar al juego.<br>(NO AGREGUES MAS RAM DE LA QUE TIENES EN TU PC)<br>(Recuerda que esta es la ram que usarás en el juego, no pongas la ram de tu pc XD)</center></html>", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
-                int ram = Integer.parseInt(ramString);
-
-                settingsJson.put("minecraftRam", ram);
-            }
-            thisWindow.jProgressBar1.setValue(55);
-
-            // guarda el archivo settings.json para que no se pierda esos datos
-            Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
-
-            //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
-            thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
-            LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
-                    settingsJson.getString("launcherVersion"),
-                    JUNTA_API.getForgeVersion(),
-                    JUNTA_API.getIndexVersion(),
-                    settingsJson.getString("username"),
-                    settingsJson.getInt("minecraftRam"),
-                    settingsJson.getString("juntaServerVersion"),
-                    settingsJson.getString("juntaName"),
-                    settingsJson.getString("diomedesDir")
-            );
-            thisWindow.jProgressBar1.setValue(64);
-
-            // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
-
-            thisWindow.datosDeCarga.setText("Comprobando temporada...");
-            thisWindow.jProgressBar1.setValue(68);
-            if (!LAUNCHER_CLASS.getJuntaName().equals(JUNTA_API.getName())) {
-                thisWindow.datosDeCarga.setText("Tienes una temporada antigua!");
-                thisWindow.jProgressBar1.setValue(68);
-
-                try {
-                    FileUtils.cleanDirectory(new File(thisWindow.diomedesDir));
-                    thisWindow.jProgressBar1.setValue(70);
-                    thisWindow.datosDeCarga.setText("Descargando nueva temporada. " + JUNTA_API.getName());
-
-                    FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
-
-                    thisWindow.datosDeCarga.setText("Temporada descargada.");
-                    thisWindow.jProgressBar1.setValue(72);
-                    settingsJson.put("juntaName", JUNTA_API.getName());
-                    LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
-
-                    thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
-                } catch (IOException e) {
-                    JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
-                }
-
-            } 
-            if (!LAUNCHER_CLASS.getServerVersion().equals(JUNTA_API.getServerVersion())) {
-                thisWindow.datosDeCarga.setText("Hay una nueva version disponible!");
-                thisWindow.jProgressBar1.setValue(68);
-
-                try {
-                    thisWindow.jProgressBar1.setValue(70);
-                    thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
-
-                    FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
-
-                    thisWindow.datosDeCarga.setText("Actualizacion descargada");
-                    thisWindow.jProgressBar1.setValue(72);
-                    settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
-                    LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
-
-                    thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
-                } catch (IOException e) {
-                    JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
-                // guarda el archivo settings.json para que no se pierda esos datos
-                Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
-
-                // Abrir ya la ventana del launcher
-                thisWindow.datosDeCarga.setText("Abriendo...");
-                thisWindow.jProgressBar1.setValue(100);
-                LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
-                LAUNCHER_WINDOW.setLocationRelativeTo(null);
-                LAUNCHER_WINDOW.setVisible(true);
-                thisWindow.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor revisa el Canal de Discord para descargar la ultima versión. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
-                thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
-                thisWindow.jProgressBar1.setValue(0);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: Descarga de API\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
     }
     
     public boolean descomprimir(FileInputStream xd) {
@@ -360,7 +371,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 jProgressBar1.setValue(90);
                 return true;
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Envia captura de este error: descomprimir\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
     }

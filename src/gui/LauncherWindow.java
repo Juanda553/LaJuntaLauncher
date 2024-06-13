@@ -274,10 +274,6 @@ public class LauncherWindow extends javax.swing.JFrame {
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         System.out.println("Jugar");
         int exitCodeMC = Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this, LAUNCHER_CLASS.getUsername());
-        
-        if (exitCodeMC != 0) {
-            JOptionPane.showMessageDialog(null, "Joa, te crasheó el juego SJAKJSJKAS", "Crash", JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed

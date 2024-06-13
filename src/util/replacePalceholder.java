@@ -12,11 +12,12 @@ import java.util.Map;
  * @author juanz
  */
 public class replacePalceholder {
-    String dotDiomedes, mcVersion;
+    String dotDiomedes, mcVersion, dotMinecraft;
 
     public replacePalceholder(String dotDiomedes, String mcVersion) {
-        this.dotDiomedes = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
+        this.dotDiomedes = dotDiomedes;
         this.mcVersion = mcVersion;
+        this.dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
     }
 
     public List<String> getPlacedHoldediiiii(List<String> asd) {

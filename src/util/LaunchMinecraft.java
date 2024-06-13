@@ -1,9 +1,12 @@
 package util;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.json.JSONArray;
 
 
@@ -23,7 +26,7 @@ public class LaunchMinecraft {
             String ramFinal = "-Xmx" + ram + "G";
             
             McArgsCommand mcArgsCommand = new McArgsCommand(dotDiomedes, JUNTA_API.getVanillaVersion(), JUNTA_API.getForgeVersion());
-            replacePalceholder pene = new replacePalceholder(dotMinecraft, mcVersion);
+            replacePalceholder pene = new replacePalceholder(dotDiomedes, mcVersion);
             
             List<String> command = new ArrayList<>();
             command.add("java");
@@ -71,20 +74,35 @@ public class LaunchMinecraft {
                 // penetrar datos al cmd
                 ProcessBuilder processBuilder = new ProcessBuilder(command);
                 processBuilder.directory(new File(dotDiomedes));
-                processBuilder.inheritIO();
+                //processBuilder.inheritIO();
+                processBuilder.redirectErrorStream(true);
                 Process process = processBuilder.start();
                 ventana.dispose();
                 
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                StringBuilder output = new StringBuilder();
+                String line;
+                int lineCount = 0;
+                while ((line = reader.readLine()) != null && lineCount < 20) {
+                    output.append(line).append("\n");
+                    lineCount++;
+                }
+
                 process.waitFor();
                 ventana.setVisible(true);
                 System.out.println("Exitcode: " + process.exitValue());
+                
+                
+                if (process.exitValue() != 0) {
+                    JOptionPane.showMessageDialog(null, "Joabro, el juego te crasheó JKASJKAJKSJK\n\n" + output.toString() + "\n\nCodigo de Salida: " + process.exitValue(), "Crash xd", JOptionPane.ERROR_MESSAGE);
+                }
+                
                 return process.exitValue();
             } catch (IOException | InterruptedException e) {
-                System.out.println(e);
+                JOptionPane.showMessageDialog(null, "Envia captura de este error: Class LaunchMinecraft.java Process\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
-            System.out.println("error ejecutar");
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: Class LaunchMinecraft.java full\n" + ex, "Error Rancio", JOptionPane.ERROR_MESSAGE);
         }
         return 1;
     }
