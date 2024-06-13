@@ -7,12 +7,11 @@ import org.json.JSONObject;
 import gui.LoadingWindow;
 
 public class LauncherJunta {
-    private String launcherVersion, minecraftVersion, indexVersion, username, serverVersion, juntaName, diomedesDir;
+    private String minecraftVersion, indexVersion, username, serverVersion, juntaName, diomedesDir;
     int ram;
     LoadingWindow asd;
 
-    public LauncherJunta(String launcherVersion, String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String juntaName, String diomedesDir) {
-        this.launcherVersion = launcherVersion;
+    public LauncherJunta(String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String juntaName, String diomedesDir) {
         this.minecraftVersion = minecraftVersion;
         this.indexVersion = indexVersion;
         this.username = username;
@@ -68,14 +67,6 @@ public class LauncherJunta {
 
     public void setDiomedesDir(String diomedesDir) {
         this.diomedesDir = diomedesDir;
-    }
-
-    public String getLauncherVersion() {
-        return launcherVersion;
-    }
-
-    public void setLauncherVersion(String launcherVersion) {
-        this.launcherVersion = launcherVersion;
     }
 
     public String getMinecraftVersion() {

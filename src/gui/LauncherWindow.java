@@ -16,7 +16,7 @@ import util.LaunchMinecraft;
 public class LauncherWindow extends javax.swing.JFrame {
     private JuntaApi JUNTA_API;
     private LauncherJunta LAUNCHER_CLASS;
-    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle;
+    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle, LAUNCHER_VERSION;
     
     private Partners partnersWindow;
     private MinecraftSettings mcSettingsWindow;
@@ -30,10 +30,11 @@ public class LauncherWindow extends javax.swing.JFrame {
     private Font mcFont, mcTitleFont;
     private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon;
 
-    public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS) throws MalformedURLException {
+    public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION) throws MalformedURLException {
         
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
+        this.LAUNCHER_VERSION = LAUNCHER_VERSION;
         
         this.partnersWindow = new Partners(JUNTA_API.getPartners(), this.JUNTA_API.getMoneyCollected());
         this.mcSettingsWindow = new MinecraftSettings();
@@ -194,7 +195,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         LauncherVersionLabelJIJIJIJIJI.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         LauncherVersionLabelJIJIJIJIJI.setForeground(Color.decode(fontColor2));
-        LauncherVersionLabelJIJIJIJIJI.setText("Version: " + LAUNCHER_CLASS.getLauncherVersion());
+        LauncherVersionLabelJIJIJIJIJI.setText("Version: " + this.LAUNCHER_VERSION);
 
         btn_credits.setBackground(Color.decode(btnColor1));
         btn_credits.setForeground(Color.decode(fontColor2));

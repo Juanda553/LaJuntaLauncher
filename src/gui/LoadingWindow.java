@@ -24,6 +24,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
+import org.json.JSONArray;
 
 public class LoadingWindow extends javax.swing.JFrame {
     //public String mineDir, diomedesDir, juntaLauncherDir;
@@ -191,7 +192,6 @@ public class LoadingWindow extends javax.swing.JFrame {
 
                         //imprimir
                         System.out.println(settingsJson.getString("juntaServerVersion"));
-                        System.out.println(settingsJson.getString("launcherVersion"));
                         System.out.println(settingsJson.getString("username"));
                         System.out.println(settingsJson.getInt("minecraftRam") + "GB");
                         System.out.println(settingsJson.getString("diomedesDir"));
@@ -254,7 +254,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                     //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
                     thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
                     LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
-                            settingsJson.getString("launcherVersion"),
                             JUNTA_API.getForgeVersion(),
                             JUNTA_API.getIndexVersion(),
                             settingsJson.getString("username"),
@@ -306,7 +305,17 @@ public class LoadingWindow extends javax.swing.JFrame {
                             settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
                             LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
 
-                            thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
+                            if (thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"))) {
+                                thisWindow.jProgressBar1.setValue(70);
+                                thisWindow.datosDeCarga.setText("Limpiando archivos innecesarios " + JUNTA_API.getServerVersion());
+                                
+                                JSONArray deletedFiles = JUNTA_API.getDeletedFiles();
+                                for (int i = 0; i < deletedFiles.length(); i++) {
+                                    File vagina = new File(thisWindow.diomedesDir+"/"+deletedFiles.getString(i));
+                                    System.out.println(vagina);
+                                    vagina.delete();
+                                }
+                            }
                         } catch (IOException e) {
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Actualizar\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
@@ -318,7 +327,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                         // Abrir ya la ventana del launcher
                         thisWindow.datosDeCarga.setText("Abriendo...");
                         thisWindow.jProgressBar1.setValue(100);
-                        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS);
+                        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS, thisWindow.LAUNCHER_VERSION);
                         LAUNCHER_WINDOW.setLocationRelativeTo(null);
                         LAUNCHER_WINDOW.setVisible(true);
                         thisWindow.dispose();

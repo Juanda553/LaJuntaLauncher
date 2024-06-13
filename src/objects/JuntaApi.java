@@ -11,9 +11,9 @@ public class JuntaApi {
     private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontPlay, fontColor1, fontColor2;
     
     private JSONObject event;
-    private JSONArray news, partners, splashes;
+    private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray splashes) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
@@ -37,7 +37,7 @@ public class JuntaApi {
         this.event = event;
         this.news = news;
         this.partners = partners;
-        this.splashes = splashes;
+        this.deletedFiles = deletedFiles;
     }
 
     public String getVanillaVersion() {
@@ -248,14 +248,11 @@ public class JuntaApi {
         this.partners = partners;
     }
 
-    public JSONArray getSplashes() {
-        return splashes;
+    public JSONArray getDeletedFiles() {
+        return deletedFiles;
     }
 
-    public void setSplashes(JSONArray splashes) {
-        this.splashes = splashes;
+    public void setDeletedFiles(JSONArray deletedFiles) {
+        this.deletedFiles = deletedFiles;
     }
-
-    
-    
 }
