@@ -32,7 +32,7 @@ public class LoadingWindow extends javax.swing.JFrame {
     public String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
     public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
     public String diomedesDir = juntaLauncherDir + "/.diomedes";
-    public String LAUNCHER_VERSION = "2.0.1";
+    public String LAUNCHER_VERSION = "2.0.2";
     
     public LoadingWindow() {
         initComponents();
@@ -114,7 +114,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        URL API_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+        URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
         thisWindow.jProgressBar1.setValue(1);
         
         // Literalmente lo que dice abajo es lo que hace esto xd | VVVV
