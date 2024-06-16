@@ -14,13 +14,13 @@ import util.LaunchMinecraft;
  * @author juanz
  */
 public class Credits extends javax.swing.JFrame {
-    private LauncherJunta LAUNCHER_CLASS;
+    private LauncherJunta HERELAUNCHER_CLASS;
     private JuntaApi JUNTA_API;
     private LaunchMinecraft Launch_Minecraft;
     private JFrame diomedesPichaGrande;
     
     public Credits(LauncherJunta Launcher_Junta, JuntaApi Junta_Api, JFrame diomedesPichaGrande) {
-        this.LAUNCHER_CLASS = Launcher_Junta;
+        this.HERELAUNCHER_CLASS = Launcher_Junta;
         this.JUNTA_API = Junta_Api;
         this.diomedesPichaGrande = diomedesPichaGrande;
         this.Launch_Minecraft = new LaunchMinecraft();
@@ -55,6 +55,7 @@ public class Credits extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Creditos");
@@ -245,33 +246,49 @@ public class Credits extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(51, 51, 51));
+        jButton3.setBorder(null);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(credLauncher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(credClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(credServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(credClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(credServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jButton1))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(credLauncher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(credClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,23 +316,35 @@ public class Credits extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
-        String pipi = LAUNCHER_CLASS.getUsername();
+        String pipi = HERELAUNCHER_CLASS.getUsername();
         
         switch (pipi) {
             case "JuanDa553":
-                System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_1"));
+                System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_1"));
                 break;
             case "Lentinoo":
-                System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_2"));
+                System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_2"));
                 break;
             case "lFaker":
-                System.out.println(Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_3"));
+                System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_3"));
                 break;
             default:
-                JOptionPane.showMessageDialog(null, "Tu no eres admin pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Tu no eres staff pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
                 break;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        dispose();
+        String pipi = HERELAUNCHER_CLASS.getUsername();
+        if (pipi.equals("JuanDa553")) {
+            HERELAUNCHER_CLASS.setDiomedesDir("C:/Users/juanz/AppData/Roaming/diomedes/builder");
+            System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_1"));
+        } else {
+            JOptionPane.showMessageDialog(null, "Tu no eres admin pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -324,6 +353,7 @@ public class Credits extends javax.swing.JFrame {
     private javax.swing.JPanel credServidor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

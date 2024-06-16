@@ -94,6 +94,8 @@ public class LauncherWindow extends javax.swing.JFrame {
         userHead = new javax.swing.JLabel();
         LauncherVersionLabelJIJIJIJIJI = new javax.swing.JLabel();
         btn_credits = new javax.swing.JButton();
+        LauncherVersionLabelJIJIJIJIJI1 = new javax.swing.JLabel();
+        btn_settings = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
@@ -195,7 +197,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         LauncherVersionLabelJIJIJIJIJI.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         LauncherVersionLabelJIJIJIJIJI.setForeground(Color.decode(fontColor2));
-        LauncherVersionLabelJIJIJIJIJI.setText("Version: " + this.LAUNCHER_VERSION);
+        LauncherVersionLabelJIJIJIJIJI.setText("Launcher v" + this.LAUNCHER_VERSION);
 
         btn_credits.setBackground(Color.decode(btnColor1));
         btn_credits.setForeground(Color.decode(fontColor2));
@@ -205,6 +207,24 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_credits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_creditsActionPerformed(evt);
+            }
+        });
+
+        LauncherVersionLabelJIJIJIJIJI1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        LauncherVersionLabelJIJIJIJIJI1.setForeground(Color.decode(fontColor2));
+        LauncherVersionLabelJIJIJIJIJI1.setText("Client v" + this.LAUNCHER_CLASS.getServerVersion());
+
+        btn_settings.setBackground(Color.decode(btnColor1));
+        btn_settings.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_settings.setForeground(Color.decode(fontColor2));
+        btn_settings.setText("Ajustes");
+        btn_settings.setToolTipText("");
+        btn_settings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_settings.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_settings.setFocusPainted(false);
+        btn_settings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_settingsActionPerformed(evt);
             }
         });
 
@@ -224,10 +244,13 @@ public class LauncherWindow extends javax.swing.JFrame {
                             .addComponent(showUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_credits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRootLayout.createSequentialGroup()
-                        .addComponent(LauncherVersionLabelJIJIJIJIJI)
+                        .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LauncherVersionLabelJIJIJIJIJI)
+                            .addComponent(LauncherVersionLabelJIJIJIJIJI1))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btn_credits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_settings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -250,7 +273,11 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_partners, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(465, 465, 465)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_settings, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(399, 399, 399)
+                        .addComponent(LauncherVersionLabelJIJIJIJIJI1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LauncherVersionLabelJIJIJIJIJI)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_credits, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -288,11 +315,17 @@ public class LauncherWindow extends javax.swing.JFrame {
         creditsWindow.setVisible(true);
     }//GEN-LAST:event_btn_creditsActionPerformed
 
+    private void btn_settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_settingsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_settingsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel EventTitle;
     private javax.swing.JLabel LauncherVersionLabelJIJIJIJIJI;
+    private javax.swing.JLabel LauncherVersionLabelJIJIJIJIJI1;
     private javax.swing.JButton btn_credits;
     private javax.swing.JButton btn_partners;
+    private javax.swing.JButton btn_settings;
     private javax.swing.JScrollPane eventDesc;
     private javax.swing.JLabel eventImg;
     private javax.swing.JPanel eventPanel;
