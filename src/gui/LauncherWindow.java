@@ -7,10 +7,12 @@ import objects.LauncherJunta;
 
 import gui.*;
 import java.awt.Font;
+import java.awt.Image;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import util.LaunchMinecraft;
 
 public class LauncherWindow extends javax.swing.JFrame {
@@ -26,9 +28,9 @@ public class LauncherWindow extends javax.swing.JFrame {
     private LaunchMinecraft Launch_Minecraft;
     
     private JSONObject currentEvent;
-    
-    private Font mcFont, mcTitleFont;
-    private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon;
+    private JSONArray news;
+
+    private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon, new0Icon;
 
     public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION) throws MalformedURLException {
         
@@ -51,6 +53,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.fontColor1 = JUNTA_API.getFontColor1();
         this.fontColor2 = JUNTA_API.getFontColor2();
         this.currentEvent = JUNTA_API.getEvent();
+        this.news = JUNTA_API.getNews();
         
         URL userHeadUrl = new URL("https://cravatar.eu/helmhead/" + LAUNCHER_CLASS.getUsername() + "/32.png");
         this.userHeadIcon = new ImageIcon(userHeadUrl);
@@ -60,16 +63,26 @@ public class LauncherWindow extends javax.swing.JFrame {
         
         URL eventImgUrl = new URL(currentEvent.getString("img"));
         this.eventIcon = new ImageIcon(eventImgUrl);
+        //this.eventIcon = new ImageIcon(new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/img/LaJuntaBack.jpg"));
+        Image tempEventImg = eventIcon.getImage();
+        tempEventImg = tempEventImg.getScaledInstance(288, 162, Image.SCALE_SMOOTH);
+        this.eventIcon = new ImageIcon(tempEventImg);
          
         URL btnPlayFontUrl = new URL(btnPlayFontString);
         this.btnPlayFontIcon = new ImageIcon(btnPlayFontUrl);
+        
+        URL new0ImgUrl = new URL(news.getJSONObject(0).getString("img"));
+        this.new0Icon = new ImageIcon(new0ImgUrl);
+        Image tempNew0Img = new0Icon.getImage();
+        tempNew0Img = tempNew0Img.getScaledInstance(114, 65, Image.SCALE_SMOOTH);
+        this.new0Icon = new ImageIcon(tempNew0Img);
         
         initComponents();
         
         this.panelRoot.setBackground(Color.decode(bgColor1));
         this.panelMain.setBackground(Color.decode(bgColor2));
-        this.eventPanel.setBackground(Color.decode(bgColor1));
         this.newsPanel.setBackground(Color.decode(bgColor1));
+        this.eventPanel.setBackground(Color.decode(bgColor1));
     }
 
     @SuppressWarnings("unchecked")
@@ -79,13 +92,40 @@ public class LauncherWindow extends javax.swing.JFrame {
         panelRoot = new javax.swing.JPanel();
         panelMain = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
-        newsPanel = new javax.swing.JPanel();
+        eventPanel = new javax.swing.JPanel();
         EventTitle = new javax.swing.JLabel();
         eventDesc = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         eventImg = new javax.swing.JLabel();
-        eventPanel = new javax.swing.JPanel();
         header = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        newsPanel = new javax.swing.JPanel();
+        new1 = new javax.swing.JPanel();
+        new_title_1 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        new_desc_1 = new javax.swing.JTextArea();
+        new_img_1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        new2 = new javax.swing.JPanel();
+        new_title_2 = new javax.swing.JLabel();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        new_desc_2 = new javax.swing.JTextArea();
+        new_img_2 = new javax.swing.JLabel();
+        new3 = new javax.swing.JPanel();
+        new_title_3 = new javax.swing.JLabel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        new_desc_3 = new javax.swing.JTextArea();
+        new_img_3 = new javax.swing.JLabel();
+        new4 = new javax.swing.JPanel();
+        new_title_4 = new javax.swing.JLabel();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        new_desc_4 = new javax.swing.JTextArea();
+        new_img_4 = new javax.swing.JLabel();
+        new5 = new javax.swing.JPanel();
+        new_title_5 = new javax.swing.JLabel();
+        jScrollPane16 = new javax.swing.JScrollPane();
+        new_desc_5 = new javax.swing.JTextArea();
+        new_img_5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         showUserName1 = new javax.swing.JLabel();
         showUserName = new javax.swing.JLabel();
@@ -117,16 +157,16 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
         panelMain.add(playButton);
-        playButton.setBounds(140, 220, 180, 65);
+        playButton.setBounds(178, 220, 180, 65);
 
-        newsPanel.setBackground(new java.awt.Color(51, 51, 51));
-        newsPanel.setLayout(null);
+        eventPanel.setBackground(new java.awt.Color(51, 51, 51));
+        eventPanel.setLayout(null);
 
         EventTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         EventTitle.setForeground(Color.decode(fontColor1));
         EventTitle.setText(currentEvent.getString("title"));
-        newsPanel.add(EventTitle);
-        EventTitle.setBounds(10, 10, 360, 25);
+        eventPanel.add(EventTitle);
+        EventTitle.setBounds(10, 10, 290, 25);
 
         eventDesc.setBackground(Color.decode(bgColor1));
         eventDesc.setBorder(null);
@@ -143,28 +183,324 @@ public class LauncherWindow extends javax.swing.JFrame {
         jTextArea1.setDisabledTextColor(Color.decode(fontColor1));
         eventDesc.setViewportView(jTextArea1);
 
-        newsPanel.add(eventDesc);
-        eventDesc.setBounds(10, 45, 360, 135);
+        eventPanel.add(eventDesc);
+        eventDesc.setBounds(10, 45, 290, 135);
 
         eventImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         eventImg.setIcon(eventIcon);
         eventImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        newsPanel.add(eventImg);
-        eventImg.setBounds(5, 185, 368, 165);
+        eventPanel.add(eventImg);
+        eventImg.setBounds(10, 185, 288, 162);
 
-        panelMain.add(newsPanel);
-        newsPanel.setBounds(455, 270, 380, 355);
-
-        eventPanel.setBackground(new java.awt.Color(51, 51, 51));
-        eventPanel.setLayout(null);
         panelMain.add(eventPanel);
-        eventPanel.setBounds(15, 295, 430, 330);
+        eventPanel.setBounds(530, 270, 310, 355);
 
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header.setIcon(headerIcon);
         header.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         panelMain.add(header);
         header.setBounds(15, 10, 820, 245);
+
+        jScrollPane1.setBackground(Color.decode(bgColor1));
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        newsPanel.setBackground(Color.decode(bgColor1));
+        newsPanel.setOpaque(false);
+        newsPanel.setLayout(new java.awt.GridLayout(0, 1, 0, 6));
+
+        new1.setBackground(Color.decode(bgColor1));
+        new1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        new1.setPreferredSize(new java.awt.Dimension(498, 136));
+
+        new_title_1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        new_title_1.setForeground(Color.decode(fontColor1));
+        new_title_1.setText(news.getJSONObject(0).getString("title"));
+
+        jScrollPane12.setBackground(Color.decode(bgColor2));
+        jScrollPane12.setBorder(null);
+        jScrollPane12.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        new_desc_1.setEditable(false);
+        new_desc_1.setBackground(Color.decode(bgColor2));
+        new_desc_1.setColumns(20);
+        new_desc_1.setForeground(Color.decode(fontColor1));
+        new_desc_1.setLineWrap(true);
+        new_desc_1.setRows(5);
+        new_desc_1.setText(news.getJSONObject(0).getString("desc"));
+        new_desc_1.setWrapStyleWord(true);
+        new_desc_1.setBorder(null);
+        jScrollPane12.setViewportView(new_desc_1);
+
+        new_img_1.setIcon(new0Icon);
+        new_img_1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel1.setForeground(Color.decode(fontColor1));
+        jLabel1.setText(news.getJSONObject(0).getString("date"));
+
+        javax.swing.GroupLayout new1Layout = new javax.swing.GroupLayout(new1);
+        new1.setLayout(new1Layout);
+        new1Layout.setHorizontalGroup(
+            new1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(new1Layout.createSequentialGroup()
+                        .addComponent(new_title_1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(new1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(new_img_1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        new1Layout.setVerticalGroup(
+            new1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(new1Layout.createSequentialGroup()
+                        .addComponent(new_img_1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1))
+                    .addGroup(new1Layout.createSequentialGroup()
+                        .addComponent(new_title_1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        newsPanel.add(new1);
+
+        new2.setBackground(Color.decode(bgColor1));
+        new2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        new2.setPreferredSize(new java.awt.Dimension(498, 136));
+
+        new_title_2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        new_title_2.setForeground(Color.decode(fontColor1));
+        new_title_2.setText(news.getJSONObject(1).getString("title"));
+
+        jScrollPane13.setBackground(Color.decode(bgColor2));
+        jScrollPane13.setBorder(null);
+        jScrollPane13.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        new_desc_2.setEditable(false);
+        new_desc_2.setBackground(Color.decode(bgColor2));
+        new_desc_2.setColumns(20);
+        new_desc_2.setForeground(Color.decode(fontColor1));
+        new_desc_2.setLineWrap(true);
+        new_desc_2.setRows(5);
+        new_desc_2.setText(news.getJSONObject(1).getString("desc"));
+        new_desc_2.setWrapStyleWord(true);
+        new_desc_2.setBorder(null);
+        jScrollPane13.setViewportView(new_desc_2);
+
+        new_img_2.setIcon(new0Icon);
+        new_img_2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout new2Layout = new javax.swing.GroupLayout(new2);
+        new2.setLayout(new2Layout);
+        new2Layout.setHorizontalGroup(
+            new2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(new2Layout.createSequentialGroup()
+                        .addComponent(new_title_2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(new_img_2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        new2Layout.setVerticalGroup(
+            new2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(new_img_2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(new2Layout.createSequentialGroup()
+                        .addComponent(new_title_2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        newsPanel.add(new2);
+
+        new3.setBackground(Color.decode(bgColor1));
+        new3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        new3.setPreferredSize(new java.awt.Dimension(498, 136));
+
+        new_title_3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        new_title_3.setForeground(Color.decode(fontColor1));
+        new_title_3.setText(news.getJSONObject(2).getString("title"));
+
+        jScrollPane14.setBackground(Color.decode(bgColor2));
+        jScrollPane14.setBorder(null);
+        jScrollPane14.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        new_desc_3.setEditable(false);
+        new_desc_3.setBackground(Color.decode(bgColor2));
+        new_desc_3.setColumns(20);
+        new_desc_3.setForeground(Color.decode(fontColor1));
+        new_desc_3.setLineWrap(true);
+        new_desc_3.setRows(5);
+        new_desc_3.setText(news.getJSONObject(2).getString("desc"));
+        new_desc_3.setWrapStyleWord(true);
+        new_desc_3.setBorder(null);
+        jScrollPane14.setViewportView(new_desc_3);
+
+        new_img_3.setIcon(new0Icon);
+        new_img_3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout new3Layout = new javax.swing.GroupLayout(new3);
+        new3.setLayout(new3Layout);
+        new3Layout.setHorizontalGroup(
+            new3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(new3Layout.createSequentialGroup()
+                        .addComponent(new_title_3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(new_img_3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        new3Layout.setVerticalGroup(
+            new3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(new_img_3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(new3Layout.createSequentialGroup()
+                        .addComponent(new_title_3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        newsPanel.add(new3);
+
+        new4.setBackground(Color.decode(bgColor1));
+        new4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        new4.setPreferredSize(new java.awt.Dimension(498, 136));
+
+        new_title_4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        new_title_4.setForeground(Color.decode(fontColor1));
+        new_title_4.setText(news.getJSONObject(3).getString("title"));
+
+        jScrollPane15.setBackground(Color.decode(bgColor2));
+        jScrollPane15.setBorder(null);
+        jScrollPane15.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        new_desc_4.setEditable(false);
+        new_desc_4.setBackground(Color.decode(bgColor2));
+        new_desc_4.setColumns(20);
+        new_desc_4.setForeground(Color.decode(fontColor1));
+        new_desc_4.setLineWrap(true);
+        new_desc_4.setRows(5);
+        new_desc_4.setText(news.getJSONObject(3).getString("desc"));
+        new_desc_4.setWrapStyleWord(true);
+        new_desc_4.setBorder(null);
+        jScrollPane15.setViewportView(new_desc_4);
+
+        new_img_4.setIcon(new0Icon);
+        new_img_4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout new4Layout = new javax.swing.GroupLayout(new4);
+        new4.setLayout(new4Layout);
+        new4Layout.setHorizontalGroup(
+            new4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(new4Layout.createSequentialGroup()
+                        .addComponent(new_title_4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(new_img_4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        new4Layout.setVerticalGroup(
+            new4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(new_img_4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(new4Layout.createSequentialGroup()
+                        .addComponent(new_title_4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        newsPanel.add(new4);
+
+        new5.setBackground(Color.decode(bgColor1));
+        new5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        new5.setPreferredSize(new java.awt.Dimension(498, 136));
+
+        new_title_5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        new_title_5.setForeground(Color.decode(fontColor1));
+        new_title_5.setText(news.getJSONObject(4).getString("title"));
+
+        jScrollPane16.setBackground(Color.decode(bgColor2));
+        jScrollPane16.setBorder(null);
+        jScrollPane16.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        new_desc_5.setEditable(false);
+        new_desc_5.setBackground(Color.decode(bgColor2));
+        new_desc_5.setColumns(20);
+        new_desc_5.setForeground(Color.decode(fontColor1));
+        new_desc_5.setLineWrap(true);
+        new_desc_5.setRows(5);
+        new_desc_5.setText(news.getJSONObject(4).getString("desc"));
+        new_desc_5.setWrapStyleWord(true);
+        new_desc_5.setBorder(null);
+        jScrollPane16.setViewportView(new_desc_5);
+
+        new_img_5.setIcon(new0Icon);
+        new_img_5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout new5Layout = new javax.swing.GroupLayout(new5);
+        new5.setLayout(new5Layout);
+        new5Layout.setHorizontalGroup(
+            new5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(new5Layout.createSequentialGroup()
+                        .addComponent(new_title_5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane16, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(new_img_5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        new5Layout.setVerticalGroup(
+            new5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(new5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(new5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(new_img_5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(new5Layout.createSequentialGroup()
+                        .addComponent(new_title_5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        newsPanel.add(new5);
+
+        jScrollPane1.setViewportView(newsPanel);
+
+        panelMain.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 295, 510, 330);
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
@@ -330,8 +666,35 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JLabel eventImg;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JLabel header;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
+    private javax.swing.JScrollPane jScrollPane16;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPanel new1;
+    private javax.swing.JPanel new2;
+    private javax.swing.JPanel new3;
+    private javax.swing.JPanel new4;
+    private javax.swing.JPanel new5;
+    private javax.swing.JTextArea new_desc_1;
+    private javax.swing.JTextArea new_desc_2;
+    private javax.swing.JTextArea new_desc_3;
+    private javax.swing.JTextArea new_desc_4;
+    private javax.swing.JTextArea new_desc_5;
+    private javax.swing.JLabel new_img_1;
+    private javax.swing.JLabel new_img_2;
+    private javax.swing.JLabel new_img_3;
+    private javax.swing.JLabel new_img_4;
+    private javax.swing.JLabel new_img_5;
+    private javax.swing.JLabel new_title_1;
+    private javax.swing.JLabel new_title_2;
+    private javax.swing.JLabel new_title_3;
+    private javax.swing.JLabel new_title_4;
+    private javax.swing.JLabel new_title_5;
     private javax.swing.JPanel newsPanel;
     private javax.swing.JPanel panelMain;
     private javax.swing.JPanel panelRoot;
