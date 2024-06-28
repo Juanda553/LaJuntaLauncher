@@ -116,6 +116,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setLocationRelativeTo(null);
         
         URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
+        //URL API_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
         thisWindow.jProgressBar1.setValue(1);
         
         // Literalmente lo que dice abajo es lo que hace esto xd | VVVV
