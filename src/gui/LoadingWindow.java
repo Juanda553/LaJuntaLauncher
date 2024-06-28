@@ -53,6 +53,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(65, 65, 65));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         datosDeCarga.setForeground(new java.awt.Color(255, 255, 255));
         datosDeCarga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -78,7 +79,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                     .addComponent(datosDeCarga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -91,7 +92,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                 .addComponent(datosDeCarga)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,6 +213,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                         localSettings.put("username", "");
                         localSettings.put("minecraftRam", 0);
                         localSettings.put("diomedesDir", thisWindow.diomedesDir);
+                        localSettings.put("highQualityMode", false);
 
                         // pasandoe ese objeto a un archivo settings.json y guardando
                         String jsonParla = localSettings.toString(4);
@@ -235,7 +237,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                     // de paso los guarda en el objeto json
                     if(settingsJson.getString("username").equals("")){
                         System.out.println("no tiene user");
-                        String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
+                        String username = JOptionPane.showInputDialog(null, "Por favor, ingresa tu nombre de usuario (TODO PEGADO, NO USES ESPACIOS)", "Ingreso de Usuario", JOptionPane.QUESTION_MESSAGE);
 
                         settingsJson.put("username", username);
 
@@ -247,6 +249,13 @@ public class LoadingWindow extends javax.swing.JFrame {
                         settingsJson.put("minecraftRam", ram);
                     }
                     thisWindow.jProgressBar1.setValue(55);
+                    
+                    // Creando nuevos ajsutes del settings.json
+                    try {
+                        System.out.println(settingsJson.getString("highQualityMode"));
+                    } catch (Exception e) {
+                        settingsJson.put("highQualityMode", false);
+                    }
 
                     // guarda el archivo settings.json para que no se pierda esos datos
                     Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
@@ -260,10 +269,11 @@ public class LoadingWindow extends javax.swing.JFrame {
                             settingsJson.getInt("minecraftRam"),
                             settingsJson.getString("juntaServerVersion"),
                             settingsJson.getString("juntaName"),
-                            settingsJson.getString("diomedesDir")
+                            settingsJson.getString("diomedesDir"),
+                            false
                     );
                     thisWindow.jProgressBar1.setValue(64);
-
+                    
                     // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
 
                     thisWindow.datosDeCarga.setText("Comprobando temporada...");
