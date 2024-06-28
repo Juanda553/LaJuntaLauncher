@@ -9,9 +9,10 @@ import gui.LoadingWindow;
 public class LauncherJunta {
     private String minecraftVersion, indexVersion, username, serverVersion, juntaName, diomedesDir;
     int ram;
+    boolean highQualityMode;
     LoadingWindow asd;
 
-    public LauncherJunta(String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String juntaName, String diomedesDir) {
+    public LauncherJunta(String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String juntaName, String diomedesDir, boolean highQualityMode) {
         this.minecraftVersion = minecraftVersion;
         this.indexVersion = indexVersion;
         this.username = username;
@@ -19,6 +20,7 @@ public class LauncherJunta {
         this.serverVersion = serverVersion;
         this.juntaName = juntaName;
         this.diomedesDir = diomedesDir;
+        this.highQualityMode = highQualityMode;
     }
     
     public boolean saveData(){
@@ -31,6 +33,14 @@ public class LauncherJunta {
             JOptionPane.showMessageDialog(null, e, "Ocurrió un pequeno error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
+
+    public boolean isHighQualityMode() {
+        return highQualityMode;
+    }
+
+    public void setHighQualityMode(boolean highQualityMode) {
+        this.highQualityMode = highQualityMode;
     }
     
     public boolean loadData(){
