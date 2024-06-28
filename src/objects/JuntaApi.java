@@ -1,5 +1,9 @@
 package objects;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,6 +42,59 @@ public class JuntaApi {
         this.news = news;
         this.partners = partners;
         this.deletedFiles = deletedFiles;
+    }
+    
+    public boolean updateApi(URL API_URL, JuntaApi x){
+        try {
+            HttpURLConnection connection = (HttpURLConnection) API_URL.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            
+            StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(API_URL.openStream());
+
+                while(scanner.hasNext()){
+                    informationString.append(scanner.nextLine());
+            }
+            scanner.close();
+            
+            JSONObject api = new JSONObject(informationString.toString());
+            
+            JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
+            JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
+
+            x.setName(api.getString("juntaName"));
+            x.setServerVersion(api.getString("juntaVersion"));
+            x.setForgeVersion(api.getString("forgeVersion"));
+            x.setVanillaVersion(api.getString("vanillaVersion"));
+            x.setIndexVersion(api.getString("indexVersion"));
+            x.setServerIcon(api.getString("icon"));
+            x.setModpackInitial(api.getString("modpackInstall"));
+            x.setModpackUpdate(api.getString("modPackUpdate"));
+            
+            x.setLauncherVersion(apiLauncherProperties.getString("launcherVersion"));
+            x.setTitleImg(apiLauncherProperties.getString("titleImage"));
+            x.setServerPrice(apiLauncherProperties.getInt("serverPrice"));
+            x.setMoneyCollected(apiLauncherProperties.getInt("moneyCollected"));
+            
+            x.setBgColor1(apiLauncherColors.getString("background1"));
+            x.setGbColor2(apiLauncherColors.getString("background2"));
+            x.setButtonColor1(apiLauncherColors.getString("button1"));
+            x.setButtonColor2(apiLauncherColors.getString("button2"));
+            x.setButtonPlay(apiLauncherColors.getString("buttonPlay"));
+            x.setFontPlay(apiLauncherColors.getString("fontPlay"));
+            x.setFontColor1(apiLauncherColors.getString("font1"));
+            x.setFontColor2(apiLauncherColors.getString("font2"));
+            x.setEvent(apiLauncherProperties.getJSONObject("event"));
+            x.setNews(apiLauncherProperties.getJSONArray("news"));
+            x.setPartners(apiLauncherProperties.getJSONArray("partners"));
+            x.setDeletedFiles(apiLauncherProperties.getJSONArray("deletedMods"));
+            
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
     public String getVanillaVersion() {
