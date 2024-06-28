@@ -4,6 +4,7 @@
  */
 package gui;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import objects.JuntaApi;
@@ -61,32 +62,33 @@ public class Credits extends javax.swing.JFrame {
         setTitle("Creditos");
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBackground(Color.decode(JUNTA_API.getGbColor2()));
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel2.setText("Fundador y dueño: JuanDa553");
 
-        credClient.setBackground(new java.awt.Color(51, 51, 51));
+        credClient.setBackground(Color.decode(JUNTA_API.getGbColor2()));
         credClient.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel9.setText("Cliente");
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel1.setText("Diseñador: JuanDa553");
 
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel10.setText("Actualizar 1.19.2: Lentinoo");
 
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel7.setText("Modpack Tester: JuanDa553");
 
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel12.setText("Diseñador menú Principal: ");
 
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel13.setText("Diseñador menú pausa: JuanDa553");
 
         javax.swing.GroupLayout credClientLayout = new javax.swing.GroupLayout(credClient);
@@ -126,23 +128,24 @@ public class Credits extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        credLauncher.setBackground(new java.awt.Color(51, 51, 51));
+        credLauncher.setBackground(Color.decode(JUNTA_API.getGbColor2()));
         credLauncher.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel8.setText("Launcher");
 
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel4.setText("Programadores: JuanDa553, Lentinoo");
 
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel5.setText("Diseñadores: JuanDa553");
 
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel6.setText("Testers: JuanDa553, Chucho");
 
-        jButton2.setBackground(new java.awt.Color(51, 51, 51));
+        jButton2.setBackground(Color.decode(JUNTA_API.getGbColor2()));
+        jButton2.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jButton2.setText("Admin");
         jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +154,7 @@ public class Credits extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(51, 51, 51));
+        jButton3.setBackground(Color.decode(JUNTA_API.getGbColor2()));
         jButton3.setBorder(null);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,26 +203,26 @@ public class Credits extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        credServidor.setBackground(new java.awt.Color(51, 51, 51));
+        credServidor.setBackground(Color.decode(JUNTA_API.getGbColor2()));
         credServidor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel11.setText("Servidor");
 
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel14.setText("Host: Vultam");
 
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel15.setText("Programador: JuanDa553");
 
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel16.setText("Diseño: JuanDa553");
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel3.setText("Constructores: JuanDa553, Lentinooo, lFaker");
 
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel17.setText("Historia: JuanDa553, Lentinoo");
 
         javax.swing.GroupLayout credServidorLayout = new javax.swing.GroupLayout(credServidor);
