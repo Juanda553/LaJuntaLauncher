@@ -32,7 +32,7 @@ public class LoadingWindow extends javax.swing.JFrame {
     public String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
     public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
     public String diomedesDir = juntaLauncherDir + "/.diomedes";
-    public String LAUNCHER_VERSION = "2.0.2";
+    public String LAUNCHER_VERSION = "2.1.0";
     
     public LoadingWindow() {
         initComponents();
