@@ -175,7 +175,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiLauncherProperties.getJSONObject("event"),
                     apiLauncherProperties.getJSONArray("news"),
                     apiLauncherProperties.getJSONArray("partners"),
-                    apiLauncherProperties.getJSONArray("deletedMods")
+                    apiLauncherProperties.getJSONArray("deletedMods"),
+                    apiLauncherProperties.getJSONObject("high_quality")
                 );
 
             // Imprime en consola toda desa vaina
@@ -191,6 +192,20 @@ public class LoadingWindow extends javax.swing.JFrame {
                         String path = thisWindow.juntaLauncherDir+"/settings.json";
                         String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
                         JSONObject settingsJson = new JSONObject(settingsContent);
+                        
+                        // Creando nuevos ajsutes del settings.json
+                        try {
+                            System.out.println(settingsJson.getBoolean("highQualityMode"));
+                        } catch (Exception e) {
+                            System.out.println("creando nuevos ajustes");
+                            System.out.println(e);
+                            String TEMPsettingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                            JSONObject tempSettingsJson = new JSONObject(settingsContent);
+                        
+                            tempSettingsJson.put("highQualityMode", false);
+                            
+                            Files.write(Paths.get(path), tempSettingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+                        }
 
                         //imprimir
                         System.out.println(settingsJson.getString("juntaServerVersion"));
@@ -251,12 +266,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                     }
                     thisWindow.jProgressBar1.setValue(55);
                     
-                    // Creando nuevos ajsutes del settings.json
-                    try {
-                        System.out.println(settingsJson.getString("highQualityMode"));
-                    } catch (Exception e) {
-                        settingsJson.put("highQualityMode", false);
-                    }
+                    
 
                     // guarda el archivo settings.json para que no se pierda esos datos
                     Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
@@ -271,7 +281,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                             settingsJson.getString("juntaServerVersion"),
                             settingsJson.getString("juntaName"),
                             settingsJson.getString("diomedesDir"),
-                            false
+                            settingsJson.getBoolean("highQualityMode")
                     );
                     thisWindow.jProgressBar1.setValue(64);
                     
@@ -338,7 +348,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                         // Abrir ya la ventana del launcher
                         thisWindow.datosDeCarga.setText("Abriendo...");
                         thisWindow.jProgressBar1.setValue(100);
-                        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS, thisWindow.LAUNCHER_VERSION);
+                        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS, thisWindow.LAUNCHER_VERSION, thisWindow.juntaLauncherDir, thisWindow.diomedesDir);
                         LAUNCHER_WINDOW.setLocationRelativeTo(null);
                         LAUNCHER_WINDOW.setVisible(true);
                         thisWindow.dispose();

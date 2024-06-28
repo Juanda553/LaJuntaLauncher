@@ -14,10 +14,10 @@ public class JuntaApi {
     private int serverPrice, MoneyCollected;
     private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontPlay, fontColor1, fontColor2;
     
-    private JSONObject event;
+    private JSONObject event, highQualityData;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
@@ -42,6 +42,7 @@ public class JuntaApi {
         this.news = news;
         this.partners = partners;
         this.deletedFiles = deletedFiles;
+        this.highQualityData = highQualityData;
     }
     
     public boolean updateApi(URL API_URL, JuntaApi x){
@@ -97,6 +98,14 @@ public class JuntaApi {
         }
     }
 
+    public JSONObject getHighQualityData() {
+        return highQualityData;
+    }
+
+    public void setHighQualityData(JSONObject highQualityData) {
+        this.highQualityData = highQualityData;
+    }
+    
     public String getVanillaVersion() {
         return vanillaVersion;
     }

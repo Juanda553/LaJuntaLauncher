@@ -32,14 +32,14 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon, new0Icon, new1Icon, new2Icon;
 
-    public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION) throws MalformedURLException {
+    public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION, String launcherDir, String dotDiomedes) throws MalformedURLException {
         
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
         this.LAUNCHER_VERSION = LAUNCHER_VERSION;
         
         this.partnersWindow = new Partners(JUNTA_API.getPartners(), this.JUNTA_API.getMoneyCollected());
-        this.mcSettingsWindow = new MinecraftSettings(JUNTA_API, LAUNCHER_CLASS);
+        this.mcSettingsWindow = new MinecraftSettings(JUNTA_API, LAUNCHER_CLASS, launcherDir, dotDiomedes);
         this.launcherSettingsWindow = new LauncherSettings();
         this.creditsWindow = new Credits(LAUNCHER_CLASS, JUNTA_API, this);
         this.Launch_Minecraft = new LaunchMinecraft();
@@ -102,12 +102,6 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.panelMain.setBackground(Color.decode(bgColor2));
         this.newsPanel.setBackground(Color.decode(bgColor1));
         this.eventPanel.setBackground(Color.decode(bgColor1));
-        
-        if (LAUNCHER_CLASS.isHighQualityMode()) {
-            isHighQualityModeLAbel.setText("Usando modo Calidad Alta");
-        } else {
-            isHighQualityModeLAbel.setText("Usando modo Baja Calidad");
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -150,15 +144,12 @@ public class LauncherWindow extends javax.swing.JFrame {
         showUserName1 = new javax.swing.JLabel();
         showUserName = new javax.swing.JLabel();
         btn_partners = new javax.swing.JButton();
-        usingRam = new javax.swing.JLabel();
         userHead = new javax.swing.JLabel();
         LauncherVersionLabelJIJIJIJIJI = new javax.swing.JLabel();
         btn_credits = new javax.swing.JButton();
         LauncherVersionLabelJIJIJIJIJI1 = new javax.swing.JLabel();
         btn_settings = new javax.swing.JButton();
         btn_settings1 = new javax.swing.JButton();
-        isHighQualityModeLAbel = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
@@ -485,10 +476,6 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
-        usingRam.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        usingRam.setForeground(Color.decode(fontColor2));
-        usingRam.setText("Usando " + LAUNCHER_CLASS.getRam() + "GB de RAM");
-
         userHead.setIcon(userHeadIcon);
 
         LauncherVersionLabelJIJIJIJIJI.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
@@ -537,13 +524,6 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
-        isHighQualityModeLAbel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        isHighQualityModeLAbel.setForeground(Color.decode(fontColor2));
-        isHighQualityModeLAbel.setText("modo hq");
-
-        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator2.setForeground(new java.awt.Color(102, 102, 102));
-
         javax.swing.GroupLayout panelRootLayout = new javax.swing.GroupLayout(panelRoot);
         panelRoot.setLayout(panelRootLayout);
         panelRootLayout.setHorizontalGroup(
@@ -553,7 +533,6 @@ public class LauncherWindow extends javax.swing.JFrame {
                 .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addComponent(btn_partners, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(usingRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(showUserName1)
@@ -563,13 +542,11 @@ public class LauncherWindow extends javax.swing.JFrame {
                     .addComponent(btn_credits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_settings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addComponent(btn_settings1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(isHighQualityModeLAbel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LauncherVersionLabelJIJIJIJIJI)
                             .addComponent(LauncherVersionLabelJIJIJIJIJI1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jSeparator2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -594,13 +571,7 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(btn_settings, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_settings1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usingRam)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(isHighQualityModeLAbel)
-                        .addGap(323, 323, 323)
+                        .addGap(378, 378, 378)
                         .addComponent(LauncherVersionLabelJIJIJIJIJI1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LauncherVersionLabelJIJIJIJIJI)
@@ -669,13 +640,11 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JLabel eventImg;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JLabel header;
-    private javax.swing.JLabel isHighQualityModeLAbel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel new1;
     private javax.swing.JPanel new2;
@@ -699,9 +668,8 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JPanel panelMain;
     private javax.swing.JPanel panelRoot;
     private javax.swing.JButton playButton;
-    private javax.swing.JLabel showUserName;
+    public javax.swing.JLabel showUserName;
     private javax.swing.JLabel showUserName1;
     private javax.swing.JLabel userHead;
-    private javax.swing.JLabel usingRam;
     // End of variables declaration//GEN-END:variables
 }

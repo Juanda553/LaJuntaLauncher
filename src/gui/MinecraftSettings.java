@@ -5,9 +5,19 @@
 package gui;
 
 import java.awt.Color;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import javax.swing.JOptionPane;
 import objects.JuntaApi;
 import objects.LauncherJunta;
+import org.json.JSONObject;
+import gui.LauncherWindow;
+import java.io.File;
+import java.net.URL;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import util.cargando;
 
 
 
@@ -18,9 +28,13 @@ import objects.LauncherJunta;
 public class MinecraftSettings extends javax.swing.JFrame {
     private JuntaApi JUNTA_API;
     private LauncherJunta LAUNCHER_CLASS;
-    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle;
+    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle, launcherDir, dotDiomedes;
     
-    public MinecraftSettings(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS) {
+    private String back_username;
+    private int back_ram;
+    private boolean back_highQuality;
+    
+    public MinecraftSettings(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String launcherDir, String dotDiomedes) {
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
         
@@ -33,8 +47,16 @@ public class MinecraftSettings extends javax.swing.JFrame {
         this.fontColor1 = JUNTA_API.getFontColor1();
         this.fontColor2 = JUNTA_API.getFontColor2();
         
+        this.launcherDir = launcherDir;
+        this.dotDiomedes = dotDiomedes;
+        
         initComponents();
-        jPanel1.setBackground(Color.decode(btnColor1));
+        loadSettings();
+        
+        
+        
+        
+        jPanel1.setBackground(Color.decode(bgColor2));
     }
 
     @SuppressWarnings("unchecked")
@@ -47,12 +69,13 @@ public class MinecraftSettings extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         highQualityCheck = new javax.swing.JCheckBox();
         btn_apply = new javax.swing.JButton();
-        spinnerRam = new javax.swing.JSpinner();
         btn_load = new javax.swing.JButton();
         btn_changeName = new javax.swing.JButton();
         btn_close = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        current_user = new javax.swing.JLabel();
+        sliderRam = new javax.swing.JSlider();
+        selectedRam = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ajustes");
@@ -75,6 +98,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
         highQualityCheck.setBackground(Color.decode(bgColor1));
         highQualityCheck.setForeground(Color.decode(fontColor1));
         highQualityCheck.setText("Alta Calidad");
+        highQualityCheck.setToolTipText("Activa los shaders y otos efectos visuales");
         highQualityCheck.setFocusable(false);
 
         btn_apply.setBackground(Color.decode(btnColor2));
@@ -87,10 +111,6 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 btn_applyActionPerformed(evt);
             }
         });
-
-        spinnerRam.setModel(new javax.swing.SpinnerNumberModel(5, 4, 16, 1));
-        spinnerRam.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        spinnerRam.setFocusable(false);
 
         btn_load.setBackground(Color.decode(btnColor2));
         btn_load.setForeground(Color.decode(fontColor2));
@@ -127,8 +147,44 @@ public class MinecraftSettings extends javax.swing.JFrame {
         jLabel4.setForeground(Color.decode(fontColor1));
         jLabel4.setText("Nombre de usuario");
 
-        jLabel5.setForeground(Color.decode(fontColor1));
-        jLabel5.setText("abcdefghijk");
+        current_user.setForeground(Color.decode(fontColor1));
+        current_user.setText("abcdefghijk");
+
+        sliderRam.setBackground(Color.decode(bgColor2));
+        sliderRam.setMaximum(16);
+        sliderRam.setMinimum(4);
+        sliderRam.setSnapToTicks(true);
+        sliderRam.setValue(5);
+        sliderRam.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                sliderRamAncestorMoved(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        sliderRam.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+                sliderRamAncestorMoved1(evt);
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+            }
+        });
+        sliderRam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                sliderRamMouseReleased(evt);
+            }
+        });
+        sliderRam.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                sliderRamVetoableChange(evt);
+            }
+        });
+
+        selectedRam.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        selectedRam.setForeground(Color.decode(fontColor1));
+        selectedRam.setText("ram");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -139,22 +195,30 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(highQualityCheck)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(spinnerRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_changeName)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(sliderRam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btn_load, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                                        .addComponent(btn_close, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_apply, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(selectedRam)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(highQualityCheck)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(current_user)
+                                    .addComponent(jLabel1))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_load, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                        .addComponent(btn_close, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_apply, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(btn_changeName)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,15 +228,17 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spinnerRam, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(sliderRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectedRam))
+                .addGap(16, 16, 16)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(highQualityCheck)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(current_user)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_changeName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
@@ -212,7 +278,28 @@ public class MinecraftSettings extends javax.swing.JFrame {
 
     private void btn_applyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_applyActionPerformed
         try {
-            
+                LAUNCHER_CLASS.setRam(sliderRam.getValue());
+                LAUNCHER_CLASS.setHighQualityMode(highQualityCheck.isSelected());
+                LAUNCHER_CLASS.setUsername(current_user.getText());
+
+                String path = this.launcherDir+"/settings.json";
+                String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                JSONObject settingsJson = new JSONObject(settingsContent);
+
+                settingsJson.put("minecraftRam", sliderRam.getValue());
+                settingsJson.put("highQualityMode", highQualityCheck.isSelected());
+                settingsJson.put("username", current_user.getText());
+
+                Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+                
+                if (this.back_highQuality != highQualityCheck.isSelected())
+                    if (highQualityCheck.isSelected()){
+                        activandoHihgQuality();
+                    } else {
+                        desactivandoHihgQuality();
+                    }
+                
+                loadSettings();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
         }
@@ -228,10 +315,14 @@ public class MinecraftSettings extends javax.swing.JFrame {
 
     private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
         try {
-            int ex = JOptionPane.showConfirmDialog(null, "Aún no has aplicado los cambios, estás seguro de cerrar sin guardar cambios?");
-            
-            if (ex == 0) {
-                loadSettings();
+            if (!this.back_username.equals(current_user.getText()) || this.back_ram != sliderRam.getValue() || this.back_highQuality != highQualityCheck.isSelected()) {
+                int ex = JOptionPane.showConfirmDialog(null, "Aún no has aplicado los cambios, estás seguro de cerrar sin guardar cambios?");
+                
+                if (ex == 0) {
+                    loadSettings();
+                    dispose();
+                }
+            } else {
                 dispose();
             }
         } catch (Exception e) {
@@ -239,11 +330,84 @@ public class MinecraftSettings extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_closeActionPerformed
 
+    private void sliderRamMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderRamMouseReleased
+        try {
+            selectedRam.setText(sliderRam.getValue() + " GB");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_sliderRamMouseReleased
+
+    private void sliderRamAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_sliderRamAncestorMoved
+
+    }//GEN-LAST:event_sliderRamAncestorMoved
+
+    private void sliderRamAncestorMoved1(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_sliderRamAncestorMoved1
+
+    }//GEN-LAST:event_sliderRamAncestorMoved1
+
+    private void sliderRamVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sliderRamVetoableChange
+
+    }//GEN-LAST:event_sliderRamVetoableChange
+
     private boolean loadSettings(){
         try {
-            spinnerRam.setValue(LAUNCHER_CLASS.getRam());
-            highQualityCheck.setEnabled(LAUNCHER_CLASS.isHighQualityMode());
+            sliderRam.setValue(LAUNCHER_CLASS.getRam());
+            highQualityCheck.setSelected(LAUNCHER_CLASS.isHighQualityMode());
+            current_user.setText(LAUNCHER_CLASS.getUsername());
+            selectedRam.setText(sliderRam.getValue() + " GB");
             
+            this.back_ram = sliderRam.getValue();
+            this.back_highQuality = highQualityCheck.isSelected();
+            this.back_username = current_user.getText();
+            
+            if (LAUNCHER_CLASS.getRam() <= 5) {
+                highQualityCheck.setEnabled(false);
+                highQualityCheck.setToolTipText("No tienes la Ram suficiente");
+            } else if (LAUNCHER_CLASS.getRam() >= 5) {
+                highQualityCheck.setEnabled(true);
+                highQualityCheck.setToolTipText("Activa los shaders y otos efectos visuales");
+            }
+            
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    private boolean activandoHihgQuality(){
+        try {
+            JSONArray modsHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("mods"));
+            
+            for (int i = 0; i < modsHQ.length(); i++) {
+                JSONObject mod = modsHQ.getJSONObject(i);
+                String name = mod.getString("name");
+                File loc = new File(dotDiomedes + "/" + mod.getString("loc"));
+                URL downloadLink = new URL(mod.getString("download"));
+                //VentanaInformacion.changeStatus("Descargando mod " + name);
+                
+                FileUtils.copyURLToFile(downloadLink, loc);
+            }
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    private boolean desactivandoHihgQuality(){
+        try {
+            JSONArray modsHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("mods"));
+            
+            for (int i = 0; i < modsHQ.length(); i++) {
+                JSONObject mod = modsHQ.getJSONObject(i);
+                String name = mod.getString("name");
+                File loc = new File(dotDiomedes + "/" + mod.getString("loc"));
+                URL downloadLink = new URL(mod.getString("download"));
+                //VentanaInformacion.changeStatus("Descargando mod " + name);
+                
+                loc.delete();
+            }
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
@@ -256,13 +420,14 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private javax.swing.JButton btn_changeName;
     private javax.swing.JButton btn_close;
     private javax.swing.JButton btn_load;
+    private javax.swing.JLabel current_user;
     private javax.swing.JCheckBox highQualityCheck;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner spinnerRam;
+    private javax.swing.JLabel selectedRam;
+    private javax.swing.JSlider sliderRam;
     // End of variables declaration//GEN-END:variables
 }
