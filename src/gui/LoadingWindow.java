@@ -248,9 +248,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                         settingsJson.put("minecraftRam", ram);
                     }
                     thisWindow.jProgressBar1.setValue(55);
-                    
-                    
-
                     // guarda el archivo settings.json para que no se pierda esos datos
                     Files.write(Paths.get(SETTINGS_FILE), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
 
