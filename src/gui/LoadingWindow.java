@@ -1,5 +1,9 @@
 package gui;
 
+import objects.JuntaApi;
+import objects.LauncherJunta;
+import util.JuandaUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -7,11 +11,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Scanner;
-import org.json.JSONObject;
-import org.apache.commons.io.FileUtils;
-
-import objects.JuntaApi;
-import objects.LauncherJunta;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,15 +24,10 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 import org.json.JSONArray;
+import org.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 
 public class LoadingWindow extends javax.swing.JFrame {
-    //public String mineDir, diomedesDir, juntaLauncherDir;
-    
-    public String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
-    public String juntaLauncherDir = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
-    public String diomedesDir = juntaLauncherDir + "/.diomedes";
-    public String LAUNCHER_VERSION = "2.1.0";
-    
     public LoadingWindow() {
         initComponents();
     }
@@ -115,6 +109,14 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
+        String LAUNCHER_VERSION = "2.1.0"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        JuandaUtils JUANDA_UTILS = new JuandaUtils();
+        String DOT_MINECRAFT = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
+        String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
+        String DOT_DIOMEDES = LAUNCHER_DIR + "/.diomedes";
+        String SETTINGS_FILE = LAUNCHER_DIR + "/settings.json";
+        
+        
         URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
         //URL API_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
         thisWindow.jProgressBar1.setValue(1);
@@ -184,13 +186,12 @@ public class LoadingWindow extends javax.swing.JFrame {
             thisWindow.jProgressBar1.setValue(30);
             
             try {
-                if (thisWindow.LAUNCHER_VERSION.equals(JUNTA_API.getLauncherVersion())) {
+                if (LAUNCHER_VERSION.equals(JUNTA_API.getLauncherVersion())) {
                     thisWindow.datosDeCarga.setText("Abriendo settings.json");
                     // Intentar leer los datos del settings json, en caso de existir los imprime, pero si no pues tira error y crea desde cero esa carpeta junto al settings.json
                     try {
                         //abrir archivo
-                        String path = thisWindow.juntaLauncherDir+"/settings.json";
-                        String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                        String settingsContent = new String(Files.readAllBytes(Paths.get(SETTINGS_FILE)));
                         JSONObject settingsJson = new JSONObject(settingsContent);
                         
                         // Creando nuevos ajsutes del settings.json
@@ -199,12 +200,12 @@ public class LoadingWindow extends javax.swing.JFrame {
                         } catch (Exception e) {
                             System.out.println("creando nuevos ajustes");
                             System.out.println(e);
-                            String TEMPsettingsContent = new String(Files.readAllBytes(Paths.get(path)));
-                            JSONObject tempSettingsJson = new JSONObject(settingsContent);
+                            String newSettingsContent = new String(Files.readAllBytes(Paths.get(SETTINGS_FILE)));
+                            JSONObject newSettingsJson = new JSONObject(newSettingsContent);
                         
-                            tempSettingsJson.put("highQualityMode", false);
+                            newSettingsJson.put("highQualityMode", false);
                             
-                            Files.write(Paths.get(path), tempSettingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+                            Files.write(Paths.get(SETTINGS_FILE), newSettingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
                         }
 
                         //imprimir
@@ -218,32 +219,15 @@ public class LoadingWindow extends javax.swing.JFrame {
                         thisWindow.datosDeCarga.setText("No se encontró el directorio");
                         thisWindow.datosDeCarga.setText("Creando nuevo directorio jeje");
                         // crear el directorio diomedes
-                        File carpeta = new File(thisWindow.diomedesDir);
+                        File carpeta = new File(DOT_DIOMEDES);
                         carpeta.mkdirs();
 
-                        // Agregando los datos necesarios actuales para el launcher de forma local
-                        JSONObject localSettings = new JSONObject();
-                        localSettings.put("juntaServerVersion", "");
-                        localSettings.put("juntaName", "");
-                        localSettings.put("username", "");
-                        localSettings.put("minecraftRam", 0);
-                        localSettings.put("diomedesDir", thisWindow.diomedesDir);
-                        localSettings.put("highQualityMode", false);
-
-                        // pasandoe ese objeto a un archivo settings.json y guardando
-                        String jsonParla = localSettings.toString(4);
-                        try (FileWriter file = new FileWriter(thisWindow.juntaLauncherDir + "/settings.json")) {
-                            file.write(jsonParla);
-                            file.flush();
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
-                        }
+                        JUANDA_UTILS.createLocalSettings(SETTINGS_FILE, DOT_DIOMEDES);
                     }
                     thisWindow.jProgressBar1.setValue(40);
 
                     // ahora si abriendo esos datos para utilizar
-                    String path = thisWindow.juntaLauncherDir+"/settings.json";
-                    String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                    String settingsContent = new String(Files.readAllBytes(Paths.get(SETTINGS_FILE)));
                     JSONObject settingsJson = new JSONObject(settingsContent);
                     thisWindow.jProgressBar1.setValue(50);
 
@@ -268,7 +252,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                     
 
                     // guarda el archivo settings.json para que no se pierda esos datos
-                    Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+                    Files.write(Paths.get(SETTINGS_FILE), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
 
                     //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
                     thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
@@ -293,18 +277,24 @@ public class LoadingWindow extends javax.swing.JFrame {
                         thisWindow.jProgressBar1.setValue(68);
 
                         try {
-                            FileUtils.cleanDirectory(new File(thisWindow.diomedesDir));
                             thisWindow.jProgressBar1.setValue(70);
                             thisWindow.datosDeCarga.setText("Descargando nueva temporada. " + JUNTA_API.getName());
 
-                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
+                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(LAUNCHER_DIR + "/current.zip"));
 
                             thisWindow.datosDeCarga.setText("Temporada descargada.");
                             thisWindow.jProgressBar1.setValue(72);
                             settingsJson.put("juntaName", JUNTA_API.getName());
                             LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
-
-                            thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"));
+                            
+                            thisWindow.datosDeCarga.setText("Descomprimiendo modpack...");
+                            thisWindow.jProgressBar1.setValue(85);
+                            
+                            FileUtils.cleanDirectory(new File(DOT_DIOMEDES));
+                            JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES);
+                            
+                            thisWindow.jProgressBar1.setValue(95);
+                            thisWindow.datosDeCarga.setText("Limpiando archivos innecesarios " + JUNTA_API.getServerVersion());
                         } catch (IOException e) {
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Descargar Primera Vez\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
@@ -318,20 +308,25 @@ public class LoadingWindow extends javax.swing.JFrame {
                             thisWindow.jProgressBar1.setValue(70);
                             thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
 
-                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(thisWindow.juntaLauncherDir + "/current.zip"));
+                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(LAUNCHER_DIR + "/current.zip"));
 
                             thisWindow.datosDeCarga.setText("Actualizacion descargada");
                             thisWindow.jProgressBar1.setValue(72);
                             settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
                             LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
 
-                            if (thisWindow.descomprimir(new FileInputStream(thisWindow.juntaLauncherDir + "/current.zip"))) {
-                                thisWindow.jProgressBar1.setValue(70);
+                            thisWindow.datosDeCarga.setText("Descomprimiendo modpack...");
+                            thisWindow.jProgressBar1.setValue(85);
+                            if (JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES)) {
+                                thisWindow.datosDeCarga.setText("Descomprimido con exito!");
+                                thisWindow.jProgressBar1.setValue(90);
+                                
+                                thisWindow.jProgressBar1.setValue(95);
                                 thisWindow.datosDeCarga.setText("Limpiando archivos innecesarios " + JUNTA_API.getServerVersion());
                                 
                                 JSONArray deletedFiles = JUNTA_API.getDeletedFiles();
                                 for (int i = 0; i < deletedFiles.length(); i++) {
-                                    File vagina = new File(thisWindow.diomedesDir+"/"+deletedFiles.getString(i));
+                                    File vagina = new File(DOT_DIOMEDES+"/"+deletedFiles.getString(i));
                                     System.out.println(vagina);
                                     vagina.delete();
                                 }
@@ -342,12 +337,12 @@ public class LoadingWindow extends javax.swing.JFrame {
                     }
 
                         // guarda el archivo settings.json para que no se pierda esos datos
-                        Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+                        Files.write(Paths.get(SETTINGS_FILE), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
 
                         // Abrir ya la ventana del launcher
                         thisWindow.datosDeCarga.setText("Abriendo...");
                         thisWindow.jProgressBar1.setValue(100);
-                        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS, thisWindow.LAUNCHER_VERSION, thisWindow.juntaLauncherDir, thisWindow.diomedesDir);
+                        LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS, LAUNCHER_VERSION, LAUNCHER_DIR, DOT_DIOMEDES);
                         LAUNCHER_WINDOW.setLocationRelativeTo(null);
                         LAUNCHER_WINDOW.setVisible(true);
                         thisWindow.dispose();
@@ -366,45 +361,6 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         
     }
-    
-    public boolean descomprimir(FileInputStream xd) {
-        try {
-                datosDeCarga.setText("Descomprimiendo modpack...");
-                jProgressBar1.setValue(85);
-
-                File comprimidom = new File(juntaLauncherDir + "/current.zip");
-                
-                ZipInputStream zipInputStream = new ZipInputStream(xd);
-                ZipEntry entry;
-                while ((entry = zipInputStream.getNextEntry()) != null) {
-                    String entryName = entry.getName();
-                    if (!entry.isDirectory()) {
-                        File entryFile = new File(diomedesDir, entryName);
-                        entryFile.getParentFile().mkdirs();
-
-                        byte[] buffer = new byte[1024];
-                        FileOutputStream fos = new FileOutputStream(entryFile);
-                        int length;
-                        while ((length = zipInputStream.read(buffer)) > 0) {
-                            fos.write(buffer, 0, length);
-                        }
-                        fos.close();
-                    }
-                    zipInputStream.closeEntry();
-                }
-                zipInputStream.close();
-
-                comprimidom.delete();
-
-                datosDeCarga.setText("Descomprimido con exito!");
-                jProgressBar1.setValue(90);
-                return true;
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Envia captura de este error: descomprimir\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel datosDeCarga;
     private javax.swing.JLabel jLabel1;

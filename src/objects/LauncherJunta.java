@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 import gui.LoadingWindow;
+import java.io.FileWriter;
 import java.nio.file.StandardOpenOption;
 
 public class LauncherJunta {
@@ -22,27 +23,6 @@ public class LauncherJunta {
         this.juntaName = juntaName;
         this.diomedesDir = diomedesDir;
         this.highQualityMode = highQualityMode;
-    }
-    
-    public boolean saveLocalSettingsCustom(String path, String newServerVersion, String newJuntaName, String newUsername, int newMinecraftRam, String newDiomeDir, boolean newHqMode){
-        try {
-            String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
-            JSONObject settingsJson = new JSONObject(settingsContent);
-
-            JSONObject localSettings = new JSONObject();
-            localSettings.put("juntaServerVersion", newServerVersion);
-            localSettings.put("juntaName", newJuntaName);
-            localSettings.put("username", newUsername);
-            localSettings.put("minecraftRam", newMinecraftRam);
-            localSettings.put("diomedesDir", newDiomeDir);
-            localSettings.put("highQualityMode", newHqMode);
-            
-            Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
-            return true;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Ocurrió un error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
     }
     
     public boolean saveLocalSettings(String path){
