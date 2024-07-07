@@ -224,7 +224,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                         // Agregando los datos necesarios actuales para el launcher de forma local
                         JSONObject localSettings = new JSONObject();
                         localSettings.put("juntaServerVersion", "");
-                        localSettings.put("launcherVersion", thisWindow.LAUNCHER_VERSION);
                         localSettings.put("juntaName", "");
                         localSettings.put("username", "");
                         localSettings.put("minecraftRam", 0);

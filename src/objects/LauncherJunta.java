@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 import gui.LoadingWindow;
+import java.nio.file.StandardOpenOption;
 
 public class LauncherJunta {
     private String minecraftVersion, indexVersion, username, serverVersion, juntaName, diomedesDir;
@@ -23,14 +24,44 @@ public class LauncherJunta {
         this.highQualityMode = highQualityMode;
     }
     
-    public boolean saveData(){
+    public boolean saveLocalSettingsCustom(String path, String newServerVersion, String newJuntaName, String newUsername, int newMinecraftRam, String newDiomeDir, boolean newHqMode){
         try {
-            String path = asd.juntaLauncherDir+"/settings.json";
             String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
             JSONObject settingsJson = new JSONObject(settingsContent);
+
+            JSONObject localSettings = new JSONObject();
+            localSettings.put("juntaServerVersion", newServerVersion);
+            localSettings.put("juntaName", newJuntaName);
+            localSettings.put("username", newUsername);
+            localSettings.put("minecraftRam", newMinecraftRam);
+            localSettings.put("diomedesDir", newDiomeDir);
+            localSettings.put("highQualityMode", newHqMode);
+            
+            Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Ocurrió un pequeno error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Ocurrió un error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean saveLocalSettings(String path){
+        try {
+            String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+            JSONObject settingsJson = new JSONObject(settingsContent);
+            
+            JSONObject localSettings = new JSONObject();
+            localSettings.put("juntaServerVersion", this.serverVersion);
+            localSettings.put("juntaName", this.juntaName);
+            localSettings.put("username", this.username);
+            localSettings.put("minecraftRam", this.ram);
+            localSettings.put("diomedesDir", this.diomedesDir);
+            localSettings.put("highQualityMode", this.highQualityMode);
+            
+            Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Ocurrió un error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -42,16 +73,6 @@ public class LauncherJunta {
     public void setHighQualityMode(boolean highQualityMode) {
         this.highQualityMode = highQualityMode;
     }
-    
-    public boolean loadData(){
-        try {
-            
-            return true;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Ocurrió un pequeno error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-    }
 
     public String getJuntaName() {
         return juntaName;
@@ -61,8 +82,6 @@ public class LauncherJunta {
         this.juntaName = juntaName;
     }
     
-    
-
     public String getIndexVersion() {
         return indexVersion;
     }
