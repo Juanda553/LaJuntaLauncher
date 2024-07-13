@@ -109,7 +109,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        String LAUNCHER_VERSION = "2.1.1"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String LAUNCHER_VERSION = "2.2.0"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         JuandaUtils JUANDA_UTILS = new JuandaUtils();
         String DOT_MINECRAFT = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
@@ -345,7 +345,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                         LAUNCHER_WINDOW.setVisible(true);
                         thisWindow.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor descargue la ultima versión para continuar. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor descargue la ultima versión para continuar. :)<br>Actualmente tienes la version " + LAUNCHER_VERSION + " y la ultima version es la "  + JUNTA_API.getLauncherVersion() + "</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
                         thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
                         thisWindow.jProgressBar1.setValue(0);
                         System.exit(0);
