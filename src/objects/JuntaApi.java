@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JuntaApi {
-    private String name, serverVersion, forgeVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate;
+    private String name, serverVersion, forgeVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -17,7 +17,7 @@ public class JuntaApi {
     private JSONObject event, highQualityData;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
@@ -43,6 +43,7 @@ public class JuntaApi {
         this.partners = partners;
         this.deletedFiles = deletedFiles;
         this.highQualityData = highQualityData;
+        this.serverIP = serverIP;
     }
     
     public boolean updateApi(URL API_URL, JuntaApi x){
@@ -96,6 +97,14 @@ public class JuntaApi {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
+
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
     }
 
     public JSONObject getHighQualityData() {

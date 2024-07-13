@@ -163,7 +163,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_credits = new javax.swing.JButton();
         LauncherVersionLabelJIJIJIJIJI1 = new javax.swing.JLabel();
         btn_settings = new javax.swing.JButton();
-        btn_settings1 = new javax.swing.JButton();
+        btn_playing = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
@@ -525,16 +525,17 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
-        btn_settings1.setBackground(Color.decode(btnColor1));
-        btn_settings1.setForeground(Color.decode(fontColor2));
-        btn_settings1.setText("Comprobar actualizaciones");
-        btn_settings1.setToolTipText("");
-        btn_settings1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_settings1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_settings1.setFocusPainted(false);
-        btn_settings1.addActionListener(new java.awt.event.ActionListener() {
+        btn_playing.setBackground(Color.decode(btnColor1));
+        btn_playing.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_playing.setForeground(Color.decode(fontColor2));
+        btn_playing.setText("Jugadores");
+        btn_playing.setToolTipText("");
+        btn_playing.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_playing.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_playing.setFocusPainted(false);
+        btn_playing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_settings1ActionPerformed(evt);
+                btn_playingActionPerformed(evt);
             }
         });
 
@@ -555,12 +556,12 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_credits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_settings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                    .addComponent(btn_settings1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LauncherVersionLabelJIJIJIJIJI)
                             .addComponent(LauncherVersionLabelJIJIJIJIJI1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btn_playing, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -584,7 +585,7 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_settings, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_settings1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_playing, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(378, 378, 378)
                         .addComponent(LauncherVersionLabelJIJIJIJIJI1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -634,13 +635,9 @@ public class LauncherWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_settingsActionPerformed
 
-    private void btn_settings1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_settings1ActionPerformed
-        try {
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btn_settings1ActionPerformed
+    private void btn_playingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_playingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_playingActionPerformed
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel EventTitle;
@@ -648,8 +645,8 @@ public class LauncherWindow extends javax.swing.JFrame {
     private javax.swing.JLabel LauncherVersionLabelJIJIJIJIJI1;
     private javax.swing.JButton btn_credits;
     private javax.swing.JButton btn_partners;
+    private javax.swing.JButton btn_playing;
     private javax.swing.JButton btn_settings;
-    private javax.swing.JButton btn_settings1;
     private javax.swing.JScrollPane eventDesc;
     private javax.swing.JLabel eventImg;
     private javax.swing.JPanel eventPanel;

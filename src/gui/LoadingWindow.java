@@ -109,7 +109,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        String LAUNCHER_VERSION = "2.1.0"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String LAUNCHER_VERSION = "2.1.1"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         JuandaUtils JUANDA_UTILS = new JuandaUtils();
         String DOT_MINECRAFT = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
@@ -178,7 +178,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiLauncherProperties.getJSONArray("news"),
                     apiLauncherProperties.getJSONArray("partners"),
                     apiLauncherProperties.getJSONArray("deletedMods"),
-                    apiLauncherProperties.getJSONObject("high_quality")
+                    apiLauncherProperties.getJSONObject("high_quality"),
+                    apiLauncherProperties.getString("ip")
                 );
 
             // Imprime en consola toda desa vaina
@@ -344,16 +345,19 @@ public class LoadingWindow extends javax.swing.JFrame {
                         LAUNCHER_WINDOW.setVisible(true);
                         thisWindow.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor revisa el Canal de Discord para descargar la ultima versión. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor descargue la ultima versión para continuar. :)</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
                         thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
                         thisWindow.jProgressBar1.setValue(0);
+                        System.exit(0);
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Envia captura de este error:\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                System.exit(0);
             }
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: Descarga de API\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         
         
