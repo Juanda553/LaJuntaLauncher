@@ -164,7 +164,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiLauncherProperties.getString("launcherVersion"),
                     apiLauncherProperties.getString("titleImage"),
                     apiLauncherProperties.getInt("serverPrice"),
-                    apiLauncherProperties.getInt("moneyCollected"),
+                    0,
 
                     apiLauncherColors.getString("background1"),
                     apiLauncherColors.getString("background2"),

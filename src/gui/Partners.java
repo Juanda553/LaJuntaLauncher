@@ -20,16 +20,29 @@ public class Partners extends javax.swing.JFrame {
         model.addColumn("Nombre");
         model.addColumn("Dinero Aportado");
         
+        int collected = 0;
         String[] cachones = new String[2];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject cachon = new JSONObject(String.valueOf(jsonArray.get(i)));
     
             cachones[0] = cachon.getString("name");
-            cachones[1] = cachon.getString("paid");
+            cachones[1] = "$" + cachon.getInt("paid");
+            collected += cachon.getInt("paid");
             
             model.addRow(cachones);
             partnersList.setModel(model);
         }
+        
+        cachones[0] = "";
+        cachones[1] = "";
+            
+        model.addRow(cachones);
+        
+        cachones[0] = "Total";
+        cachones[1] = "$" + collected;
+            
+        model.addRow(cachones);
+        partnersList.setModel(model);
         
     }
 

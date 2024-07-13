@@ -86,7 +86,7 @@ public class Credits extends javax.swing.JFrame {
         jLabel7.setText("Modpack Tester: JuanDa553");
 
         jLabel12.setForeground(Color.decode(JUNTA_API.getFontColor1()));
-        jLabel12.setText("Diseñador menú Principal: ");
+        jLabel12.setText("Diseñador menú Principal: JuanDa553");
 
         jLabel13.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel13.setText("Diseñador menú pausa: JuanDa553");
@@ -136,7 +136,8 @@ public class Credits extends javax.swing.JFrame {
         jLabel8.setText("Launcher");
 
         jLabel4.setForeground(Color.decode(JUNTA_API.getFontColor1()));
-        jLabel4.setText("Programadores: JuanDa553, Lentinoo");
+        jLabel4.setText("Programadores: JuanDa553");
+        jLabel4.setToolTipText("");
 
         jLabel5.setForeground(Color.decode(JUNTA_API.getFontColor1()));
         jLabel5.setText("Diseñadores: JuanDa553");
@@ -220,10 +221,10 @@ public class Credits extends javax.swing.JFrame {
         jLabel16.setText("Diseño: JuanDa553");
 
         jLabel3.setForeground(Color.decode(JUNTA_API.getFontColor1()));
-        jLabel3.setText("Constructores: JuanDa553, Lentinooo, lFaker");
+        jLabel3.setText("Constructores: JuanDa553");
 
         jLabel17.setForeground(Color.decode(JUNTA_API.getFontColor1()));
-        jLabel17.setText("Historia: JuanDa553, Lentinoo");
+        jLabel17.setText("Historia: JuanDa553");
 
         javax.swing.GroupLayout credServidorLayout = new javax.swing.GroupLayout(credServidor);
         credServidor.setLayout(credServidorLayout);

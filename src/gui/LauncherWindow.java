@@ -98,6 +98,20 @@ public class LauncherWindow extends javax.swing.JFrame {
         
         initComponents();
         
+        int collected = 0;
+        for (int i = 0; i < JUNTA_API.getPartners().length(); i++) {
+            JSONObject cachon = new JSONObject(String.valueOf(JUNTA_API.getPartners().get(i)));
+            
+            collected += cachon.getInt("paid");
+        }
+        JUNTA_API.setMoneyCollected(collected);
+        
+        if (JUNTA_API.getServerPrice() - collected <= 0){
+            btn_partners.setText("Servidor Pagado");
+        }else{
+            btn_partners.setText("$" + (JUNTA_API.getServerPrice() - collected) + " restantes");
+        }
+        
         this.panelRoot.setBackground(Color.decode(bgColor1));
         this.panelMain.setBackground(Color.decode(bgColor2));
         this.newsPanel.setBackground(Color.decode(bgColor1));
@@ -465,7 +479,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         btn_partners.setBackground(Color.decode(btnColor1));
         btn_partners.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_partners.setForeground(Color.decode(fontColor2));
-        btn_partners.setText("$" + (JUNTA_API.getServerPrice() - JUNTA_API.getMoneyCollected()) + " restantes");
+        btn_partners.setText("Partners");
         btn_partners.setToolTipText("");
         btn_partners.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_partners.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
