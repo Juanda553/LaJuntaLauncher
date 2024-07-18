@@ -8,6 +8,7 @@ import objects.LauncherJunta;
 import gui.*;
 import java.awt.Font;
 import java.awt.Image;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.ImageIcon;
@@ -24,6 +25,7 @@ public class LauncherWindow extends javax.swing.JFrame {
     private MinecraftSettings mcSettingsWindow;
     private LauncherSettings launcherSettingsWindow;
     private Credits creditsWindow;
+    private Playing serverStats;
     
     private LaunchMinecraft Launch_Minecraft;
     
@@ -32,7 +34,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon, new0Icon, new1Icon, new2Icon;
 
-    public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION, String launcherDir, String dotDiomedes) throws MalformedURLException {
+    public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION, String launcherDir, String dotDiomedes) throws MalformedURLException, IOException {
         
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
@@ -43,6 +45,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.launcherSettingsWindow = new LauncherSettings();
         this.creditsWindow = new Credits(LAUNCHER_CLASS, JUNTA_API, this);
         this.Launch_Minecraft = new LaunchMinecraft();
+        this.serverStats = new Playing(JUNTA_API.getServerIP());
 
         this.bgColor1 = JUNTA_API.getBgColor1();
         this.bgColor2 = JUNTA_API.getGbColor2();
@@ -112,6 +115,12 @@ public class LauncherWindow extends javax.swing.JFrame {
             btn_partners.setText("$" + (JUNTA_API.getServerPrice() - collected) + " restantes");
         }
         
+        if (serverStats.getOnlinePlayers() <= 0){
+            btn_playing.setText("Nadie conectado");
+        } else {
+            btn_playing.setText("Conectados: " + serverStats.getOnlinePlayers() + "/" + serverStats.getMaxPlayers());
+        }
+        
         this.panelRoot.setBackground(Color.decode(bgColor1));
         this.panelMain.setBackground(Color.decode(bgColor2));
         this.newsPanel.setBackground(Color.decode(bgColor1));
@@ -159,11 +168,12 @@ public class LauncherWindow extends javax.swing.JFrame {
         showUserName = new javax.swing.JLabel();
         btn_partners = new javax.swing.JButton();
         userHead = new javax.swing.JLabel();
-        LauncherVersionLabelJIJIJIJIJI = new javax.swing.JLabel();
+        LauncherVersionLabel = new javax.swing.JLabel();
         btn_credits = new javax.swing.JButton();
-        LauncherVersionLabelJIJIJIJIJI1 = new javax.swing.JLabel();
+        ClientVersionLabel = new javax.swing.JLabel();
         btn_settings = new javax.swing.JButton();
         btn_playing = new javax.swing.JButton();
+        ServerVersionLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
@@ -492,9 +502,9 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         userHead.setIcon(userHeadIcon);
 
-        LauncherVersionLabelJIJIJIJIJI.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        LauncherVersionLabelJIJIJIJIJI.setForeground(Color.decode(fontColor2));
-        LauncherVersionLabelJIJIJIJIJI.setText("Launcher v" + this.LAUNCHER_VERSION);
+        LauncherVersionLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        LauncherVersionLabel.setForeground(Color.decode(fontColor2));
+        LauncherVersionLabel.setText("Launcher v" + this.LAUNCHER_VERSION);
 
         btn_credits.setBackground(Color.decode(btnColor1));
         btn_credits.setForeground(Color.decode(fontColor2));
@@ -507,9 +517,9 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
-        LauncherVersionLabelJIJIJIJIJI1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        LauncherVersionLabelJIJIJIJIJI1.setForeground(Color.decode(fontColor2));
-        LauncherVersionLabelJIJIJIJIJI1.setText("Client v" + this.LAUNCHER_CLASS.getServerVersion());
+        ClientVersionLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        ClientVersionLabel.setForeground(Color.decode(fontColor2));
+        ClientVersionLabel.setText("Client v" + this.LAUNCHER_CLASS.getServerVersion());
 
         btn_settings.setBackground(Color.decode(btnColor1));
         btn_settings.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -539,6 +549,10 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
+        ServerVersionLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        ServerVersionLabel.setForeground(Color.decode(fontColor2));
+        ServerVersionLabel.setText("Server " + this.serverStats.getServerVersion());
+
         javax.swing.GroupLayout panelRootLayout = new javax.swing.GroupLayout(panelRoot);
         panelRoot.setLayout(panelRootLayout);
         panelRootLayout.setHorizontalGroup(
@@ -556,12 +570,13 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(userHead, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_credits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_settings, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                    .addComponent(btn_playing, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                     .addGroup(panelRootLayout.createSequentialGroup()
                         .addGroup(panelRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LauncherVersionLabelJIJIJIJIJI)
-                            .addComponent(LauncherVersionLabelJIJIJIJIJI1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btn_playing, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
+                            .addComponent(LauncherVersionLabel)
+                            .addComponent(ServerVersionLabel)
+                            .addComponent(ClientVersionLabel))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -586,10 +601,12 @@ public class LauncherWindow extends javax.swing.JFrame {
                         .addComponent(btn_settings, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_playing, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(378, 378, 378)
-                        .addComponent(LauncherVersionLabelJIJIJIJIJI1)
+                        .addGap(358, 358, 358)
+                        .addComponent(ClientVersionLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LauncherVersionLabelJIJIJIJIJI)
+                        .addComponent(ServerVersionLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LauncherVersionLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_credits, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -636,13 +653,19 @@ public class LauncherWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_settingsActionPerformed
 
     private void btn_playingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_playingActionPerformed
-        // TODO add your handling code here:
+        try {
+            serverStats.setLocationRelativeTo(null);
+            serverStats.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_playingActionPerformed
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ClientVersionLabel;
     private javax.swing.JLabel EventTitle;
-    private javax.swing.JLabel LauncherVersionLabelJIJIJIJIJI;
-    private javax.swing.JLabel LauncherVersionLabelJIJIJIJIJI1;
+    private javax.swing.JLabel LauncherVersionLabel;
+    private javax.swing.JLabel ServerVersionLabel;
     private javax.swing.JButton btn_credits;
     private javax.swing.JButton btn_partners;
     private javax.swing.JButton btn_playing;
