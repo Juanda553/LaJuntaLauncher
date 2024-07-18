@@ -4,15 +4,42 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
+import objects.JuntaApi;
 import org.json.JSONObject;
 
 public class JuandaUtils {
+    
+    public JSONObject getApi(URL url){
+        try {
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while(scanner.hasNext()){
+                    informationString.append(scanner.nextLine());
+            }
+            scanner.close();
+
+            JSONObject api = new JSONObject(informationString.toString());
+            return api;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al obtener la API.\nEnvia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            return new JSONObject();
+        }
+    }
     
     public boolean descomprimir(String archivo, String destino) {
         try {
@@ -42,7 +69,7 @@ public class JuandaUtils {
                 comprimidom.delete();
                 return true;
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Envia captura de este error: descomprimir\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Hubo un error al descomprimir.\nEnvia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
     }
@@ -67,7 +94,7 @@ public class JuandaUtils {
             return true;
         } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, e, "Ocurrió un error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Hubo un error al crear settings.json\nEnvia captura de este error: " + e, JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -88,7 +115,7 @@ public class JuandaUtils {
             Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Ocurrió un error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Hubo un error al guardar settings.json\nEnvia captura del error: " + e, JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }

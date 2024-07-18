@@ -121,51 +121,42 @@ public class LoadingWindow extends javax.swing.JFrame {
         String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
         String DOT_DIOMEDES = LAUNCHER_DIR + "/.diomedes";
         String SETTINGS_FILE = LAUNCHER_DIR + "/settings.json";
+
+//        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+//        URL API_LAUNCHER_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+//        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+
         
+        URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
+        URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
+        URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
-        URL API_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/junta_api.json");
-        //URL API_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
         thisWindow.jProgressBar1.setValue(1);
-        
-        // Literalmente lo que dice abajo es lo que hace esto xd | VVVV
         JuntaApi JUNTA_API = null;
         try {
             // chupar la api
             thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");
-            HttpURLConnection connection = (HttpURLConnection) API_URL.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
             thisWindow.jProgressBar1.setValue(10);
-
-            thisWindow.datosDeCarga.setText("Guardando datos de la nube");
-            StringBuilder informationString = new StringBuilder();
-                Scanner scanner = new Scanner(API_URL.openStream());
-
-                while(scanner.hasNext()){
-                    informationString.append(scanner.nextLine());
-            }
-            scanner.close();
+            JSONObject apiData = JUANDA_UTILS.getApi(API_DATA_URL);
+            JSONObject apiLauncherProperties = JUANDA_UTILS.getApi(API_LAUNCHER_URL).getJSONObject("launcher_properties");
+            JSONObject apiNews = JUANDA_UTILS.getApi(API_NEWS_URL);
+            
             thisWindow.jProgressBar1.setValue(20);
 
-            // poner la api como0 json
-            thisWindow.datosDeCarga.setText("Parseando datos a Json");
-            JSONObject api = new JSONObject(informationString.toString());
-
             // objetos padre del Json
-            JSONObject apiLauncherProperties = (JSONObject) api.get("launcher_properties");
-            JSONObject apiLauncherColors = (JSONObject) apiLauncherProperties.get("colores");
+            JSONObject apiLauncherColors = apiLauncherProperties.getJSONObject("colores");
             thisWindow.jProgressBar1.setValue(25);
             
             thisWindow.datosDeCarga.setText("Instanciando datos de la API");
             JUNTA_API = new JuntaApi(
-                    api.getString("juntaName"),
-                    api.getString("juntaVersion"),
-                    api.getString("forgeVersion"),
-                    api.getString("vanillaVersion"),
-                    api.getString("indexVersion"),
-                    api.getString("icon"),
-                    api.getString("modpackInstall"),
-                    api.getString("modPackUpdate"),
+                    apiData.getString("juntaName"),
+                    apiData.getString("juntaVersion"),
+                    apiData.getString("forgeVersion"),
+                    apiData.getString("vanillaVersion"),
+                    apiData.getString("indexVersion"),
+                    apiData.getString("icon"),
+                    apiData.getString("modpackInstall"),
+                    apiData.getString("modPackUpdate"),
 
                     apiLauncherProperties.getString("launcherVersion"),
                     apiLauncherProperties.getString("titleImage"),
@@ -180,11 +171,12 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiLauncherColors.getString("fontPlay"),
                     apiLauncherColors.getString("font1"),
                     apiLauncherColors.getString("font2"),
-                    apiLauncherProperties.getJSONObject("event"),
-                    apiLauncherProperties.getJSONArray("news"),
-                    apiLauncherProperties.getJSONArray("partners"),
-                    apiLauncherProperties.getJSONArray("deletedMods"),
-                    apiLauncherProperties.getJSONObject("high_quality"),
+                    apiLauncherColors.getString("border"),
+                    apiLauncherProperties.getJSONObject("feature"),
+                    apiNews.getJSONArray("news"),
+                    apiData.getJSONArray("partners"),
+                    apiData.getJSONArray("deletedMods"),
+                    apiData.getJSONObject("high_quality"),
                     apiLauncherProperties.getString("ip")
                 );
 
@@ -362,7 +354,7 @@ public class LoadingWindow extends javax.swing.JFrame {
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Envia captura de este error: Descarga de API\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al iniciar.\n" + e, "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         

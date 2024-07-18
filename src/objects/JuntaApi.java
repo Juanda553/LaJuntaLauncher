@@ -12,12 +12,12 @@ public class JuntaApi {
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
-    private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontPlay, fontColor1, fontColor2;
+    private String bgColor1, gbColor2, buttonColor1, buttonColor2, buttonPlay, fontPlay, fontColor1, fontColor2, borderColor;
     
     private JSONObject event, highQualityData;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP) {
+    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP) {
         this.name = name;
         this.serverVersion = serverVersion;
         this.forgeVersion = forgeVersion;
@@ -38,6 +38,7 @@ public class JuntaApi {
         this.fontPlay = fontPlay;
         this.fontColor1 = fontColor1;
         this.fontColor2 = fontColor2;
+        this.borderColor = borderColor;
         this.event = event;
         this.news = news;
         this.partners = partners;
@@ -165,6 +166,14 @@ public class JuntaApi {
 
     public String getServerVersion() {
         return serverVersion;
+    }
+    
+    public String getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(String borderColor) {
+        this.borderColor = borderColor;
     }
 
     public void setServerVersion(String serverVersion) {

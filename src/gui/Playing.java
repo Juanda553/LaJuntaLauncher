@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import util.JuandaUtils;
 
 /**
  *
@@ -25,23 +26,12 @@ public class Playing extends javax.swing.JFrame {
     
     public Playing(String _serverIP) throws MalformedURLException, IOException {
         String serverIP = _serverIP;
+        JuandaUtils utils = new JuandaUtils();
 
         initComponents();
         URL mcSrvStatURl = new URL("https://api.mcsrvstat.us/3/" + serverIP);
         
-        HttpURLConnection connection = (HttpURLConnection) mcSrvStatURl.openConnection();
-        connection.setRequestMethod("GET");
-        connection.connect();
-
-        StringBuilder informationString = new StringBuilder();
-            Scanner scanner = new Scanner(mcSrvStatURl.openStream());
-
-            while(scanner.hasNext()){
-                informationString.append(scanner.nextLine());
-        }
-        scanner.close();
-        
-        JSONObject mcSrvStat = new JSONObject(informationString.toString());
+        JSONObject mcSrvStat = utils.getApi(mcSrvStatURl);
         
         if (mcSrvStat.getBoolean("online")){
             this.motd = (String) mcSrvStat.getJSONObject("motd").getJSONArray("raw").get(0);

@@ -19,7 +19,7 @@ import util.LaunchMinecraft;
 public class LauncherWindow extends javax.swing.JFrame {
     private JuntaApi JUNTA_API;
     private LauncherJunta LAUNCHER_CLASS;
-    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle, LAUNCHER_VERSION;
+    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle, LAUNCHER_VERSION, borderColor;
     
     private Partners partnersWindow;
     private MinecraftSettings mcSettingsWindow;
@@ -55,6 +55,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.btnPlayFontString = JUNTA_API.getFontPlay();
         this.fontColor1 = JUNTA_API.getFontColor1();
         this.fontColor2 = JUNTA_API.getFontColor2();
+        this.borderColor = JUNTA_API.getBorderColor();
         this.currentEvent = JUNTA_API.getEvent();
         this.news = JUNTA_API.getNews();
         
@@ -186,7 +187,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         playButton.setBackground(Color.decode(btnPlayColor));
         playButton.setIcon(btnPlayFontIcon);
-        playButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        playButton.setBorder(javax.swing.BorderFactory.createLineBorder(Color.decode(borderColor), 2));
         playButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         playButton.setFocusPainted(false);
         playButton.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +199,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         playButton.setBounds(178, 220, 180, 65);
 
         eventPanel.setBackground(new java.awt.Color(51, 51, 51));
+        eventPanel.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
         eventPanel.setLayout(null);
 
         EventTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -226,7 +228,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         eventImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         eventImg.setIcon(eventIcon);
-        eventImg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        eventImg.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 2, true));
         eventPanel.add(eventImg);
         eventImg.setBounds(10, 185, 288, 162);
 
@@ -235,11 +237,12 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header.setIcon(headerIcon);
-        header.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        header.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 2, true));
         panelMain.add(header);
         header.setBounds(15, 10, 820, 245);
 
         jScrollPane1.setBackground(Color.decode(bgColor1));
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         newsPanel.setBackground(Color.decode(bgColor1));
@@ -247,7 +250,8 @@ public class LauncherWindow extends javax.swing.JFrame {
         newsPanel.setLayout(new java.awt.GridLayout(0, 1, 0, 6));
 
         new1.setBackground(Color.decode(bgColor1));
-        new1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        new1.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
+        new1.setForeground(Color.decode(fontColor2));
         new1.setPreferredSize(new java.awt.Dimension(498, 136));
 
         new_title_1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -270,7 +274,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         jScrollPane12.setViewportView(new_desc_1);
 
         new_img_1.setIcon(new0Icon);
-        new_img_1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        new_img_1.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
 
         new_date_0.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         new_date_0.setForeground(Color.decode(fontColor1));
@@ -322,7 +326,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         newsPanel.add(new1);
 
         new2.setBackground(Color.decode(bgColor1));
-        new2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        new2.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
         new2.setPreferredSize(new java.awt.Dimension(498, 136));
 
         new_title_2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -345,7 +349,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         jScrollPane13.setViewportView(new_desc_2);
 
         new_img_2.setIcon(new1Icon);
-        new_img_2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        new_img_2.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
 
         new_date_1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         new_date_1.setForeground(Color.decode(fontColor1));
@@ -397,7 +401,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         newsPanel.add(new2);
 
         new3.setBackground(Color.decode(bgColor1));
-        new3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        new3.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
         new3.setPreferredSize(new java.awt.Dimension(498, 136));
 
         new_title_3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -420,7 +424,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         jScrollPane14.setViewportView(new_desc_3);
 
         new_img_3.setIcon(new2Icon);
-        new_img_3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        new_img_3.setBorder(new javax.swing.border.LineBorder(Color.decode(borderColor), 1, true));
 
         new_date_2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         new_date_2.setForeground(Color.decode(fontColor1));
@@ -477,7 +481,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         jScrollPane1.setBounds(10, 295, 510, 330);
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
+        jSeparator1.setForeground(Color.decode(borderColor));
 
         showUserName1.setForeground(Color.decode(fontColor1));
         showUserName1.setText("Sesion iniciada como:");
@@ -488,7 +492,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         btn_partners.setBackground(Color.decode(btnColor1));
         btn_partners.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_partners.setForeground(Color.decode(fontColor2));
+        btn_partners.setForeground(Color.decode(fontColor1));
         btn_partners.setText("Partners");
         btn_partners.setToolTipText("");
         btn_partners.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -507,7 +511,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         LauncherVersionLabel.setText("Launcher v" + this.LAUNCHER_VERSION);
 
         btn_credits.setBackground(Color.decode(btnColor1));
-        btn_credits.setForeground(Color.decode(fontColor2));
+        btn_credits.setForeground(Color.decode(fontColor1));
         btn_credits.setText("Creditos");
         btn_credits.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_credits.setFocusPainted(false);
@@ -523,7 +527,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         btn_settings.setBackground(Color.decode(btnColor1));
         btn_settings.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_settings.setForeground(Color.decode(fontColor2));
+        btn_settings.setForeground(Color.decode(fontColor1));
         btn_settings.setText("Ajustes");
         btn_settings.setToolTipText("");
         btn_settings.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -537,7 +541,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         btn_playing.setBackground(Color.decode(btnColor1));
         btn_playing.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_playing.setForeground(Color.decode(fontColor2));
+        btn_playing.setForeground(Color.decode(fontColor1));
         btn_playing.setText("Jugadores");
         btn_playing.setToolTipText("");
         btn_playing.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
