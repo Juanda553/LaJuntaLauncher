@@ -378,16 +378,16 @@ public class MinecraftSettings extends javax.swing.JFrame {
     
     private boolean activandoHihgQuality(){
         try {
-            JSONArray modsHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("mods"));
+            JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
             
-            for (int i = 0; i < modsHQ.length(); i++) {
-                JSONObject mod = modsHQ.getJSONObject(i);
+            for (int i = 0; i < filesHQ.length(); i++) {
+                JSONObject mod = filesHQ.getJSONObject(i);
                 String name = mod.getString("name");
                 File loc = new File(dotDiomedes + "/" + mod.getString("loc"));
                 URL downloadLink = new URL(mod.getString("download"));
-                //VentanaInformacion.changeStatus("Descargando mod " + name);
                 
                 FileUtils.copyURLToFile(downloadLink, loc);
+                System.out.println(name + " descargado");
             }
             return true;
         } catch (Exception e) {
@@ -397,16 +397,15 @@ public class MinecraftSettings extends javax.swing.JFrame {
     }
     private boolean desactivandoHihgQuality(){
         try {
-            JSONArray modsHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("mods"));
+            JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
             
-            for (int i = 0; i < modsHQ.length(); i++) {
-                JSONObject mod = modsHQ.getJSONObject(i);
+            for (int i = 0; i < filesHQ.length(); i++) {
+                JSONObject mod = filesHQ.getJSONObject(i);
                 String name = mod.getString("name");
                 File loc = new File(dotDiomedes + "/" + mod.getString("loc"));
-                URL downloadLink = new URL(mod.getString("download"));
-                //VentanaInformacion.changeStatus("Descargando mod " + name);
                 
                 loc.delete();
+                System.out.println(name + " eliminado");
             }
             return true;
         } catch (Exception e) {
