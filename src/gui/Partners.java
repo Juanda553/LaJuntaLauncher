@@ -78,7 +78,15 @@ public class Partners extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         partnersList.setGridColor(new java.awt.Color(51, 51, 51));
         partnersList.setRowHeight(32);
         partnersList.setSelectionBackground(new java.awt.Color(51, 51, 51));

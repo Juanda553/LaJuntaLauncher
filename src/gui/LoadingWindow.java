@@ -1,5 +1,6 @@
 package gui;
 
+import design.ScrollBarWin11UI;
 import objects.JuntaApi;
 import objects.LauncherJunta;
 import util.JuandaUtils;
@@ -23,6 +24,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.apache.commons.io.FileUtils;
@@ -103,8 +106,11 @@ public class LoadingWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public static void main(String args[]) throws MalformedURLException, ProtocolException, IOException, InterruptedException {
-        // Poniendo pantalla de carga
+    public static void main(String args[]) throws MalformedURLException, ProtocolException, IOException, InterruptedException {       
+        UIDefaults ui = UIManager.getDefaults();
+        ui.put("ScrollBarUI", ScrollBarWin11UI.class.getCanonicalName());
+
+// Poniendo pantalla de carga
         LoadingWindow thisWindow = new LoadingWindow();
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
