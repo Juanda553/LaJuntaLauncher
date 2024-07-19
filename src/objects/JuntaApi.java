@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JuntaApi {
-    private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP;
+    private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP, lastLauncherDownload;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -17,7 +17,7 @@ public class JuntaApi {
     private JSONObject event, highQualityData;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP) {
+    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String lastLauncherDownload, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP) {
         this.lastUpdate = lastUpdate;
         this.name = name;
         this.serverVersion = serverVersion;
@@ -29,6 +29,7 @@ public class JuntaApi {
         this.modpackInitial = modpackInitial;
         this.modpackUpdate = modpackUpdate;
         this.launcherVersion = launcherVersion;
+        this.lastLauncherDownload = lastLauncherDownload;
         this.titleImg = titleImg;
         this.serverPrice = serverPrice;
         this.MoneyCollected = MoneyCollected;
@@ -117,6 +118,14 @@ public class JuntaApi {
 
     public void setHighQualityData(JSONObject highQualityData) {
         this.highQualityData = highQualityData;
+    }
+
+    public String getLastLauncherDownload() {
+        return lastLauncherDownload;
+    }
+
+    public void setLastLauncherDownload(String lastLauncherDownload) {
+        this.lastLauncherDownload = lastLauncherDownload;
     }
     
     public String getVanillaVersion() {

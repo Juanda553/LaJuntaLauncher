@@ -123,12 +123,12 @@ public class LoadingWindow extends javax.swing.JFrame {
         String DOT_DIOMEDES = LAUNCHER_DIR + "/.diomedes";
         String SETTINGS_FILE = LAUNCHER_DIR + "/settings.json";
 
-        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+//        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_LAUNCHER_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 
         
-//        URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
+        URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
         URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
         URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
@@ -160,8 +160,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiData.getString("icon"),
                     apiData.getString("modpackInstall"),
                     apiData.getString("modPackUpdate"),
-
                     apiLauncherProperties.getString("launcherVersion"),
+                    apiLauncherProperties.getString("lastRelaseDownload"),
                     apiLauncherProperties.getString("titleImage"),
                     apiLauncherProperties.getInt("serverPrice"),
                     0,
