@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JuntaApi {
-    private String name, serverVersion, forgeVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP;
+    private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -17,10 +17,12 @@ public class JuntaApi {
     private JSONObject event, highQualityData;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String name, String serverVersion, String forgeVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP) {
+    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP) {
+        this.lastUpdate = lastUpdate;
         this.name = name;
         this.serverVersion = serverVersion;
-        this.forgeVersion = forgeVersion;
+        this.modLoader = modLoader;
+        this.modLoaderVersion = modLoaderVersion;
         this.vanillaVersion = vanillaVersion;
         this.indexVersion = indexVersion;
         this.serverIcon = serverIcon;
@@ -68,7 +70,8 @@ public class JuntaApi {
 
             x.setName(api.getString("juntaName"));
             x.setServerVersion(api.getString("juntaVersion"));
-            x.setForgeVersion(api.getString("forgeVersion"));
+            x.setModLoader(api.getString("modLoader"));
+            x.setModLoaderVersion(api.getString("modLoaderVersion"));
             x.setVanillaVersion(api.getString("vanillaVersion"));
             x.setIndexVersion(api.getString("indexVersion"));
             x.setServerIcon(api.getString("icon"));
@@ -128,7 +131,8 @@ public class JuntaApi {
         StringBuilder result = new StringBuilder();
         result.append("name: ").append(this.name).append("\n");
         result.append("serverVersion: ").append(this.serverVersion).append("\n");
-        result.append("forgeVersion: ").append(this.forgeVersion).append("\n");
+        result.append("forgeVersion: ").append(this.modLoader).append("\n");
+        result.append("forgeVersion: ").append(this.modLoaderVersion).append("\n");
         result.append("serverIcon: ").append(this.serverIcon).append("\n");
         result.append("modpackInitial: ").append(this.modpackInitial).append("\n");
         result.append("modpackUpdate: ").append(this.modpackUpdate).append("\n");
@@ -146,6 +150,14 @@ public class JuntaApi {
         result.append("fontColor2: ").append(this.fontColor2).append("\n");
         
         return result.toString();
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public String getIndexVersion() {
@@ -180,12 +192,20 @@ public class JuntaApi {
         this.serverVersion = serverVersion;
     }
 
-    public String getForgeVersion() {
-        return forgeVersion;
+    public String getModLoader() {
+        return modLoader;
     }
 
-    public void setForgeVersion(String forgeVersion) {
-        this.forgeVersion = forgeVersion;
+    public void setModLoader(String modLoader) {
+        this.modLoader = modLoader;
+    }
+
+    public String getModLoaderVersion() {
+        return modLoaderVersion;
+    }
+
+    public void setModLoaderVersion(String modLoaderVersion) {
+        this.modLoaderVersion = modLoaderVersion;
     }
 
     public String getServerIcon() {

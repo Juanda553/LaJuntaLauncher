@@ -18,7 +18,7 @@ public class LaunchMinecraft {
     public int launch(LauncherJunta LAUNCHER_CLASS, JuntaApi JUNTA_API, JFrame ventana, String userName){
         try {                                           
             String dotDiomedes = LAUNCHER_CLASS.getDiomedesDir();
-            String mcVersion = JUNTA_API.getForgeVersion();
+            String mcVersion = JUNTA_API.getModLoaderVersion();
             String vanillaVersion = JUNTA_API.getVanillaVersion();
             String verIndex = JUNTA_API.getIndexVersion();
             String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
@@ -27,7 +27,7 @@ public class LaunchMinecraft {
             String ram = String.valueOf(LAUNCHER_CLASS.getRam());
             String ramFinal = "-Xmx" + ram + "G";
             
-            McArgsCommand mcArgsCommand = new McArgsCommand(dotDiomedes, JUNTA_API.getVanillaVersion(), JUNTA_API.getForgeVersion());
+            McArgsCommand mcArgsCommand = new McArgsCommand(dotDiomedes, JUNTA_API.getVanillaVersion(), mcVersion, JUNTA_API.getModLoader());
             replacePalceholder pene = new replacePalceholder(dotDiomedes, mcVersion);
             
             List<String> command = new ArrayList<>();
@@ -37,11 +37,24 @@ public class LaunchMinecraft {
             command.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
             command.add("-Djava.library.path=" + dotDiomedes + "/versions/" + mcVersion + "/natives");
             command.add("-cp");
-            command.add(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
-//            System.out.println(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
             
-            command.addAll(pene.getPlacedHoldediiiii(mcArgsCommand.getJvmArgs()));
-            
+            switch (JUNTA_API.getModLoader()) {
+                case "forge":
+                    command.add(mcArgsCommand.getForgeCpLibs() + ";" + mcArgsCommand.getCpLibsVanillaForged());
+                    command.addAll(pene.getPlacedHoldediiiii(mcArgsCommand.getJvmArgs()));
+                    break;
+                case "fabric":
+                    command.add(mcArgsCommand.getFabricCpLibs()+ ";" + mcArgsCommand.getCpLibsVanillaForged());
+                    command.addAll(pene.getPlacedHoldediiiii(mcArgsCommand.getJvmArgs()));
+                    break;
+                case "vanilla":
+                    command.add(mcArgsCommand.getCpLibsVanilla());
+                    break;
+                default:
+                    command.add(mcArgsCommand.getCpLibsVanilla());
+                    break;
+            }
+
             command.add(mcArgsCommand.getMainClassMC());
             
             command.add("--username");
@@ -66,7 +79,21 @@ public class LaunchMinecraft {
             command.add("msa");
             command.add("--versionType");
             command.add("release");
-            command.addAll(mcArgsCommand.getGamerArgs());
+            
+            switch (JUNTA_API.getModLoader()) {
+                case "forge":
+                    command.addAll(mcArgsCommand.getGamerArgs());
+                    break;
+                case "fabric":
+                    command.addAll(mcArgsCommand.getGamerArgs());
+                    break;
+                case "vanilla":
+                    break;
+                default:
+                    break;
+            }
+            
+            
             
 //            System.out.println(command);
             JSONArray dsfgsdfghsdfh = new JSONArray(command);

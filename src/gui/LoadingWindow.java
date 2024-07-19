@@ -123,12 +123,12 @@ public class LoadingWindow extends javax.swing.JFrame {
         String DOT_DIOMEDES = LAUNCHER_DIR + "/.diomedes";
         String SETTINGS_FILE = LAUNCHER_DIR + "/settings.json";
 
-//        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_LAUNCHER_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 
         
-        URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
+//        URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
         URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
         URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
@@ -150,9 +150,11 @@ public class LoadingWindow extends javax.swing.JFrame {
             
             thisWindow.datosDeCarga.setText("Instanciando datos de la API");
             JUNTA_API = new JuntaApi(
+                    apiData.getString("last_update"),
                     apiData.getString("juntaName"),
                     apiData.getString("juntaVersion"),
-                    apiData.getString("forgeVersion"),
+                    apiData.getString("modLoader"),
+                    apiData.getString("modLoaderVersion"),
                     apiData.getString("vanillaVersion"),
                     apiData.getString("indexVersion"),
                     apiData.getString("icon"),
@@ -255,7 +257,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                     //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
                     thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
                     LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
-                            JUNTA_API.getForgeVersion(),
+                            JUNTA_API.getModLoaderVersion(),
                             JUNTA_API.getIndexVersion(),
                             settingsJson.getString("username"),
                             settingsJson.getInt("minecraftRam"),
@@ -307,6 +309,21 @@ public class LoadingWindow extends javax.swing.JFrame {
                             thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
 
                             FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(LAUNCHER_DIR + "/current.zip"));
+                            
+                            if (LAUNCHER_CLASS.isHighQualityMode()) {
+                                thisWindow.datosDeCarga.setText("Actualizando modo HQ " + JUNTA_API.getServerVersion());
+                                JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
+            
+                                for (int i = 0; i < filesHQ.length(); i++) {
+                                    JSONObject mod = filesHQ.getJSONObject(i);
+                                    String name = mod.getString("name");
+                                    File loc = new File(DOT_DIOMEDES + "/" + mod.getString("loc"));
+                                    URL downloadLink = new URL(mod.getString("download"));
+
+                                    FileUtils.copyURLToFile(downloadLink, loc);
+                                    System.out.println(name + " descargado");
+                                }
+                            }
 
                             thisWindow.datosDeCarga.setText("Actualizacion descargada");
                             thisWindow.jProgressBar1.setValue(72);
