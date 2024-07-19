@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -122,12 +123,12 @@ public class LoadingWindow extends javax.swing.JFrame {
         String DOT_DIOMEDES = LAUNCHER_DIR + "/.diomedes";
         String SETTINGS_FILE = LAUNCHER_DIR + "/settings.json";
 
-//        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_LAUNCHER_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 
         
-        URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
+//        URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
         URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
         URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
@@ -210,6 +211,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                         //imprimir
                         System.out.println(settingsJson.getString("juntaServerVersion"));
                         System.out.println(settingsJson.getString("username"));
+                        System.out.println(UUID.nameUUIDFromBytes(("OfflinePlayer:"+settingsJson.getString("username")).getBytes()));
                         System.out.println(settingsJson.getInt("minecraftRam") + "GB");
                         System.out.println(settingsJson.getString("diomedesDir"));
                         thisWindow.jProgressBar1.setValue(32);
@@ -259,7 +261,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                             settingsJson.getInt("minecraftRam"),
                             settingsJson.getString("juntaServerVersion"),
                             settingsJson.getString("juntaName"),
-                            settingsJson.getString("diomedesDir"),
+                            DOT_DIOMEDES,
                             settingsJson.getBoolean("highQualityMode")
                     );
                     thisWindow.jProgressBar1.setValue(64);

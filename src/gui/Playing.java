@@ -74,6 +74,7 @@ public class Playing extends javax.swing.JFrame {
         playerlist = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         playerlist.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         playerlist.setModel(new javax.swing.table.DefaultTableModel(

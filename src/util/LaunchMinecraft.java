@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.json.JSONArray;
@@ -17,8 +18,9 @@ public class LaunchMinecraft {
     public int launch(LauncherJunta LAUNCHER_CLASS, JuntaApi JUNTA_API, JFrame ventana, String userName){
         try {                                           
             String dotDiomedes = LAUNCHER_CLASS.getDiomedesDir();
-            String mcVersion = LAUNCHER_CLASS.getMinecraftVersion();
-            String verIndex = LAUNCHER_CLASS.getIndexVersion();
+            String mcVersion = JUNTA_API.getForgeVersion();
+            String vanillaVersion = JUNTA_API.getVanillaVersion();
+            String verIndex = JUNTA_API.getIndexVersion();
             String dotMinecraft = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
             
             
@@ -29,14 +31,14 @@ public class LaunchMinecraft {
             replacePalceholder pene = new replacePalceholder(dotDiomedes, mcVersion);
             
             List<String> command = new ArrayList<>();
-            command.add("java");
+            command.add("C:/Program Files/Java/jdk-22/bin/java.exe");
             command.add(ramFinal);
             command.add(ramFinal);
             command.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
             command.add("-Djava.library.path=" + dotDiomedes + "/versions/" + mcVersion + "/natives");
             command.add("-cp");
             command.add(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
-            //System.out.println(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
+//            System.out.println(mcArgsCommand.getCpLibs() + ";" + mcArgsCommand.getCpLibsVanilla());
             
             command.addAll(pene.getPlacedHoldediiiii(mcArgsCommand.getJvmArgs()));
             
@@ -49,11 +51,11 @@ public class LaunchMinecraft {
             command.add("--gameDir");
             command.add(dotDiomedes);
             command.add("--assetsDir");
-            command.add(dotMinecraft + "/assets");
+            command.add(dotDiomedes + "/assets");
             command.add("--assetIndex");
             command.add(verIndex);
             command.add("--uuid");
-            command.add("");
+            command.add(String.valueOf(UUID.nameUUIDFromBytes(("OfflinePlayer:"+userName).getBytes())));
             command.add("--accessToken");
             command.add("");
             command.add("--clientId");
@@ -66,7 +68,7 @@ public class LaunchMinecraft {
             command.add("release");
             command.addAll(mcArgsCommand.getGamerArgs());
             
-            //System.out.println(command);
+//            System.out.println(command);
             JSONArray dsfgsdfghsdfh = new JSONArray(command);
             System.out.println(dsfgsdfghsdfh);
             

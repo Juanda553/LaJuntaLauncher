@@ -21,17 +21,21 @@ public class replacePalceholder {
     }
 
     public List<String> getPlacedHoldediiiii(List<String> asd) {
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("library_directory", dotMinecraft + "/libraries");
-        placeholders.put("classpath_separator", ";");
-        placeholders.put("version_name", mcVersion);
+        try {
+            Map<String, String> placeholders = new HashMap<>();
+            placeholders.put("library_directory", dotDiomedes + "/libraries");
+            placeholders.put("classpath_separator", ";");
+            placeholders.put("version_name", mcVersion);
 
-        for (int i = 0; i < asd.size(); i++) {
-            String arg = asd.get(i);
-            for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-                arg = arg.replace("${" + entry.getKey() + "}", entry.getValue());
+            for (int i = 0; i < asd.size(); i++) {
+                String arg = asd.get(i);
+                for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+                    arg = arg.replace("${" + entry.getKey() + "}", entry.getValue());
+                }
+                asd.set(i, arg);
             }
-            asd.set(i, arg);
+        } catch (Exception e) {
+            System.out.println(e);
         }
         
         return asd;
