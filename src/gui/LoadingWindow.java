@@ -309,21 +309,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                             thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
 
                             FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(LAUNCHER_DIR + "/current.zip"));
-                            
-                            if (LAUNCHER_CLASS.isHighQualityMode()) {
-                                thisWindow.datosDeCarga.setText("Actualizando modo HQ " + JUNTA_API.getServerVersion());
-                                JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
-            
-                                for (int i = 0; i < filesHQ.length(); i++) {
-                                    JSONObject mod = filesHQ.getJSONObject(i);
-                                    String name = mod.getString("name");
-                                    File loc = new File(DOT_DIOMEDES + "/" + mod.getString("loc"));
-                                    URL downloadLink = new URL(mod.getString("download"));
-
-                                    FileUtils.copyURLToFile(downloadLink, loc);
-                                    System.out.println(name + " descargado");
-                                }
-                            }
 
                             thisWindow.datosDeCarga.setText("Actualizacion descargada");
                             thisWindow.jProgressBar1.setValue(72);
@@ -344,6 +329,21 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     File vagina = new File(DOT_DIOMEDES+"/"+deletedFiles.getString(i));
                                     System.out.println(vagina);
                                     vagina.delete();
+                                }
+                            }
+                            
+                            if (LAUNCHER_CLASS.isHighQualityMode()) {
+                                thisWindow.datosDeCarga.setText("Actualizando modo HQ " + JUNTA_API.getServerVersion());
+                                JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
+            
+                                for (int i = 0; i < filesHQ.length(); i++) {
+                                    JSONObject mod = filesHQ.getJSONObject(i);
+                                    String name = mod.getString("name");
+                                    File loc = new File(DOT_DIOMEDES + "/" + mod.getString("loc"));
+                                    URL downloadLink = new URL(mod.getString("download"));
+
+                                    FileUtils.copyURLToFile(downloadLink, loc);
+                                    System.out.println(name + " descargado");
                                 }
                             }
                         } catch (IOException e) {
