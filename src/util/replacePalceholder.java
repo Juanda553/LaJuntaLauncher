@@ -27,6 +27,8 @@ public class replacePalceholder {
             placeholders.put("classpath_separator", ";");
             placeholders.put("version_name", mcVersion);
 
+            // No recuerdo para que vergas era esto ni como sirve, pero si lo borro no abre el juego
+            // el que lo elimine es gay
             for (int i = 0; i < asd.size(); i++) {
                 String arg = asd.get(i);
                 for (Map.Entry<String, String> entry : placeholders.entrySet()) {

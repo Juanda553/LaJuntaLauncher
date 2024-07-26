@@ -61,7 +61,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         datosDeCarga.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/junta_full_logo_resizedlow.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/junta_3d_large_white_resized.png"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         jProgressBar1.setBackground(new java.awt.Color(102, 102, 102));
@@ -116,7 +116,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        String LAUNCHER_VERSION = "2.2.0"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String LAUNCHER_VERSION = "2.2.1"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         JuandaUtils JUANDA_UTILS = new JuandaUtils();
         String DOT_MINECRAFT = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
@@ -180,7 +180,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiData.getJSONArray("partners"),
                     apiData.getJSONArray("deletedMods"),
                     apiData.getJSONObject("high_quality"),
-                    apiLauncherProperties.getString("ip")
+                    apiLauncherProperties.getString("ip"),
+                    apiData.getJSONObject("staff")
                 );
 
             // Imprime en consola toda desa vaina
@@ -332,10 +333,10 @@ public class LoadingWindow extends javax.swing.JFrame {
                                 }
                             }
                             
+                            // Esto era para que se actualice tambien el high quality mode creo
                             if (LAUNCHER_CLASS.isHighQualityMode()) {
                                 thisWindow.datosDeCarga.setText("Actualizando modo HQ " + JUNTA_API.getServerVersion());
                                 JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
-            
                                 for (int i = 0; i < filesHQ.length(); i++) {
                                     JSONObject mod = filesHQ.getJSONObject(i);
                                     String name = mod.getString("name");

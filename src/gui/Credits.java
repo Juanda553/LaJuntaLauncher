@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import objects.JuntaApi;
 import objects.LauncherJunta;
+import org.json.JSONArray;
 import util.LaunchMinecraft;
 /**
  *
@@ -325,19 +326,10 @@ public class Credits extends javax.swing.JFrame {
         dispose();
         String pipi = HERELAUNCHER_CLASS.getUsername();
         
-        switch (pipi) {
-            case "JuanDa553":
-                System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_1"));
-                break;
-            case "Lentinoo":
-                System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_2"));
-                break;
-            case "lFaker":
-                System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_3"));
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Tu no eres staff pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
-                break;
+        if (JUNTA_API.getStaffs().has(pipi)) {
+            System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, JUNTA_API.getStaffs().getString(pipi)));
+        } else {
+            JOptionPane.showMessageDialog(null, "Tu no eres staff pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
