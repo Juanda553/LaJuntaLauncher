@@ -36,8 +36,8 @@ public class JuandaUtils {
             JSONObject api = new JSONObject(informationString.toString());
             return api;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Hubo un error al obtener la API.\nEnvia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
-            return new JSONObject();
+            JOptionPane.showMessageDialog(null, "No se pudieron obtemer los datos del servidor, pero esto no afectara la ejecucion del launcher. \n" + e, "Error leve", JOptionPane.WARNING_MESSAGE);
+            return new JSONObject().put("online", false);
         }
     }
     
