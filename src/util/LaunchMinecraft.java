@@ -67,8 +67,10 @@ public class LaunchMinecraft {
             command.add(dotDiomedes + "/assets");
             command.add("--assetIndex");
             command.add(verIndex);
+            
             command.add("--uuid");
             command.add(String.valueOf(UUID.nameUUIDFromBytes(("OfflinePlayer:"+userName).getBytes())));
+            
             command.add("--accessToken");
             command.add("");
             command.add("--clientId");
