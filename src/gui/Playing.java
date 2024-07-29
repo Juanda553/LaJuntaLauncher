@@ -23,6 +23,7 @@ public class Playing extends javax.swing.JFrame {
     int maxplayers, onlinePlayers;
     String motd, serverVersion;
     JSONArray playerList;
+    boolean OnLine;
     
     public Playing(String _serverIP) throws MalformedURLException, IOException {
         String serverIP = _serverIP;
@@ -34,6 +35,7 @@ public class Playing extends javax.swing.JFrame {
         JSONObject mcSrvStat = utils.getApi(mcSrvStatURl);
         
         if (mcSrvStat.getBoolean("online")){
+            this.OnLine = true;
             this.motd = (String) mcSrvStat.getJSONObject("motd").getJSONArray("raw").get(0);
             this.onlinePlayers = mcSrvStat.getJSONObject("players").getInt("online");
             this.maxplayers = mcSrvStat.getJSONObject("players").getInt("max");
@@ -44,6 +46,7 @@ public class Playing extends javax.swing.JFrame {
                 this.playerList = new JSONArray("[{\"name\": \"Nadie conectado\", \"uuid\": \"\"}]");
             }
         } else {
+            this.OnLine = false;
             this.motd = "Apagado";
             this.onlinePlayers = 0;
             this.maxplayers = 20;
@@ -135,6 +138,14 @@ public class Playing extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Este es un error que no daña el launcher, pero igual envia captura de este error: \n" + e, "Error Suave", JOptionPane.ERROR_MESSAGE);
             return 0;
         }
+    }
+
+    public boolean isOnLine() {
+        return OnLine;
+    }
+
+    public void setOnLine(boolean OnLine) {
+        this.OnLine = OnLine;
     }
     
     public String getServerVersion(){

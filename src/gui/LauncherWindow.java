@@ -17,29 +17,30 @@ import org.json.JSONArray;
 import util.LaunchMinecraft;
 
 public class LauncherWindow extends javax.swing.JFrame {
+
     private JuntaApi JUNTA_API;
     private LauncherJunta LAUNCHER_CLASS;
     private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle, LAUNCHER_VERSION, borderColor;
-    
+
     private Partners partnersWindow;
     private MinecraftSettings mcSettingsWindow;
     private LauncherSettings launcherSettingsWindow;
     private Credits creditsWindow;
     private Playing serverStats;
-    
+
     private LaunchMinecraft Launch_Minecraft;
-    
+
     private JSONObject currentEvent;
     private JSONArray news;
 
     private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon, new0Icon, new1Icon, new2Icon;
 
     public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION, String launcherDir, String dotDiomedes) throws MalformedURLException, IOException {
-        
+
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
         this.LAUNCHER_VERSION = LAUNCHER_VERSION;
-        
+
         this.partnersWindow = new Partners(JUNTA_API.getPartners(), this.JUNTA_API.getMoneyCollected());
         this.mcSettingsWindow = new MinecraftSettings(JUNTA_API, LAUNCHER_CLASS, launcherDir, dotDiomedes);
         this.launcherSettingsWindow = new LauncherSettings();
@@ -58,13 +59,13 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.borderColor = JUNTA_API.getBorderColor();
         this.currentEvent = JUNTA_API.getEvent();
         this.news = JUNTA_API.getNews();
-        
+
         URL userHeadUrl = new URL("https://cravatar.eu/helmhead/" + LAUNCHER_CLASS.getUsername() + "/32.png");
         this.userHeadIcon = new ImageIcon(userHeadUrl);
-        
+
         URL headerUrl = new URL(JUNTA_API.getTitleImg());
         this.headerIcon = new ImageIcon(headerUrl);
-        
+
         System.out.println("owo ev");
         URL eventImgUrl = new URL(currentEvent.getString("img"));
         this.eventIcon = new ImageIcon(eventImgUrl);
@@ -72,10 +73,10 @@ public class LauncherWindow extends javax.swing.JFrame {
         tempEventImg = tempEventImg.getScaledInstance(288, 162, Image.SCALE_SMOOTH);
         this.eventIcon = new ImageIcon(tempEventImg);
         System.out.println("uwu ev");
-         
+
         URL btnPlayFontUrl = new URL(btnPlayFontString);
         this.btnPlayFontIcon = new ImageIcon(btnPlayFontUrl);
-        
+
         System.out.println("owo ne ");
         URL new0ImgUrl = new URL(news.getJSONObject(0).getString("img"));
         this.new0Icon = new ImageIcon(new0ImgUrl);
@@ -99,29 +100,33 @@ public class LauncherWindow extends javax.swing.JFrame {
         tempNew2Img = tempNew2Img.getScaledInstance(114, 65, Image.SCALE_SMOOTH);
         this.new2Icon = new ImageIcon(tempNew2Img);
         System.out.println("uwu ne");
-        
+
         initComponents();
-        
+
         int collected = 0;
         for (int i = 0; i < JUNTA_API.getPartners().length(); i++) {
             JSONObject cachon = new JSONObject(String.valueOf(JUNTA_API.getPartners().get(i)));
-            
+
             collected += cachon.getInt("paid");
         }
         JUNTA_API.setMoneyCollected(collected);
-        
-        if (JUNTA_API.getServerPrice() - collected <= 0){
+
+        if (JUNTA_API.getServerPrice() - collected <= 0) {
             btn_partners.setText("Servidor Pagado");
-        }else{
+        } else {
             btn_partners.setText("$" + (JUNTA_API.getServerPrice() - collected) + " restantes");
         }
-        
-        if (serverStats.getOnlinePlayers() <= 0){
-            btn_playing.setText("Nadie conectado");
+
+        if (serverStats.isOnLine()) {
+            if (serverStats.getOnlinePlayers() <= 0) {
+                btn_playing.setText("Nadie conectado");
+            } else {
+                btn_playing.setText("Conectados: " + serverStats.getOnlinePlayers() + "/" + serverStats.getMaxPlayers());
+            }
         } else {
-            btn_playing.setText("Conectados: " + serverStats.getOnlinePlayers() + "/" + serverStats.getMaxPlayers());
+            btn_playing.setText("Servidor Apagado");
         }
-        
+
         this.panelRoot.setBackground(Color.decode(bgColor1));
         this.panelMain.setBackground(Color.decode(bgColor2));
         this.newsPanel.setBackground(Color.decode(bgColor1));
@@ -664,7 +669,7 @@ public class LauncherWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_playingActionPerformed
-        
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ClientVersionLabel;
     private javax.swing.JLabel EventTitle;
