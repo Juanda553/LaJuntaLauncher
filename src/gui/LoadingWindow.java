@@ -43,7 +43,8 @@ public class LoadingWindow extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         datosDeCarga = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        progressOpen = new javax.swing.JProgressBar();
+        progressDownload = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
@@ -64,21 +65,25 @@ public class LoadingWindow extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/junta_3d_large_white_resized.png"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        jProgressBar1.setBackground(new java.awt.Color(102, 102, 102));
-        jProgressBar1.setForeground(new java.awt.Color(255, 255, 255));
-        jProgressBar1.setValue(32);
-        jProgressBar1.setBorder(null);
+        progressOpen.setBackground(new java.awt.Color(102, 102, 102));
+        progressOpen.setForeground(new java.awt.Color(255, 255, 255));
+        progressOpen.setBorder(null);
+
+        progressDownload.setBackground(new java.awt.Color(102, 102, 102));
+        progressDownload.setForeground(new java.awt.Color(255, 255, 255));
+        progressDownload.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
-                    .addComponent(datosDeCarga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progressOpen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                    .addComponent(datosDeCarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(progressDownload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -88,9 +93,11 @@ public class LoadingWindow extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(datosDeCarga)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(progressOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progressDownload, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -116,7 +123,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        String LAUNCHER_VERSION = "2.2.2"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String LAUNCHER_VERSION = "2.2.3"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         JuandaUtils JUANDA_UTILS = new JuandaUtils();
         String DOT_MINECRAFT = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
@@ -132,23 +139,19 @@ public class LoadingWindow extends javax.swing.JFrame {
         URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
         URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
-        thisWindow.jProgressBar1.setValue(1);
         JuntaApi JUNTA_API = null;
         try {
             // chupar la api
-            thisWindow.datosDeCarga.setText("Obteniendo datos de la nube");
-            thisWindow.jProgressBar1.setValue(10);
+            thisWindow.changeStatus("Obteniendo datos de la nube.", 5);
             JSONObject apiData = JUANDA_UTILS.getApi(API_DATA_URL);
             JSONObject apiLauncherProperties = JUANDA_UTILS.getApi(API_LAUNCHER_URL).getJSONObject("launcher_properties");
             JSONObject apiNews = JUANDA_UTILS.getApi(API_NEWS_URL);
             
-            thisWindow.jProgressBar1.setValue(20);
 
             // objetos padre del Json
             JSONObject apiLauncherColors = apiLauncherProperties.getJSONObject("colores");
-            thisWindow.jProgressBar1.setValue(25);
             
-            thisWindow.datosDeCarga.setText("Instanciando datos de la API");
+            thisWindow.changeStatus("Instanciando datos de la nube.", 10);
             JUNTA_API = new JuntaApi(
                     apiData.getString("last_update"),
                     apiData.getString("juntaName"),
@@ -181,16 +184,17 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiData.getJSONArray("deletedMods"),
                     apiData.getJSONObject("high_quality"),
                     apiLauncherProperties.getString("ip"),
-                    apiData.getJSONObject("staff")
+                    apiData.getJSONObject("staff"),
+                    apiData.getString("libsDownload"),
+                    apiData.getString("assetsDownload")
                 );
 
             // Imprime en consola toda desa vaina
             System.out.println(JUNTA_API.getDetails());
-            thisWindow.jProgressBar1.setValue(30);
             
             try {
                 if (LAUNCHER_VERSION.equals(JUNTA_API.getLauncherVersion())) {
-                    thisWindow.datosDeCarga.setText("Abriendo settings.json");
+                    thisWindow.changeStatus("Obteniendo ajustes locales", 15);
                     // Intentar leer los datos del settings json, en caso de existir los imprime, pero si no pues tira error y crea desde cero esa carpeta junto al settings.json
                     try {
                         //abrir archivo
@@ -217,23 +221,19 @@ public class LoadingWindow extends javax.swing.JFrame {
                         System.out.println(UUID.nameUUIDFromBytes(("OfflinePlayer:"+settingsJson.getString("username")).getBytes()));
                         System.out.println(settingsJson.getInt("minecraftRam") + "GB");
                         System.out.println(settingsJson.getString("diomedesDir"));
-                        thisWindow.jProgressBar1.setValue(32);
 
                     } catch (Exception e) {
-                        thisWindow.datosDeCarga.setText("No se encontró el directorio");
-                        thisWindow.datosDeCarga.setText("Creando nuevo directorio jeje");
+                        thisWindow.changeStatus("Creando nuevo directorio", 20);
                         // crear el directorio diomedes
                         File carpeta = new File(DOT_DIOMEDES);
                         carpeta.mkdirs();
 
                         JUANDA_UTILS.createLocalSettings(SETTINGS_FILE, DOT_DIOMEDES);
                     }
-                    thisWindow.jProgressBar1.setValue(40);
 
                     // ahora si abriendo esos datos para utilizar
                     String settingsContent = new String(Files.readAllBytes(Paths.get(SETTINGS_FILE)));
                     JSONObject settingsJson = new JSONObject(settingsContent);
-                    thisWindow.jProgressBar1.setValue(50);
 
                     // comprobar si es primera vez que abre el launcher, lo hace de forma que si username es vacio pida el username, y si ram es 0 que pida la ram pal juego
                     // Por ahora se hará con joptionpane XD
@@ -251,12 +251,11 @@ public class LoadingWindow extends javax.swing.JFrame {
 
                         settingsJson.put("minecraftRam", ram);
                     }
-                    thisWindow.jProgressBar1.setValue(55);
                     // guarda el archivo settings.json para que no se pierda esos datos
                     Files.write(Paths.get(SETTINGS_FILE), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
 
                     //Literalmente lo que dice abajo es lo que hace esto xd x2 | VVVV
-                    thisWindow.datosDeCarga.setText("Instanciando propiedades del Launcher");
+                    thisWindow.changeStatus("Instanciando ajustes del Launcher.", 25);
                     LauncherJunta LAUNCHER_CLASS = new LauncherJunta(
                             JUNTA_API.getModLoaderVersion(),
                             JUNTA_API.getIndexVersion(),
@@ -267,63 +266,52 @@ public class LoadingWindow extends javax.swing.JFrame {
                             DOT_DIOMEDES,
                             settingsJson.getBoolean("highQualityMode")
                     );
-                    thisWindow.jProgressBar1.setValue(64);
                     
                     // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
 
-                    thisWindow.datosDeCarga.setText("Comprobando temporada...");
-                    thisWindow.jProgressBar1.setValue(68);
+                    thisWindow.changeStatus("Comprobando temporada.", 30);
                     if (!LAUNCHER_CLASS.getJuntaName().equals(JUNTA_API.getName())) {
-                        thisWindow.datosDeCarga.setText("Tienes una temporada antigua!");
-                        thisWindow.jProgressBar1.setValue(68);
+                        thisWindow.changeStatus("Nueva temporada detectada! " + JUNTA_API.getName(), 35);
 
                         try {
-                            thisWindow.jProgressBar1.setValue(70);
-                            thisWindow.datosDeCarga.setText("Descargando nueva temporada. " + JUNTA_API.getName());
-
-                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackInitial()), new File(LAUNCHER_DIR + "/current.zip"));
-
-                            thisWindow.datosDeCarga.setText("Temporada descargada.");
-                            thisWindow.jProgressBar1.setValue(72);
+                            FileUtils.cleanDirectory(new File(DOT_DIOMEDES)); // Eliminar el .diomedes
+                            
+                            thisWindow.changeStatus("Descargando nueva temporada, " + JUNTA_API.getName() + " " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getModpackInitial()), 40);
+                            JUANDA_UTILS.donwloadFile(JUNTA_API.getModpackInitial(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
+                            thisWindow.changeStatus("Descomprimiendo Temporada", 45);
+                            JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload);
+                            
+                            thisWindow.changeStatus("Descargando assets de Minecraft " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getAssetsDonwload()), 50);
+                            JUANDA_UTILS.donwloadFile(JUNTA_API.getAssetsDonwload(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
+                            thisWindow.changeStatus("Descomprimiendo assets", 55);
+                            JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload);
+                            
+                            thisWindow.changeStatus("Descargando librerias de Minecraft y " + JUNTA_API.getModLoader() + " " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getLibsDownload()), 60);
+                            JUANDA_UTILS.donwloadFile(JUNTA_API.getLibsDownload(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
+                            thisWindow.changeStatus("descomprimiendo librerias", 65);
+                            JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload);
+                            
                             settingsJson.put("juntaName", JUNTA_API.getName());
                             LAUNCHER_CLASS.setJuntaName(JUNTA_API.getName());
-                            
-                            thisWindow.datosDeCarga.setText("Descomprimiendo modpack...");
-                            thisWindow.jProgressBar1.setValue(85);
-                            
-                            FileUtils.cleanDirectory(new File(DOT_DIOMEDES));
-                            JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES);
-                            
-                            thisWindow.jProgressBar1.setValue(95);
-                            thisWindow.datosDeCarga.setText("Limpiando archivos innecesarios " + JUNTA_API.getServerVersion());
+
+                            thisWindow.changeStatus("Limpiando caché", 70);
                         } catch (IOException e) {
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Descargar Primera Vez\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
 
                     } 
                     if (!LAUNCHER_CLASS.getServerVersion().equals(JUNTA_API.getServerVersion())) {
-                        thisWindow.datosDeCarga.setText("Hay una nueva version disponible!");
-                        thisWindow.jProgressBar1.setValue(68);
+                        thisWindow.changeStatus("Nueva versión detectada", 75);
 
                         try {
-                            thisWindow.jProgressBar1.setValue(70);
-                            thisWindow.datosDeCarga.setText("Descargando actualizacion " + JUNTA_API.getServerVersion());
+                            thisWindow.changeStatus("Descargando actualización " + JUNTA_API.getServerVersion() + " " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getModpackUpdate()), 80);
 
-                            FileUtils.copyURLToFile(new URL(JUNTA_API.getModpackUpdate()), new File(LAUNCHER_DIR + "/current.zip"));
+                            JUANDA_UTILS.donwloadFile(JUNTA_API.getModpackUpdate(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
 
-                            thisWindow.datosDeCarga.setText("Actualizacion descargada");
-                            thisWindow.jProgressBar1.setValue(72);
-                            settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
-                            LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
-
-                            thisWindow.datosDeCarga.setText("Descomprimiendo modpack...");
-                            thisWindow.jProgressBar1.setValue(85);
-                            if (JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES)) {
-                                thisWindow.datosDeCarga.setText("Descomprimido con exito!");
-                                thisWindow.jProgressBar1.setValue(90);
+                            thisWindow.changeStatus("Descomprimiendo actualización", 85);
+                            if (JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload)) {
                                 
-                                thisWindow.jProgressBar1.setValue(95);
-                                thisWindow.datosDeCarga.setText("Limpiando archivos innecesarios " + JUNTA_API.getServerVersion());
+                                thisWindow.changeStatus("Limpiando datos eliminados", 90);
                                 
                                 JSONArray deletedFiles = JUNTA_API.getDeletedFiles();
                                 for (int i = 0; i < deletedFiles.length(); i++) {
@@ -335,7 +323,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                             
                             // Esto era para que se actualice tambien el high quality mode creo
                             if (LAUNCHER_CLASS.isHighQualityMode()) {
-                                thisWindow.datosDeCarga.setText("Actualizando modo HQ " + JUNTA_API.getServerVersion());
+                                thisWindow.changeStatus("Actualizando modo HQ " + JUNTA_API.getServerVersion(), 95);
+                                
                                 JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
                                 for (int i = 0; i < filesHQ.length(); i++) {
                                     JSONObject mod = filesHQ.getJSONObject(i);
@@ -347,6 +336,9 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     System.out.println(name + " descargado");
                                 }
                             }
+                            
+                            settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
+                            LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
                         } catch (IOException e) {
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Actualizar\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
@@ -356,16 +348,14 @@ public class LoadingWindow extends javax.swing.JFrame {
                         Files.write(Paths.get(SETTINGS_FILE), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
 
                         // Abrir ya la ventana del launcher
-                        thisWindow.datosDeCarga.setText("Abriendo...");
-                        thisWindow.jProgressBar1.setValue(100);
+                        thisWindow.changeStatus("Abriendo...", 100);
                         LauncherWindow LAUNCHER_WINDOW = new LauncherWindow(JUNTA_API, LAUNCHER_CLASS, LAUNCHER_VERSION, LAUNCHER_DIR, DOT_DIOMEDES);
                         LAUNCHER_WINDOW.setLocationRelativeTo(null);
                         LAUNCHER_WINDOW.setVisible(true);
                         thisWindow.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "<html><center>Tienes una version antigua del launcher.<br>Por favor descargue la ultima versión para continuar. :)<br>Actualmente tienes la version " + LAUNCHER_VERSION + " y la ultima version es la "  + JUNTA_API.getLauncherVersion() + "</center></html>", "Versión antigua", JOptionPane.ERROR_MESSAGE);
-                        thisWindow.datosDeCarga.setText("Actualiza el Launcher para poder abrir :)");
-                        thisWindow.jProgressBar1.setValue(0);
+                        thisWindow.changeStatus("Actualiza el Launcher para poder abrir :)", 0);
                         System.exit(0);
                 }
             } catch (Exception e) {
@@ -380,10 +370,17 @@ public class LoadingWindow extends javax.swing.JFrame {
         
         
     }
+    
+    private void changeStatus(String text, int progreso){
+        datosDeCarga.setText(text);
+        progressOpen.setValue(progreso);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel datosDeCarga;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar progressDownload;
+    private javax.swing.JProgressBar progressOpen;
     // End of variables declaration//GEN-END:variables
 }

@@ -76,6 +76,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
         current_user = new javax.swing.JLabel();
         sliderRam = new javax.swing.JSlider();
         selectedRam = new javax.swing.JLabel();
+        btn_hardResetSeason = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ajustes");
@@ -186,6 +188,19 @@ public class MinecraftSettings extends javax.swing.JFrame {
         selectedRam.setForeground(Color.decode(fontColor1));
         selectedRam.setText("ram");
 
+        btn_hardResetSeason.setBackground(Color.decode(btnColor2));
+        btn_hardResetSeason.setForeground(Color.decode(fontColor1));
+        btn_hardResetSeason.setText("Formatear");
+        btn_hardResetSeason.setFocusPainted(false);
+        btn_hardResetSeason.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hardResetSeasonActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setForeground(Color.decode(fontColor1));
+        jLabel5.setText("Formatear datos de La Junta Actual");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -212,7 +227,9 @@ public class MinecraftSettings extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(current_user)
                             .addComponent(jLabel1)
-                            .addComponent(btn_changeName))
+                            .addComponent(btn_changeName)
+                            .addComponent(btn_hardResetSeason)
+                            .addComponent(jLabel5))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -237,7 +254,11 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 .addComponent(current_user)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_changeName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_hardResetSeason)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_load)
                     .addComponent(btn_apply)
@@ -322,7 +343,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error cerrar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_closeActionPerformed
 
@@ -330,7 +351,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
         try {
             selectedRam.setText(sliderRam.getValue() + " GB");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Ram", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_sliderRamMouseReleased
 
@@ -345,6 +366,31 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private void sliderRamVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_sliderRamVetoableChange
 
     }//GEN-LAST:event_sliderRamVetoableChange
+
+    private void btn_hardResetSeasonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hardResetSeasonActionPerformed
+        try {
+            int formatear = JOptionPane.showConfirmDialog(null, "Seguro quieres formatear tu Junta? Esto no hará que pierdas tu inventario, solo reiniciará todos tus ajustes del juego.");
+            
+            if(formatear == 0) {
+                FileUtils.cleanDirectory(new File(dotDiomedes)); // Eliminar el .diomedes
+
+                String path = this.launcherDir + "/settings.json";
+                String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                JSONObject settingsJson = new JSONObject(settingsContent);
+
+                settingsJson.put("juntaName", "Junta Nothing");
+                settingsJson.put("juntaServerVersion", "0.0.0");
+
+                Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+                
+                JOptionPane.showMessageDialog(null, "Formateo con exito, por favor reinicia el Launcher.", "Fomatear", JOptionPane.INFORMATION_MESSAGE);
+                System.exit(0);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error de formateo", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_hardResetSeasonActionPerformed
 
     private boolean loadSettings(){
         try {
@@ -367,7 +413,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
             
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error de carga", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -387,7 +433,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
             }
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -405,7 +451,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
             }
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -414,6 +460,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private javax.swing.JButton btn_apply;
     private javax.swing.JButton btn_changeName;
     private javax.swing.JButton btn_close;
+    private javax.swing.JButton btn_hardResetSeason;
     private javax.swing.JButton btn_load;
     private javax.swing.JLabel current_user;
     private javax.swing.JCheckBox highQualityCheck;
@@ -421,6 +468,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel selectedRam;
     private javax.swing.JSlider sliderRam;

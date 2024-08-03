@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JuntaApi {
-    private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP, lastLauncherDownload;
+    private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP, lastLauncherDownload, libsDownload, assetsDonwload;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -17,7 +17,7 @@ public class JuntaApi {
     private JSONObject event, highQualityData, staffs;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String lastLauncherDownload, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP, JSONObject staffs) {
+    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String lastLauncherDownload, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP, JSONObject staffs, String libsDownload, String assetsDonwload) {
         this.lastUpdate = lastUpdate;
         this.name = name;
         this.serverVersion = serverVersion;
@@ -49,6 +49,8 @@ public class JuntaApi {
         this.highQualityData = highQualityData;
         this.serverIP = serverIP;
         this.staffs = staffs;
+        this.libsDownload = libsDownload;
+        this.assetsDonwload = assetsDonwload;
     }
     
     public boolean updateApi(URL API_URL, JuntaApi x){
@@ -111,6 +113,22 @@ public class JuntaApi {
 
     public void setStaffs(JSONObject staffs) {
         this.staffs = staffs;
+    }
+
+    public String getLibsDownload() {
+        return libsDownload;
+    }
+
+    public void setLibsDownload(String libsDownload) {
+        this.libsDownload = libsDownload;
+    }
+
+    public String getAssetsDonwload() {
+        return assetsDonwload;
+    }
+
+    public void setAssetsDonwload(String assetsDonwload) {
+        this.assetsDonwload = assetsDonwload;
     }
 
     public String getServerIP() {
