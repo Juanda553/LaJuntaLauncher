@@ -296,6 +296,7 @@ public class LoadingWindow extends javax.swing.JFrame {
 
                             thisWindow.changeStatus("Limpiando caché", 70);
                         } catch (IOException e) {
+                            settingsJson.put("juntaName", "Junta");
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Descargar Primera Vez\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
 
@@ -340,6 +341,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                             settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
                             LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
                         } catch (IOException e) {
+                            settingsJson.put("juntaServerVersion", "0.0.0");
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Actualizar\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
                     }
