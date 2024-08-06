@@ -327,7 +327,7 @@ public class Credits extends javax.swing.JFrame {
         String pipi = HERELAUNCHER_CLASS.getUsername();
         
         if (JUNTA_API.getStaffs().has(pipi)) {
-            System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, JUNTA_API.getStaffs().getString(pipi)));
+            Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, JUNTA_API.getStaffs().getString(pipi));
         } else {
             JOptionPane.showMessageDialog(null, "Tu no eres staff pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
         }
@@ -336,11 +336,12 @@ public class Credits extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         dispose();
         String pipi = HERELAUNCHER_CLASS.getUsername();
+        LauncherJunta builderLaun = HERELAUNCHER_CLASS;
         if (pipi.equals("JuanDa553")) {
-            HERELAUNCHER_CLASS.setDiomedesDir("C:/Users/juanz/AppData/Roaming/diomedes/builder");
-            System.out.println(Launch_Minecraft.launch(HERELAUNCHER_CLASS, JUNTA_API, diomedesPichaGrande, "Diomedes_1"));
+            builderLaun.setDiomedesDir("C:/Users/juanz/AppData/Roaming/diomedes/builder");
+            Launch_Minecraft.launch(builderLaun, JUNTA_API, diomedesPichaGrande, "Diomedes");
         } else {
-            JOptionPane.showMessageDialog(null, "Tu no eres admin pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Tu no eres Juanda pendejo AJKSJKAS", "Pendejo", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
