@@ -18,9 +18,9 @@ import util.LaunchMinecraft;
 
 public class LauncherWindow extends javax.swing.JFrame {
 
-    private JuntaApi JUNTA_API;
-    private LauncherJunta LAUNCHER_CLASS;
-    private String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle, LAUNCHER_VERSION, borderColor;
+    public JuntaApi JUNTA_API;
+    public LauncherJunta LAUNCHER_CLASS;
+    public String bgColor1, bgColor2, btnColor1, btnColor2, btnPlayColor, btnPlayFontString, fontColor1, fontColor2, eventTitle, LAUNCHER_VERSION, borderColor;
 
     private Partners partnersWindow;
     private MinecraftSettings mcSettingsWindow;
@@ -34,12 +34,15 @@ public class LauncherWindow extends javax.swing.JFrame {
     private JSONArray news;
 
     private ImageIcon headerIcon, userHeadIcon, eventIcon, btnPlayFontIcon, new0Icon, new1Icon, new2Icon;
+    
+    private int MAX_NEWS;
 
     public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION, String launcherDir, String dotDiomedes) throws MalformedURLException, IOException {
 
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
         this.LAUNCHER_VERSION = LAUNCHER_VERSION;
+        this.MAX_NEWS = 3;
 
         this.partnersWindow = new Partners(JUNTA_API.getPartners(), this.JUNTA_API.getMoneyCollected());
         this.mcSettingsWindow = new MinecraftSettings(JUNTA_API, LAUNCHER_CLASS, launcherDir, dotDiomedes);
@@ -77,29 +80,50 @@ public class LauncherWindow extends javax.swing.JFrame {
         URL btnPlayFontUrl = new URL(btnPlayFontString);
         this.btnPlayFontIcon = new ImageIcon(btnPlayFontUrl);
 
-        System.out.println("owo ne ");
-        URL new0ImgUrl = new URL(news.getJSONObject(0).getString("img"));
-        this.new0Icon = new ImageIcon(new0ImgUrl);
-        Image tempNew0Img = new0Icon.getImage();
-        tempNew0Img = tempNew0Img.getScaledInstance(114, 65, Image.SCALE_SMOOTH);
-        this.new0Icon = new ImageIcon(tempNew0Img);
-        System.out.println("uwu ne");
-        //
-        System.out.println("owo ne");
-        URL new1ImgUrl = new URL(news.getJSONObject(1).getString("img"));
-        this.new1Icon = new ImageIcon(new1ImgUrl);
-        Image tempNew1Img = new1Icon.getImage();
-        tempNew1Img = tempNew1Img.getScaledInstance(114, 65, Image.SCALE_SMOOTH);
-        this.new1Icon = new ImageIcon(tempNew1Img);
-        System.out.println("uwu ne");
-        //
-        System.out.println("owo ne");
-        URL new2ImgUrl = new URL(news.getJSONObject(2).getString("img"));
-        this.new2Icon = new ImageIcon(new2ImgUrl);
-        Image tempNew2Img = new2Icon.getImage();
-        tempNew2Img = tempNew2Img.getScaledInstance(114, 65, Image.SCALE_SMOOTH);
-        this.new2Icon = new ImageIcon(tempNew2Img);
-        System.out.println("uwu ne");
+        for (int thisNoticia = 0; thisNoticia < MAX_NEWS; thisNoticia++) {
+            JSONObject newsObject = news.getJSONObject(thisNoticia);
+            if (news.getJSONObject(thisNoticia).getBoolean("custom_img")) {
+                System.out.println("Resizing img noticia " + thisNoticia);
+                URL newsImgUrl = new URL(newsObject.getString("img"));
+                ImageIcon image_icon = new ImageIcon(newsImgUrl);
+                Image image = image_icon.getImage();
+                image = image.getScaledInstance(114, 65, Image.SCALE_SMOOTH);
+
+                switch (thisNoticia) {
+                    case 0:
+                        this.new0Icon = new ImageIcon(image);
+                        break;
+                    case 1:
+                        this.new1Icon = new ImageIcon(image);
+                        break;
+                    case 2:
+                        this.new2Icon = new ImageIcon(image);
+                        break;
+                    default:
+                        this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+                        break;
+                }
+                System.out.println("Resized img noticia " + thisNoticia);
+            } else {
+                switch (thisNoticia) {
+                    case 0:
+                        System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
+                        this.new0Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+                        break;
+                    case 1:
+                        System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
+                        this.new1Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+                        break;
+                    case 2:
+                        System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
+                        this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+                        break;
+                    default:
+                        this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+                        break;
+                }
+            }
+        }
 
         initComponents();
 

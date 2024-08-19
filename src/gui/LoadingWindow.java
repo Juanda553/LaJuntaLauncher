@@ -114,7 +114,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public static void main(String args[]) throws MalformedURLException, ProtocolException, IOException, InterruptedException {       
+    public static void main(String args[]) throws MalformedURLException, ProtocolException, IOException, InterruptedException {
         UIDefaults ui = UIManager.getDefaults();
         ui.put("ScrollBarUI", ScrollBarWin11UI.class.getCanonicalName());
 
@@ -132,12 +132,12 @@ public class LoadingWindow extends javax.swing.JFrame {
 
 //        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_LAUNCHER_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
-//        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 
         
         URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
         URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
-        URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
+//        URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
         JuntaApi JUNTA_API = null;
         try {
@@ -330,17 +330,17 @@ public class LoadingWindow extends javax.swing.JFrame {
                                 for (int i = 0; i < filesHQ.length(); i++) {
                                     JSONObject mod = filesHQ.getJSONObject(i);
                                     String name = mod.getString("name");
-                                    File loc = new File(DOT_DIOMEDES + "/" + mod.getString("loc"));
-                                    URL downloadLink = new URL(mod.getString("download"));
-
-                                    FileUtils.copyURLToFile(downloadLink, loc);
+                                    String loc = DOT_DIOMEDES + "/" + mod.getString("loc");
+                                    String downloadLink = mod.getString("download");
+                                    
+                                    JUANDA_UTILS.donwloadFile(downloadLink, loc, thisWindow.progressDownload);
                                     System.out.println(name + " descargado");
                                 }
                             }
-                            
+
                             settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
                             LAUNCHER_CLASS.setServerVersion(JUNTA_API.getServerVersion());
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             settingsJson.put("juntaServerVersion", "0.0.0");
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Actualizar\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
@@ -361,12 +361,14 @@ public class LoadingWindow extends javax.swing.JFrame {
                         System.exit(0);
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Envia captura de este error:\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Envia captura de este error:\n" + e, "Error Rancio a", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
                 System.exit(0);
             }
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al iniciar.\n" + e, "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
             System.exit(0);
         }
         

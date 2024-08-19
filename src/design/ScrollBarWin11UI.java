@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import javax.swing.plaf.ComponentUI;
+import gui.LoadingWindow;
 
 /**
  *
@@ -15,8 +16,8 @@ public class ScrollBarWin11UI extends BasicScrollBarUI {
         return new ScrollBarWin11UI();
     }
 
-    private final Color darkBackgroundColor = new Color(40, 40, 40);
-    private final Color scrollColor = Color.GRAY;
+    public final Color darkBackgroundColor = new Color(40, 40, 40);
+    public final Color scrollColor = Color.GRAY;
     
     @Override
     public void installUI(JComponent c) {
