@@ -113,7 +113,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        String LAUNCHER_VERSION = "2.3.0"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String LAUNCHER_VERSION = "2.3.1"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         JuandaUtils JUANDA_UTILS = new JuandaUtils();
         String DOT_MINECRAFT = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
