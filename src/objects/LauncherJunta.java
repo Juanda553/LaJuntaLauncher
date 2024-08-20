@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 import gui.LoadingWindow;
-import java.io.FileWriter;
 import java.nio.file.StandardOpenOption;
 
 public class LauncherJunta {

@@ -6,7 +6,6 @@ import objects.JuntaApi;
 import objects.LauncherJunta;
 
 import gui.*;
-import java.awt.Font;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;

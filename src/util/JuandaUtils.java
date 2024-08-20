@@ -18,7 +18,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
-import objects.JuntaApi;
 import org.json.JSONObject;
 
 public class JuandaUtils {

@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import objects.JuntaApi;
 import objects.LauncherJunta;
-import org.json.JSONArray;
 import util.LaunchMinecraft;
 /**
  *
