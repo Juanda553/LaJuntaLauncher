@@ -79,17 +79,22 @@ public class JuandaUtils {
             connection.setRequestMethod("HEAD"); // Solicitud para obtener solo los encabezados
             connection.connect();
 
-            int fileSizeInBytes = connection.getContentLength(); // Tamaño en bytes
+            long fileSizeInBytes = connection.getContentLengthLong(); // Tamaño en bytes
 
-            // Convertir el tamaño a megabytes
-            double fileSizeInMB = fileSizeInBytes / (1024.0 * 1024.0);
-
-            // Formatear a 2 decimales
+            // Formato de salida
             DecimalFormat df = new DecimalFormat("#.##");
-            return "(" + df.format(fileSizeInMB) + " MB)";
+
+            // Convertir a MB o GB según corresponda
+            if (fileSizeInBytes >= 1024L * 1024L * 1024L) {
+                double fileSizeInGB = fileSizeInBytes / (1024.0 * 1024.0 * 1024.0);
+                return df.format(fileSizeInGB) + " GB";
+            } else {
+                double fileSizeInMB = fileSizeInBytes / (1024.0 * 1024.0);
+                return df.format(fileSizeInMB) + " MB";
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error MB";
+            return "Error al obtener el tamaño del archivo";
         }
     }
     
@@ -161,6 +166,7 @@ public class JuandaUtils {
             zipInputStream.close();
             xd.close();
 
+            System.out.println("descomprimido");
             comprimidom.delete();
             progressBar.setValue(0);
             return true;

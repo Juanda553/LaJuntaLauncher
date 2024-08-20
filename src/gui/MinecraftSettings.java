@@ -30,7 +30,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private boolean back_highQuality;
     private JuandaUtils JUANDA_UTILS;
     cargando sayajin;
-    
+
     public MinecraftSettings(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String launcherDir, String dotDiomedes) {
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
@@ -51,10 +51,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
         
         initComponents();
         loadSettings();
-        
-        
-        
-        
+
         jPanel1.setBackground(Color.decode(bgColor2));
     }
 
@@ -77,7 +74,9 @@ public class MinecraftSettings extends javax.swing.JFrame {
         selectedRam = new javax.swing.JLabel();
         btn_hardResetSeason = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        btn_hardResetSeason1 = new javax.swing.JButton();
+        btn_downloadFullMap = new javax.swing.JButton();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ajustes");
@@ -201,17 +200,22 @@ public class MinecraftSettings extends javax.swing.JFrame {
         jLabel5.setForeground(Color.decode(fontColor1));
         jLabel5.setText("Formatear datos de La Junta Actual");
 
-        btn_hardResetSeason1.setBackground(Color.decode(btnColor2));
-        btn_hardResetSeason1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        btn_hardResetSeason1.setForeground(Color.decode(fontColor1));
-        btn_hardResetSeason1.setText("Descargar mapa precargado");
-        btn_hardResetSeason1.setToolTipText("Descarga el mapa pregenrado previamente para que al usar el HQ puedas ver todo desde lejos");
-        btn_hardResetSeason1.setFocusPainted(false);
-        btn_hardResetSeason1.addActionListener(new java.awt.event.ActionListener() {
+        btn_downloadFullMap.setBackground(Color.decode(btnColor2));
+        btn_downloadFullMap.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        btn_downloadFullMap.setForeground(Color.decode(fontColor1));
+        btn_downloadFullMap.setText("Descargar mapa precargado");
+        btn_downloadFullMap.setToolTipText("");
+        btn_downloadFullMap.setFocusPainted(false);
+        btn_downloadFullMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hardResetSeason1ActionPerformed(evt);
+                btn_downloadFullMapActionPerformed(evt);
             }
         });
+
+        jProgressBar1.setBorder(null);
+
+        jLabel6.setForeground(Color.decode(fontColor1));
+        jLabel6.setText(JUANDA_UTILS.getFileSizeMb(JUNTA_API.getHighQualityData().getString("full_world")));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -220,6 +224,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(sliderRam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,7 +247,10 @@ public class MinecraftSettings extends javax.swing.JFrame {
                             .addComponent(btn_changeName)
                             .addComponent(btn_hardResetSeason)
                             .addComponent(jLabel5)
-                            .addComponent(btn_hardResetSeason1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btn_downloadFullMap)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -262,7 +270,9 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(highQualityCheck)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_hardResetSeason1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_downloadFullMap)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -273,7 +283,9 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_hardResetSeason)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_load)
                     .addComponent(btn_apply)
@@ -407,15 +419,17 @@ public class MinecraftSettings extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_hardResetSeasonActionPerformed
 
-    private void btn_hardResetSeason1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hardResetSeason1ActionPerformed
+    private void btn_downloadFullMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_downloadFullMapActionPerformed
         try {
-            sayajin.setLocationRelativeTo(null);
-            sayajin.setVisible(true);
-            sayajin.titulo.setText("Descargando el mapa precargado");
+            String fullWorld = JUNTA_API.getHighQualityData().getString("full_world");
+
+            JUANDA_UTILS.donwloadFile(fullWorld, this.launcherDir + "/current.zip", jProgressBar1);
+            jProgressBar1.setValue(0);
+            JUANDA_UTILS.descomprimir(this.launcherDir + "/current.zip", this.dotDiomedes, jProgressBar1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error de mapa precargado", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btn_hardResetSeason1ActionPerformed
+    }//GEN-LAST:event_btn_downloadFullMapActionPerformed
 
     private boolean loadSettings(){
         try {
@@ -436,6 +450,14 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 highQualityCheck.setToolTipText("Activa los shaders y otos efectos visuales");
             }
             
+            if (LAUNCHER_CLASS.isHighQualityMode()) {
+                btn_downloadFullMap.setEnabled(true);
+                btn_downloadFullMap.setToolTipText("Descarga el mapa pre-generado para que al usar el HQ puedas ver todo desde lejos");
+            } else {
+                btn_downloadFullMap.setEnabled(false);
+                btn_downloadFullMap.setToolTipText("Activa primero el modo Alta Calidad");
+            }
+            
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error de carga", JOptionPane.ERROR_MESSAGE);
@@ -445,10 +467,6 @@ public class MinecraftSettings extends javax.swing.JFrame {
     
     private boolean activandoHihgQuality(){
         try {
-            sayajin.setLocationRelativeTo(null);
-            sayajin.setVisible(true);
-            sayajin.titulo.setText("Activando modo HQ");
-            
             JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
             for (int i = 0; i < filesHQ.length(); i++) {
                 JSONObject mod = filesHQ.getJSONObject(i);
@@ -456,11 +474,9 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 String loc = dotDiomedes + "/" + mod.getString("loc");
                 String downloadLink = mod.getString("download");
 
-                sayajin.accion.setText("Instalando " + name);
-                JUANDA_UTILS.donwloadFile(downloadLink, loc, sayajin.progressBar);
+                JUANDA_UTILS.donwloadFile(downloadLink, loc, jProgressBar1);
                 System.out.println(name + " descargado");
             }
-            sayajin.dispose();
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);
@@ -469,12 +485,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
     }
     private boolean desactivandoHihgQuality(){
         try {
-            sayajin.setLocationRelativeTo(null);
-            sayajin.setVisible(true);
-            sayajin.titulo.setText("Desactivando modo HQ");
-            
             JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
-            sayajin.progressBar.setMaximum(filesHQ.length());
             
             for (int i = 0; i < filesHQ.length(); i++) {
                 JSONObject mod = filesHQ.getJSONObject(i);
@@ -482,11 +493,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 File loc = new File(dotDiomedes + "/" + mod.getString("loc"));
                 
                 loc.delete();
-                sayajin.progressBar.setValue(i);
-                sayajin.accion.setText("Eliminando " + name);
                 System.out.println(name + " eliminado");
             }
-            sayajin.dispose();
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);
@@ -498,8 +506,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private javax.swing.JButton btn_apply;
     private javax.swing.JButton btn_changeName;
     private javax.swing.JButton btn_close;
+    private javax.swing.JButton btn_downloadFullMap;
     private javax.swing.JButton btn_hardResetSeason;
-    private javax.swing.JButton btn_hardResetSeason1;
     private javax.swing.JButton btn_load;
     private javax.swing.JLabel current_user;
     private javax.swing.JCheckBox highQualityCheck;
@@ -508,7 +516,9 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JLabel selectedRam;
     private javax.swing.JSlider sliderRam;
     // End of variables declaration//GEN-END:variables

@@ -38,7 +38,9 @@ public class cargando extends javax.swing.JFrame {
         progressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cargando");
         setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(bgColor1);
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

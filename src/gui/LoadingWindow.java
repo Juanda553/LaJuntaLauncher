@@ -325,14 +325,14 @@ public class LoadingWindow extends javax.swing.JFrame {
                             // Esto era para que se actualice tambien el high quality mode creo
                             if (LAUNCHER_CLASS.isHighQualityMode()) {
                                 thisWindow.changeStatus("Actualizando modo HQ " + JUNTA_API.getServerVersion(), 95);
-                                
+
                                 JSONArray filesHQ = new JSONArray(JUNTA_API.getHighQualityData().getJSONArray("files"));
                                 for (int i = 0; i < filesHQ.length(); i++) {
                                     JSONObject mod = filesHQ.getJSONObject(i);
                                     String name = mod.getString("name");
                                     String loc = DOT_DIOMEDES + "/" + mod.getString("loc");
                                     String downloadLink = mod.getString("download");
-                                    
+
                                     JUANDA_UTILS.donwloadFile(downloadLink, loc, thisWindow.progressDownload);
                                     System.out.println(name + " descargado");
                                 }
@@ -345,7 +345,6 @@ public class LoadingWindow extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Envia captura de este error: Actualizar\n" + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
                         }
                     }
-
                         // guarda el archivo settings.json para que no se pierda esos datos
                         Files.write(Paths.get(SETTINGS_FILE), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
 
@@ -365,21 +364,19 @@ public class LoadingWindow extends javax.swing.JFrame {
                 e.printStackTrace();
                 System.exit(0);
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al iniciar.\n" + e, "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
             System.exit(0);
         }
-        
-        
     }
-    
+
     private void changeStatus(String text, int progreso){
         datosDeCarga.setText(text);
         progressOpen.setValue(progreso);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel datosDeCarga;
     private javax.swing.JLabel jLabel1;
