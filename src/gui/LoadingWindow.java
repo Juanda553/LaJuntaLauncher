@@ -333,7 +333,9 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     JUANDA_UTILS.donwloadFile(downloadLink, loc, thisWindow.progressDownload);
                                     System.out.println(name + " descargado");
                                 }
-
+                            }
+                            
+                            if (LAUNCHER_CLASS.isLiteMode()){
                                 JSONArray filesLite = new JSONArray(JUNTA_API.getLiteModeData().getJSONArray("files"));
 
                                 for (int i = 0; i < filesLite.length(); i++) {
