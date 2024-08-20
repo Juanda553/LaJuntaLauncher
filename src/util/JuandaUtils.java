@@ -35,11 +35,9 @@ public class JuandaUtils {
             URL url = new URL(fileURL);
             in = new BufferedInputStream(url.openStream());
 
-            // Definir la ruta de salida
             Path outputPath = Paths.get(saveDir);
             out = new FileOutputStream(outputPath.toFile());
 
-            // Obtener el tamaño total del archivo para el seguimiento del progreso
             int fileSize = url.openConnection().getContentLength();
             progressBar.setMaximum(fileSize);
 
@@ -76,15 +74,13 @@ public class JuandaUtils {
         try {
             URL url = new URL(fileURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("HEAD"); // Solicitud para obtener solo los encabezados
+            connection.setRequestMethod("HEAD");
             connection.connect();
 
-            long fileSizeInBytes = connection.getContentLengthLong(); // Tamaño en bytes
+            long fileSizeInBytes = connection.getContentLengthLong();
 
-            // Formato de salida
             DecimalFormat df = new DecimalFormat("#.##");
 
-            // Convertir a MB o GB según corresponda
             if (fileSizeInBytes >= 1024L * 1024L * 1024L) {
                 double fileSizeInGB = fileSizeInBytes / (1024.0 * 1024.0 * 1024.0);
                 return df.format(fileSizeInGB) + " GB";
@@ -128,21 +124,18 @@ public class JuandaUtils {
             ZipInputStream zipInputStream = new ZipInputStream(xd);
             ZipEntry entry;
 
-            // Calcular el tamaño total de todos los archivos dentro del ZIP
             int totalSize = 0;
             while ((entry = zipInputStream.getNextEntry()) != null) {
                 totalSize += entry.getSize();
                 zipInputStream.closeEntry();
             }
 
-            // Reiniciar el ZipInputStream para empezar la descompresión
             zipInputStream.close();
             xd.close();
             xd = new FileInputStream(archivo);
             zipInputStream = new ZipInputStream(xd);
 
-            // Configurar la barra de progreso
-            progressBar.setMaximum(totalSize > 0 ? totalSize : 100); // Si no se puede calcular el tamaño, usar 100 como valor arbitrario
+            progressBar.setMaximum(totalSize > 0 ? totalSize : 100);
             int bytesReadTotal = 0;
 
             while ((entry = zipInputStream.getNextEntry()) != null) {
