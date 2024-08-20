@@ -170,7 +170,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         current_user.setForeground(Color.decode(fontColor1));
-        current_user.setText("abcdefghijk");
+        current_user.setText("username");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(Color.decode(fontColor1));
@@ -178,9 +178,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
 
         btn_changeName.setBackground(Color.decode(btnColor2));
         btn_changeName.setForeground(Color.decode(fontColor1));
-        btn_changeName.setText("Cambiar Usuario");
-        btn_changeName.setToolTipText("ESTA FUNCION AUN NO ESTÁ DISPONIBLE");
-        btn_changeName.setEnabled(false);
+        btn_changeName.setText("Cambiar Username");
+        btn_changeName.setToolTipText("Para cambiar el username debes pedir permiso");
         btn_changeName.setFocusPainted(false);
         btn_changeName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -435,7 +434,28 @@ public class MinecraftSettings extends javax.swing.JFrame {
 
     private void btn_changeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_changeNameActionPerformed
         try {
-            
+            if(JUNTA_API.getChangeUsernamePermission().equals(LAUNCHER_CLASS.getUsername())){
+                String changeUserPassword = JOptionPane.showInputDialog(null, "Ingresa la contraseña de cambio de nombre", "Cambio de nombre de Usuario", JOptionPane.WARNING_MESSAGE);
+                
+                if (changeUserPassword.equals(JUNTA_API.getChangeUsernamePassword())) {
+                    String newUserName = JUNTA_API.getChangeUsernameNewUserName();
+                    LAUNCHER_CLASS.setUsername(newUserName);
+                    
+                    current_user.setText(newUserName);
+                    
+                    String path = this.launcherDir + "/settings.json";
+                    String settingsContent = new String(Files.readAllBytes(Paths.get(path)));
+                    JSONObject settingsJson = new JSONObject(settingsContent);
+
+                    settingsJson.put("username", newUserName);
+                    Files.write(Paths.get(path), settingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
+                    
+                    JOptionPane.showMessageDialog(null, "Nombre de usuario cambiado con exito, por favor reinicia el Launcher", "Cambio de nombre", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No tienes permiso para cambiar tu nombre de usuario, pide permiso al admin y especifica el por qué", "NO PUEDES CAMBIAR EL USERNAME", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
         }

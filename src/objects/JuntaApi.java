@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JuntaApi {
-    private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP, lastLauncherDownload, libsDownload, assetsDonwload, changeUsernamePermission;
+    private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP, lastLauncherDownload, libsDownload, assetsDonwload, changeUsernamePermission, changeUsernamePassword, changeUsernameNewUserName;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -17,7 +17,7 @@ public class JuntaApi {
     private JSONObject event, highQualityData, staffs, liteModeData;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String lastLauncherDownload, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP, JSONObject staffs, String libsDownload, String assetsDonwload, JSONObject liteModeData, String changeUsernamePermission) {
+    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String lastLauncherDownload, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP, JSONObject staffs, String libsDownload, String assetsDonwload, JSONObject liteModeData, String changeUsernamePermission, String changeUsernamePassword, String changeUsernameNewUserName) {
         this.lastUpdate = lastUpdate;
         this.name = name;
         this.serverVersion = serverVersion;
@@ -53,6 +53,8 @@ public class JuntaApi {
         this.assetsDonwload = assetsDonwload;
         this.liteModeData = liteModeData;
         this.changeUsernamePermission = changeUsernamePermission;
+        this.changeUsernamePassword = changeUsernamePassword;
+        this.changeUsernameNewUserName = changeUsernameNewUserName;
     }
     
     public boolean updateApi(URL API_URL, JuntaApi x){
@@ -412,6 +414,22 @@ public class JuntaApi {
 
     public void setChangeUsernamePermission(String changeUsernamePermission) {
         this.changeUsernamePermission = changeUsernamePermission;
+    }
+
+    public String getChangeUsernamePassword() {
+        return changeUsernamePassword;
+    }
+
+    public void setChangeUsernamePassword(String changeUsernamePassword) {
+        this.changeUsernamePassword = changeUsernamePassword;
+    }
+
+    public String getChangeUsernameNewUserName() {
+        return changeUsernameNewUserName;
+    }
+
+    public void setChangeUsernameNewUserName(String changeUsernameNewUserName) {
+        this.changeUsernameNewUserName = changeUsernameNewUserName;
     }
     
 }

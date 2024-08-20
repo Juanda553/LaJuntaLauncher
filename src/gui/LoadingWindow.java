@@ -178,7 +178,9 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiData.getString("libsDownload"),
                     apiData.getString("assetsDownload"),
                     apiData.getJSONObject("lite_mode"),
-                    apiData.getString("changeUserNamePermission")
+                    apiData.getString("changeUserNamePermission"), 
+                    apiData.getString("changeUsernamePassword"),
+                    apiData.getString("changeUsernameNewUserName")
                 );
 
             // Imprime en consola toda desa vaina
