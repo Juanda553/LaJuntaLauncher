@@ -644,10 +644,10 @@ public class MinecraftSettings extends javax.swing.JFrame {
     }
     private boolean activandoLiteMode(){
         try {
-            JSONArray filesHQ = new JSONArray(JUNTA_API.getLiteModeData().getJSONArray("files"));
+            JSONArray filesLite = new JSONArray(JUNTA_API.getLiteModeData().getJSONArray("files"));
             
-            for (int i = 0; i < filesHQ.length(); i++) {
-                JSONObject mod = filesHQ.getJSONObject(i);
+            for (int i = 0; i < filesLite.length(); i++) {
+                JSONObject mod = filesLite.getJSONObject(i);
                 String name = mod.getString("name");
                 File loc = new File(dotDiomedes + "/" + mod.getString("loc"));
                 

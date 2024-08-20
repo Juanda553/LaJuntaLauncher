@@ -333,6 +333,17 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     JUANDA_UTILS.donwloadFile(downloadLink, loc, thisWindow.progressDownload);
                                     System.out.println(name + " descargado");
                                 }
+
+                                JSONArray filesLite = new JSONArray(JUNTA_API.getLiteModeData().getJSONArray("files"));
+
+                                for (int i = 0; i < filesLite.length(); i++) {
+                                    JSONObject mod = filesLite.getJSONObject(i);
+                                    String name = mod.getString("name");
+                                    File loc = new File(DOT_DIOMEDES + "/" + mod.getString("loc"));
+
+                                    loc.delete();
+                                    System.out.println(name + " eliminado");
+                                }
                             }
 
                             settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());
