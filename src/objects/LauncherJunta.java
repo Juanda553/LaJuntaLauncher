@@ -10,10 +10,10 @@ import java.nio.file.StandardOpenOption;
 public class LauncherJunta {
     private String minecraftVersion, indexVersion, username, serverVersion, juntaName, diomedesDir;
     int ram;
-    boolean highQualityMode;
+    boolean highQualityMode, liteMode;
     LoadingWindow asd;
 
-    public LauncherJunta(String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String juntaName, String diomedesDir, boolean highQualityMode) {
+    public LauncherJunta(String minecraftVersion, String indexVersion, String username, int ram, String serverVersion, String juntaName, String diomedesDir, boolean highQualityMode, boolean liteMode) {
         this.minecraftVersion = minecraftVersion;
         this.indexVersion = indexVersion;
         this.username = username;
@@ -22,6 +22,7 @@ public class LauncherJunta {
         this.juntaName = juntaName;
         this.diomedesDir = diomedesDir;
         this.highQualityMode = highQualityMode;
+        this.liteMode = liteMode;
     }
     
     public boolean saveLocalSettings(String path){
@@ -43,6 +44,14 @@ public class LauncherJunta {
             JOptionPane.showMessageDialog(null, e, "Ocurrió un error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
+
+    public boolean isLiteMode() {
+        return liteMode;
+    }
+
+    public void setLiteMode(boolean liteMode) {
+        this.liteMode = liteMode;
     }
 
     public boolean isHighQualityMode() {

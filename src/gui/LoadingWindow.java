@@ -122,12 +122,12 @@ public class LoadingWindow extends javax.swing.JFrame {
 
 //        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_LAUNCHER_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
-//        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 
         
         URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
         URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
-        URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
+//        URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
         JuntaApi JUNTA_API = null;
         try {
@@ -176,7 +176,9 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiLauncherProperties.getString("ip"),
                     apiData.getJSONObject("staff"),
                     apiData.getString("libsDownload"),
-                    apiData.getString("assetsDownload")
+                    apiData.getString("assetsDownload"),
+                    apiData.getJSONObject("lite_mode"),
+                    apiData.getString("changeUserNamePermission")
                 );
 
             // Imprime en consola toda desa vaina
@@ -194,6 +196,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                         // Creando nuevos ajsutes del settings.json
                         try {
                             System.out.println(settingsJson.getBoolean("highQualityMode"));
+                            System.out.println(settingsJson.getBoolean("liteMode"));
                         } catch (Exception e) {
                             System.out.println("creando nuevos ajustes");
                             System.out.println(e);
@@ -201,6 +204,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                             JSONObject newSettingsJson = new JSONObject(newSettingsContent);
                         
                             newSettingsJson.put("highQualityMode", false);
+                            newSettingsJson.put("liteMode", false);
                             
                             Files.write(Paths.get(SETTINGS_FILE), newSettingsJson.toString(4).getBytes(), StandardOpenOption.WRITE);
                         }
@@ -254,7 +258,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                             settingsJson.getString("juntaServerVersion"),
                             settingsJson.getString("juntaName"),
                             DOT_DIOMEDES,
-                            settingsJson.getBoolean("highQualityMode")
+                            settingsJson.getBoolean("highQualityMode"),
+                            settingsJson.getBoolean("liteMode")
                     );
                     
                     // aqui deberia de comprobar la version de la junta y la temporada en caso que sea nueva
