@@ -132,12 +132,12 @@ public class LoadingWindow extends javax.swing.JFrame {
 
 //        URL API_DATA_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 //        URL API_LAUNCHER_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
-        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
+//        URL API_NEWS_URL = new URL("https://pastebin.com/raw/nj6RWKmF");
 
         
         URL API_DATA_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/data.json");
         URL API_LAUNCHER_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/launcher.json");
-//        URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
+        URL API_NEWS_URL = new URL("https://raw.githubusercontent.com/Juanda553/junta_api/main/news.json");
         
         JuntaApi JUNTA_API = null;
         try {
