@@ -331,13 +331,17 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     String downloadLink = mod.getString("download");
 
                                     JUANDA_UTILS.donwloadFile(downloadLink, loc, thisWindow.progressDownload);
+                                    
                                     System.out.println(name + " descargado");
                                 }
+                                JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("game_settings"), LAUNCHER_DIR + "/new_options.txt", thisWindow.progressDownload);
+                                JUANDA_UTILS.updateOptions(DOT_DIOMEDES + "/options.txt", LAUNCHER_DIR + "/new_options.txt");
                             }
                             
                             if (LAUNCHER_CLASS.isLiteMode()){
+                                thisWindow.changeStatus("Actualizando modo Lite " + JUNTA_API.getServerVersion(), 95);
+                                
                                 JSONArray filesLite = new JSONArray(JUNTA_API.getLiteModeData().getJSONArray("files"));
-
                                 for (int i = 0; i < filesLite.length(); i++) {
                                     JSONObject mod = filesLite.getJSONObject(i);
                                     String name = mod.getString("name");
@@ -346,6 +350,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     loc.delete();
                                     System.out.println(name + " eliminado");
                                 }
+                                JUANDA_UTILS.donwloadFile(JUNTA_API.getLiteModeData().getString("game_settings"), LAUNCHER_DIR + "/new_options.txt", thisWindow.progressDownload);
+                                JUANDA_UTILS.updateOptions(DOT_DIOMEDES + "/options.txt", LAUNCHER_DIR + "/new_options.txt");
                             }
 
                             settingsJson.put("juntaServerVersion", JUNTA_API.getServerVersion());

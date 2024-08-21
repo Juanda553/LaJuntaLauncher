@@ -223,6 +223,11 @@ public class MinecraftSettings extends javax.swing.JFrame {
         highQualityCheck.setText("Modo Alta Calidad");
         highQualityCheck.setToolTipText("Activa los shaders y otos efectos visuales");
         highQualityCheck.setFocusable(false);
+        highQualityCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                highQualityCheckActionPerformed(evt);
+            }
+        });
 
         btn_downloadFullMap.setBackground(Color.decode(btnColor2));
         btn_downloadFullMap.setForeground(Color.decode(fontColor1));
@@ -536,8 +541,12 @@ public class MinecraftSettings extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_downloadFullMapActionPerformed
 
     private void LiteCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiteCheckActionPerformed
-        // TODO add your handling code here:
+        highQualityCheck.setEnabled(false);
     }//GEN-LAST:event_LiteCheckActionPerformed
+
+    private void highQualityCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highQualityCheckActionPerformed
+       LiteCheck.setEnabled(false);
+    }//GEN-LAST:event_highQualityCheckActionPerformed
 
     private boolean loadSettings(){
         try {
@@ -599,6 +608,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 JUANDA_UTILS.donwloadFile(downloadLink, loc, jProgressBar1);
                 System.out.println(name + " descargado");
             }
+            JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("game_settings"), launcherDir + "/new_options.txt", jProgressBar1);  
+            JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);
@@ -617,6 +628,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 loc.delete();
                 System.out.println(name + " eliminado");
             }
+            JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("default_game_settings"), launcherDir + "/new_options.txt", jProgressBar1);  
+            JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);
@@ -636,6 +649,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 JUANDA_UTILS.donwloadFile(downloadLink, loc, jProgressBar1);
                 System.out.println(name + " descargado");
             }
+            JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("default_game_settings"), launcherDir + "/new_options.txt", jProgressBar1);  
+            JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);
@@ -654,6 +669,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 loc.delete();
                 System.out.println(name + " eliminado");
             }
+            JUANDA_UTILS.donwloadFile(JUNTA_API.getLiteModeData().getString("game_settings"), launcherDir + "/new_options.txt", jProgressBar1);
+            JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error HQ", JOptionPane.ERROR_MESSAGE);

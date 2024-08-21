@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package util;
 import java.awt.Color;
 import objects.JuntaApi;
-/**
- *
- * @author juanz
- */
+
 public class cargando extends javax.swing.JFrame {
 
     public JuntaApi JUNTA_API;

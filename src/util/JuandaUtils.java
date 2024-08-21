@@ -13,7 +13,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JOptionPane;
@@ -68,7 +74,54 @@ public class JuandaUtils {
             }
         }
     }
-    
+
+    public void updateOptions(String optionsFilePath, String newOptionsFilePath) throws IOException {
+        try {
+            // Lee todas las líneas del archivo options.txt
+            List<String> lines = new ArrayList<>(Files.readAllLines(Paths.get(optionsFilePath)));
+
+            // Carga los ajustes nuevos desde new_options.txt en un mapa
+            Map<String, String> newSettings = new HashMap<>();
+            List<String> newLines = Files.readAllLines(Paths.get(newOptionsFilePath));
+            for (String line : newLines) {
+                if (line.contains(":")) {
+                    String[] parts = line.split(":", 2);
+                    String key = parts[0].trim();
+                    String value = parts[1].trim();
+                    newSettings.put(key, value);
+                }
+            }
+
+            // Marca si se encontró la clave
+            Set<String> keysFound = new HashSet<>();
+
+            // Actualiza las líneas en options.txt con los valores de new_options.txt
+            for (int i = 0; i < lines.size(); i++) {
+                String line = lines.get(i);
+                if (line.contains(":")) {
+                    String key = line.split(":", 2)[0].trim();
+                    if (newSettings.containsKey(key)) {
+                        lines.set(i, key + ":" + newSettings.get(key));
+                        keysFound.add(key);
+                    }
+                }
+            }
+
+            // Agrega cualquier nueva configuración que no estaba previamente en options.txt
+            for (Map.Entry<String, String> entry : newSettings.entrySet()) {
+                if (!keysFound.contains(entry.getKey())) {
+                    lines.add(entry.getKey() + ":" + entry.getValue());
+                }
+            }
+
+            // Escribe las líneas actualizadas de nuevo en options.txt
+            Files.write(Paths.get(optionsFilePath), lines, StandardOpenOption.TRUNCATE_EXISTING);
+            System.out.println("Ajustes updateados");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String getFileSizeMb(String fileURL) {
         try {
             URL url = new URL(fileURL);
