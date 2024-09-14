@@ -22,6 +22,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import org.json.JSONObject;
@@ -32,7 +33,7 @@ public class JuandaUtils {
         
     }
     
-    public boolean donwloadFile(String fileURL, String saveDir, JProgressBar progressBar) {
+    public boolean downloadFile(String fileURL, String saveDir, JProgressBar progressBar, JLabel peso, JLabel tiempo) {
         BufferedInputStream in = null;
         FileOutputStream out = null;
 
@@ -49,14 +50,40 @@ public class JuandaUtils {
             byte[] buffer = new byte[1024];
             int count;
             int downloaded = 0;
+
+            long startTime = System.currentTimeMillis();
+
             while ((count = in.read(buffer, 0, 1024)) != -1) {
                 out.write(buffer, 0, count);
                 downloaded += count;
                 progressBar.setValue(downloaded);
+
+                // Actualiza la información del JLabel
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                double downloadSpeedKB = (downloaded / 1024.0) / (elapsedTime / 1000.0); // KB/s
+                double downloadSpeedMB = downloadSpeedKB / 1024.0; // MB/s
+                double remainingTimeSecs = ((double) (fileSize - downloaded) / (1024.0 * downloadSpeedKB)); // Tiempo restante en segundos
+
+                String timeRemainingText;
+                if (remainingTimeSecs >= 60) {
+                    double remainingTimeMins = remainingTimeSecs / 60.0;
+                    timeRemainingText = "" + Math.round(remainingTimeMins) + " minutos";
+                } else {
+                    timeRemainingText = "" + Math.round(remainingTimeSecs) + " segundos";
+                }
+
+                String speedText = downloadSpeedMB >= 1 ? 
+                    "" + roundToOneDecimal(downloadSpeedMB) + " MB/s" : 
+                    "" + roundToOneDecimal(downloadSpeedKB) + " KB/s";
+
+                peso.setText(formatSize(downloaded) + " / " + formatSize(fileSize));
+                tiempo.setText(speedText + ", " + timeRemainingText);
             }
 
-            System.out.println("descargado " + outputPath);
+            System.out.println("Descargado " + outputPath);
             progressBar.setValue(0);
+            peso.setText("");
+            tiempo.setText("");
             return true;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al descargar. Envia captura de este error:\n" + e, "Error al descargar", JOptionPane.ERROR_MESSAGE);
@@ -73,6 +100,62 @@ public class JuandaUtils {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public boolean downloadFileNormal(String fileURL, String saveDir) {
+        BufferedInputStream in = null;
+        FileOutputStream out = null;
+
+        try {
+            URL url = new URL(fileURL);
+            in = new BufferedInputStream(url.openStream());
+
+            Path outputPath = Paths.get(saveDir);
+            out = new FileOutputStream(outputPath.toFile());
+
+            byte[] buffer = new byte[1024];
+            int count;
+
+            while ((count = in.read(buffer, 0, 1024)) != -1) {
+                out.write(buffer, 0, count);
+            }
+
+            System.out.println("Descargado " + outputPath);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    // infoLabel.setText("");
+    private String formatSize(int size) {
+        double kb = size / 1024.0;
+        double mb = kb / 1024.0;
+        double gb = mb / 1024.0;
+
+        if (gb >= 1) {
+            return "" + roundToOneDecimal(gb) + " GB";
+        } else if (mb >= 1) {
+            return "" + roundToOneDecimal(mb) + " MB";
+        } else {
+            return "" + roundToOneDecimal(kb) + " KB";
+        }
+    }
+    
+    private String roundToOneDecimal(double value) {
+        return "" + Math.round(value * 10.0) / 10.0;
     }
 
     public void updateOptions(String optionsFilePath, String newOptionsFilePath) throws IOException {
@@ -122,7 +205,7 @@ public class JuandaUtils {
         }
     }
 
-    public static String getFileSizeMb(String fileURL) {
+    public String getFileSizeMb(String fileURL) {
         try {
             URL url = new URL(fileURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -214,6 +297,55 @@ public class JuandaUtils {
             System.out.println("descomprimido");
             comprimidom.delete();
             progressBar.setValue(0);
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al descomprimir.\nEnvia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+    
+    public boolean descomprimirNormal(String archivo, String destino) {
+        try {
+            File comprimidom = new File(archivo);
+            FileInputStream xd = new FileInputStream(archivo);
+            ZipInputStream zipInputStream = new ZipInputStream(xd);
+            ZipEntry entry;
+
+            int totalSize = 0;
+            while ((entry = zipInputStream.getNextEntry()) != null) {
+                totalSize += entry.getSize();
+                zipInputStream.closeEntry();
+            }
+
+            zipInputStream.close();
+            xd.close();
+            xd = new FileInputStream(archivo);
+            zipInputStream = new ZipInputStream(xd);
+
+            int bytesReadTotal = 0;
+
+            while ((entry = zipInputStream.getNextEntry()) != null) {
+                String entryName = entry.getName();
+                if (!entry.isDirectory()) {
+                    File entryFile = new File(destino, entryName);
+                    entryFile.getParentFile().mkdirs();
+
+                    byte[] buffer = new byte[1024];
+                    FileOutputStream fos = new FileOutputStream(entryFile);
+                    int length;
+                    while ((length = zipInputStream.read(buffer)) > 0) {
+                        fos.write(buffer, 0, length);
+                        bytesReadTotal += length;
+                    }
+                    fos.close();
+                }
+                zipInputStream.closeEntry();
+            }
+            zipInputStream.close();
+            xd.close();
+
+            System.out.println("descomprimido");
+            comprimidom.delete();
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Hubo un error al descomprimir.\nEnvia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);

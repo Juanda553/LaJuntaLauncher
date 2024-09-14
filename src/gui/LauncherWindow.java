@@ -38,6 +38,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     public LauncherWindow(JuntaApi JUNTA_API, LauncherJunta LAUNCHER_CLASS, String LAUNCHER_VERSION, String launcherDir, String dotDiomedes) throws MalformedURLException, IOException {
 
+        System.out.println("Construyendo");
         this.JUNTA_API = JUNTA_API;
         this.LAUNCHER_CLASS = LAUNCHER_CLASS;
         this.LAUNCHER_VERSION = LAUNCHER_VERSION;
@@ -61,23 +62,84 @@ public class LauncherWindow extends javax.swing.JFrame {
         this.borderColor = JUNTA_API.getBorderColor();
         this.currentEvent = JUNTA_API.getEvent();
         this.news = JUNTA_API.getNews();
+        System.out.println("Construido");
 
+        System.out.println("Downloading Avatar Img");
         URL userHeadUrl = new URL("https://cravatar.eu/helmhead/" + LAUNCHER_CLASS.getUsername() + "/32.png");
         this.userHeadIcon = new ImageIcon(userHeadUrl);
-
         URL headerUrl = new URL(JUNTA_API.getTitleImg());
         this.headerIcon = new ImageIcon(headerUrl);
+        System.out.println("Avatar Img downloaded");
+        
+        URL btnPlayFontUrl = new URL(btnPlayFontString);
+        this.btnPlayFontIcon = new ImageIcon(btnPlayFontUrl);
+        System.out.println("Play Button");
 
-        System.out.println("owo ev");
+//        System.out.println("owo ev");
+//        URL eventImgUrl = new URL(currentEvent.getString("img"));
+//        this.eventIcon = new ImageIcon(eventImgUrl);
+//        Image tempEventImg = eventIcon.getImage();
+//        tempEventImg = tempEventImg.getScaledInstance(288, 162, Image.SCALE_SMOOTH);
+//        this.eventIcon = new ImageIcon(tempEventImg);
+//        System.out.println("uwu ev");
+//
+//        for (int thisNoticia = 0; thisNoticia < MAX_NEWS; thisNoticia++) {
+//            JSONObject newsObject = news.getJSONObject(thisNoticia);
+//            if (news.getJSONObject(thisNoticia).getBoolean("custom_img")) {
+//                System.out.println("Resizing img noticia " + thisNoticia);
+//                URL newsImgUrl = new URL(newsObject.getString("img"));
+//                ImageIcon image_icon = new ImageIcon(newsImgUrl);
+//                Image image = image_icon.getImage();
+//                image = image.getScaledInstance(114, 65, Image.SCALE_SMOOTH);
+//
+//                switch (thisNoticia) {
+//                    case 0:
+//                        this.new0Icon = new ImageIcon(image);
+//                        break;
+//                    case 1:
+//                        this.new1Icon = new ImageIcon(image);
+//                        break;
+//                    case 2:
+//                        this.new2Icon = new ImageIcon(image);
+//                        break;
+//                    default:
+//                        this.new0Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+//                        this.new1Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+//                        this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+//                        break;
+//                }
+//                System.out.println("Resized img noticia " + thisNoticia);
+//            } else {
+//                switch (thisNoticia) {
+//                    case 0:
+//                        System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
+//                        this.new0Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+//                        break;
+//                    case 1:
+//                        System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
+//                        this.new1Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+//                        break;
+//                    case 2:
+//                        System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
+//                        this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+//                        break;
+//                    default:
+//                        this.new0Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+//                        this.new1Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+//                        this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+//                        break;
+//                }
+//            }
+//        }
+
+        initComponents();
+
         URL eventImgUrl = new URL(currentEvent.getString("img"));
         this.eventIcon = new ImageIcon(eventImgUrl);
         Image tempEventImg = eventIcon.getImage();
         tempEventImg = tempEventImg.getScaledInstance(288, 162, Image.SCALE_SMOOTH);
         this.eventIcon = new ImageIcon(tempEventImg);
-        System.out.println("uwu ev");
-
-        URL btnPlayFontUrl = new URL(btnPlayFontString);
-        this.btnPlayFontIcon = new ImageIcon(btnPlayFontUrl);
+        eventImg.setIcon(eventIcon);
 
         for (int thisNoticia = 0; thisNoticia < MAX_NEWS; thisNoticia++) {
             JSONObject newsObject = news.getJSONObject(thisNoticia);
@@ -91,15 +153,23 @@ public class LauncherWindow extends javax.swing.JFrame {
                 switch (thisNoticia) {
                     case 0:
                         this.new0Icon = new ImageIcon(image);
+                        new_img_1.setIcon(new ImageIcon(image));
                         break;
                     case 1:
                         this.new1Icon = new ImageIcon(image);
+                        new_img_2.setIcon(new ImageIcon(image));
                         break;
                     case 2:
                         this.new2Icon = new ImageIcon(image);
+                        new_img_3.setIcon(new ImageIcon(image));
                         break;
                     default:
+                        this.new0Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+                        this.new1Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
                         this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+                        new_img_1.setIcon(new ImageIcon(getClass().getResource("/images/status_img/no.png")));
+                        new_img_2.setIcon(new ImageIcon(getClass().getResource("/images/status_img/no.png")));
+                        new_img_3.setIcon(new ImageIcon(getClass().getResource("/images/status_img/no.png")));
                         break;
                 }
                 System.out.println("Resized img noticia " + thisNoticia);
@@ -108,23 +178,29 @@ public class LauncherWindow extends javax.swing.JFrame {
                     case 0:
                         System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
                         this.new0Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+                        new_img_1.setIcon(new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png")));
                         break;
                     case 1:
                         System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
                         this.new1Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+                        new_img_2.setIcon(new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png")));
                         break;
                     case 2:
                         System.out.println("/images/status_img/" + newsObject.getString("img") + ".png");
                         this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png"));
+                        new_img_3.setIcon(new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png")));
                         break;
                     default:
+                        this.new0Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+                        this.new1Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
                         this.new2Icon = new ImageIcon(getClass().getResource("/images/status_img/no.png"));
+                        new_img_1.setIcon(new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png")));
+                        new_img_2.setIcon(new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png")));
+                        new_img_3.setIcon(new ImageIcon(getClass().getResource("/images/status_img/" + newsObject.getString("img") + ".png")));
                         break;
                 }
             }
         }
-
-        initComponents();
 
         int collected = 0;
         for (int i = 0; i < JUNTA_API.getPartners().length(); i++) {

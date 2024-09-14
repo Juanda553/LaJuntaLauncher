@@ -60,7 +60,6 @@ public class MinecraftSettings extends javax.swing.JFrame {
         btn_apply = new javax.swing.JButton();
         btn_load = new javax.swing.JButton();
         btn_close = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel2 = new javax.swing.JPanel();
         btn_hardResetSeason = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -122,10 +121,6 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 btn_closeActionPerformed(evt);
             }
         });
-
-        jProgressBar1.setBackground(Color.decode(fontColor2));
-        jProgressBar1.setForeground(Color.decode(fontColor1));
-        jProgressBar1.setBorder(null);
 
         jPanel2.setBackground(Color.decode(bgColor1));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -297,17 +292,18 @@ public class MinecraftSettings extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sliderRam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sliderRam, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(highQualityCheck)
                             .addComponent(selectedRam)
-                            .addComponent(LiteCheck)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(btn_downloadFullMap)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_downloadFullMap)
+                                    .addComponent(LiteCheck))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)))
+                                .addComponent(jLabel6))
+                            .addComponent(highQualityCheck))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -338,7 +334,6 @@ public class MinecraftSettings extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btn_load, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -362,8 +357,6 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_load)
@@ -532,9 +525,8 @@ public class MinecraftSettings extends javax.swing.JFrame {
         try {
             String fullWorld = JUNTA_API.getHighQualityData().getString("full_world");
 
-            JUANDA_UTILS.donwloadFile(fullWorld, this.launcherDir + "/current.zip", jProgressBar1);
-            jProgressBar1.setValue(0);
-            JUANDA_UTILS.descomprimir(this.launcherDir + "/current.zip", this.dotDiomedes, jProgressBar1);
+            JUANDA_UTILS.downloadFileNormal(fullWorld, this.launcherDir + "/current.zip");
+            JUANDA_UTILS.descomprimirNormal(this.launcherDir + "/current.zip", this.dotDiomedes);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error de mapa precargado", JOptionPane.ERROR_MESSAGE);
         }
@@ -605,10 +597,10 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 String loc = dotDiomedes + "/" + mod.getString("loc");
                 String downloadLink = mod.getString("download");
 
-                JUANDA_UTILS.donwloadFile(downloadLink, loc, jProgressBar1);
+                JUANDA_UTILS.downloadFileNormal(downloadLink, loc);
                 System.out.println(name + " descargado");
             }
-            JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("game_settings"), launcherDir + "/new_options.txt", jProgressBar1);  
+            JUANDA_UTILS.downloadFileNormal(JUNTA_API.getHighQualityData().getString("game_settings"), launcherDir + "/new_options.txt");  
             JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
@@ -628,7 +620,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 loc.delete();
                 System.out.println(name + " eliminado");
             }
-            JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("default_game_settings"), launcherDir + "/new_options.txt", jProgressBar1);  
+            JUANDA_UTILS.downloadFileNormal(JUNTA_API.getHighQualityData().getString("default_game_settings"), launcherDir + "/new_options.txt");  
             JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
@@ -646,10 +638,10 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 String loc = dotDiomedes + "/" + mod.getString("loc");
                 String downloadLink = mod.getString("download");
 
-                JUANDA_UTILS.donwloadFile(downloadLink, loc, jProgressBar1);
+                JUANDA_UTILS.downloadFileNormal(downloadLink, loc);
                 System.out.println(name + " descargado");
             }
-            JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("default_game_settings"), launcherDir + "/new_options.txt", jProgressBar1);  
+            JUANDA_UTILS.downloadFileNormal(JUNTA_API.getHighQualityData().getString("default_game_settings"), launcherDir + "/new_options.txt");  
             JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
@@ -669,7 +661,7 @@ public class MinecraftSettings extends javax.swing.JFrame {
                 loc.delete();
                 System.out.println(name + " eliminado");
             }
-            JUANDA_UTILS.donwloadFile(JUNTA_API.getLiteModeData().getString("game_settings"), launcherDir + "/new_options.txt", jProgressBar1);
+            JUANDA_UTILS.downloadFileNormal(JUNTA_API.getLiteModeData().getString("game_settings"), launcherDir + "/new_options.txt");
             JUANDA_UTILS.updateOptions(dotDiomedes + "/options.txt", launcherDir + "/new_options.txt");
             return true;
         } catch (Exception e) {
@@ -697,7 +689,6 @@ public class MinecraftSettings extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JLabel selectedRam;
     private javax.swing.JSlider sliderRam;
     // End of variables declaration//GEN-END:variables

@@ -35,6 +35,8 @@ public class LoadingWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         progressOpen = new javax.swing.JProgressBar();
         progressDownload = new javax.swing.JProgressBar();
+        datosDeDescarga = new javax.swing.JLabel();
+        datosDeSpeed = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("La Junta Launcher");
@@ -53,7 +55,6 @@ public class LoadingWindow extends javax.swing.JFrame {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/junta_3d_large_white_resized.png"))); // NOI18N
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         progressOpen.setBackground(new java.awt.Color(102, 102, 102));
         progressOpen.setForeground(new java.awt.Color(255, 255, 255));
@@ -63,6 +64,18 @@ public class LoadingWindow extends javax.swing.JFrame {
         progressDownload.setForeground(new java.awt.Color(255, 255, 255));
         progressDownload.setBorder(null);
 
+        datosDeDescarga.setForeground(new java.awt.Color(255, 255, 255));
+        datosDeDescarga.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        datosDeDescarga.setToolTipText("");
+        datosDeDescarga.setAlignmentX(0.5F);
+        datosDeDescarga.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        datosDeSpeed.setForeground(new java.awt.Color(255, 255, 255));
+        datosDeSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        datosDeSpeed.setToolTipText("");
+        datosDeSpeed.setAlignmentX(0.5F);
+        datosDeSpeed.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -71,23 +84,31 @@ public class LoadingWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(progressOpen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
                     .addComponent(datosDeCarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(progressDownload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(progressDownload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(datosDeDescarga, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(datosDeSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(datosDeCarga)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressDownload, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(datosDeDescarga, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datosDeSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -271,20 +292,19 @@ public class LoadingWindow extends javax.swing.JFrame {
                         thisWindow.changeStatus("Nueva temporada detectada! " + JUNTA_API.getName(), 35);
 
                         try {
+                            thisWindow.changeStatus("Descargando nueva temporada, " + JUNTA_API.getName(), 40);
+                            JUANDA_UTILS.downloadFile(JUNTA_API.getModpackInitial(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload, thisWindow.datosDeDescarga, thisWindow.datosDeSpeed);
                             FileUtils.cleanDirectory(new File(DOT_DIOMEDES)); // Eliminar el .diomedes
-                            
-                            thisWindow.changeStatus("Descargando nueva temporada, " + JUNTA_API.getName() + " " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getModpackInitial()), 40);
-                            JUANDA_UTILS.donwloadFile(JUNTA_API.getModpackInitial(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
                             thisWindow.changeStatus("Descomprimiendo Temporada", 45);
                             JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload);
                             
-                            thisWindow.changeStatus("Descargando assets de Minecraft " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getAssetsDonwload()), 50);
-                            JUANDA_UTILS.donwloadFile(JUNTA_API.getAssetsDonwload(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
+                            thisWindow.changeStatus("Descargando assets de Minecraft", 50);
+                            JUANDA_UTILS.downloadFile(JUNTA_API.getAssetsDonwload(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload, thisWindow.datosDeDescarga, thisWindow.datosDeSpeed);
                             thisWindow.changeStatus("Descomprimiendo assets", 55);
                             JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload);
                             
-                            thisWindow.changeStatus("Descargando librerias de Minecraft y " + JUNTA_API.getModLoader() + " " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getLibsDownload()), 60);
-                            JUANDA_UTILS.donwloadFile(JUNTA_API.getLibsDownload(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
+                            thisWindow.changeStatus("Descargando librerias de Minecraft y " + JUNTA_API.getModLoader(), 60);
+                            JUANDA_UTILS.downloadFile(JUNTA_API.getLibsDownload(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload, thisWindow.datosDeDescarga, thisWindow.datosDeSpeed);
                             thisWindow.changeStatus("descomprimiendo librerias", 65);
                             JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload);
                             
@@ -302,9 +322,9 @@ public class LoadingWindow extends javax.swing.JFrame {
                         thisWindow.changeStatus("Nueva versión detectada", 75);
 
                         try {
-                            thisWindow.changeStatus("Descargando actualización " + JUNTA_API.getServerVersion() + " " + JUANDA_UTILS.getFileSizeMb(JUNTA_API.getModpackUpdate()), 80);
+                            thisWindow.changeStatus("Descargando actualización " + JUNTA_API.getServerVersion(), 80);
 
-                            JUANDA_UTILS.donwloadFile(JUNTA_API.getModpackUpdate(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload);
+                            JUANDA_UTILS.downloadFile(JUNTA_API.getModpackUpdate(), LAUNCHER_DIR + "/current.zip", thisWindow.progressDownload, thisWindow.datosDeDescarga, thisWindow.datosDeSpeed);
 
                             thisWindow.changeStatus("Descomprimiendo actualización", 85);
                             if (JUANDA_UTILS.descomprimir(LAUNCHER_DIR + "/current.zip", DOT_DIOMEDES, thisWindow.progressDownload)) {
@@ -330,11 +350,11 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     String loc = DOT_DIOMEDES + "/" + mod.getString("loc");
                                     String downloadLink = mod.getString("download");
 
-                                    JUANDA_UTILS.donwloadFile(downloadLink, loc, thisWindow.progressDownload);
+                                    JUANDA_UTILS.downloadFile(downloadLink, loc, thisWindow.progressDownload, thisWindow.datosDeDescarga, thisWindow.datosDeSpeed);
                                     
                                     System.out.println(name + " descargado");
                                 }
-                                JUANDA_UTILS.donwloadFile(JUNTA_API.getHighQualityData().getString("game_settings"), LAUNCHER_DIR + "/new_options.txt", thisWindow.progressDownload);
+                                JUANDA_UTILS.downloadFile(JUNTA_API.getHighQualityData().getString("game_settings"), LAUNCHER_DIR + "/new_options.txt", thisWindow.progressDownload, thisWindow.datosDeDescarga, thisWindow.datosDeSpeed);
                                 JUANDA_UTILS.updateOptions(DOT_DIOMEDES + "/options.txt", LAUNCHER_DIR + "/new_options.txt");
                             }
                             
@@ -350,7 +370,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                                     loc.delete();
                                     System.out.println(name + " eliminado");
                                 }
-                                JUANDA_UTILS.donwloadFile(JUNTA_API.getLiteModeData().getString("game_settings"), LAUNCHER_DIR + "/new_options.txt", thisWindow.progressDownload);
+                                JUANDA_UTILS.downloadFile(JUNTA_API.getLiteModeData().getString("game_settings"), LAUNCHER_DIR + "/new_options.txt", thisWindow.progressDownload, thisWindow.datosDeDescarga, thisWindow.datosDeSpeed);
                                 JUANDA_UTILS.updateOptions(DOT_DIOMEDES + "/options.txt", LAUNCHER_DIR + "/new_options.txt");
                             }
 
@@ -395,6 +415,8 @@ public class LoadingWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel datosDeCarga;
+    private javax.swing.JLabel datosDeDescarga;
+    private javax.swing.JLabel datosDeSpeed;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar progressDownload;
