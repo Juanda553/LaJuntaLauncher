@@ -736,8 +736,12 @@ public class LauncherWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        System.out.println("Jugar");
-        int exitCodeMC = Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this, LAUNCHER_CLASS.getUsername());
+        if (JUNTA_API.isCanPlay()){
+            System.out.println("Jugar");
+            int exitCodeMC = Launch_Minecraft.launch(LAUNCHER_CLASS, JUNTA_API, this, LAUNCHER_CLASS.getUsername());
+        } else {
+            JOptionPane.showMessageDialog(null, "Actualmente los jugadores no tienen permiso para jugar", "Cerrado", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void btn_partnersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_partnersActionPerformed

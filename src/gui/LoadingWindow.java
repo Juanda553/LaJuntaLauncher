@@ -134,7 +134,7 @@ public class LoadingWindow extends javax.swing.JFrame {
         thisWindow.setVisible(true);
         thisWindow.setLocationRelativeTo(null);
         
-        String LAUNCHER_VERSION = "2.3.3"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String LAUNCHER_VERSION = "2.3.3-1"; ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         JuandaUtils JUANDA_UTILS = new JuandaUtils();
         String DOT_MINECRAFT = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/.minecraft";
         String LAUNCHER_DIR = "C:/Users/"+ System.getProperty("user.name") +"/AppData/Roaming/diomedes";
@@ -201,7 +201,8 @@ public class LoadingWindow extends javax.swing.JFrame {
                     apiData.getJSONObject("lite_mode"),
                     apiData.getString("changeUserNamePermission"), 
                     apiData.getString("changeUsernamePassword"),
-                    apiData.getString("changeUsernameNewUserName")
+                    apiData.getString("changeUsernameNewUserName"),
+                    apiData.getBoolean("can_play")
                 );
 
             // Imprime en consola toda desa vaina

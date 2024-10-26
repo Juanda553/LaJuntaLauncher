@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 public class JuntaApi {
     private String lastUpdate, name, serverVersion, modLoader, modLoaderVersion, vanillaVersion, indexVersion, serverIcon, modpackInitial, modpackUpdate, serverIP, lastLauncherDownload, libsDownload, assetsDonwload, changeUsernamePermission, changeUsernamePassword, changeUsernameNewUserName;
+    private boolean canPlay;
     
     private String launcherVersion, titleImg;
     private int serverPrice, MoneyCollected;
@@ -17,7 +18,7 @@ public class JuntaApi {
     private JSONObject event, highQualityData, staffs, liteModeData;
     private JSONArray news, partners, deletedFiles;
 
-    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String lastLauncherDownload, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP, JSONObject staffs, String libsDownload, String assetsDonwload, JSONObject liteModeData, String changeUsernamePermission, String changeUsernamePassword, String changeUsernameNewUserName) {
+    public JuntaApi(String lastUpdate, String name, String serverVersion, String modLoader, String modLoaderVersion, String vanillaVersion, String indexVersion, String serverIcon, String modpackInitial, String modpackUpdate, String launcherVersion, String lastLauncherDownload, String titleImg, int serverPrice, int MoneyCollected, String bgColor1, String gbColor2, String buttonColor1, String buttonColor2, String buttonPlay, String fontPlay, String fontColor1, String fontColor2, String borderColor, JSONObject event, JSONArray news, JSONArray partners, JSONArray deletedFiles, JSONObject highQualityData, String serverIP, JSONObject staffs, String libsDownload, String assetsDonwload, JSONObject liteModeData, String changeUsernamePermission, String changeUsernamePassword, String changeUsernameNewUserName, boolean canPlay) {
         this.lastUpdate = lastUpdate;
         this.name = name;
         this.serverVersion = serverVersion;
@@ -55,6 +56,7 @@ public class JuntaApi {
         this.changeUsernamePermission = changeUsernamePermission;
         this.changeUsernamePassword = changeUsernamePassword;
         this.changeUsernameNewUserName = changeUsernameNewUserName;
+        this.canPlay = canPlay;
     }
     
     public boolean updateApi(URL API_URL, JuntaApi x){
@@ -109,6 +111,14 @@ public class JuntaApi {
             JOptionPane.showMessageDialog(null, "Envia captura de este error: " + e, "Error Rancio", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
+
+    public boolean isCanPlay() {
+        return canPlay;
+    }
+
+    public void setCanPlay(boolean canPlay) {
+        this.canPlay = canPlay;
     }
 
     public JSONObject getStaffs() {
